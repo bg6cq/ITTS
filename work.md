@@ -12,16 +12,18 @@ Linux可以使用自带的编辑器如vim等，windows系统下建议安装 [Not
 登录自己的github账号，访问[https://github.com/bg6cq/ITTS](https://github.com/bg6cq/ITTS)，单击右侧的Fork
 5. 下载自己的代码
 在某个目录下，执行 `git clone https://github.com/xxx/ITTS.git` （其中xxx是自己的github账号）下载自己的代码，下载后的代码在目录ITTS下。
-6. 创建一个分支
+6. 设定上级源
+    git remote add bg6cq https://github.com/bg6cq/ITTS.git
+7. 创建一个分支
     cd ITTS
     git checkout -b xxx
-7. 在这个分支上修改
-8. 提交到服务器
+8. 在这个分支上修改
+9. 提交到服务器
     git add ??.md
     git commit -m commit_message
     git push origin xxx`
-9. 到服务器上可以看到效果，注意要选择branch xxx
-10. 创建一个pull request
+10. 到服务器上可以看到效果，注意要选择branch xxx
+11. 创建一个pull request
 
 
 
