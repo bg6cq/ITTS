@@ -4,8 +4,10 @@
 
     Linux可以安装git，windows建议到 [https://git-for-windows.github.io/](https://git-for-windows.github.io/) 下载安装
     设置好自己的邮件地址和姓名：
-        git config --global user.email "my@mail.org"
-        git config --global user.name "My Name"
+```
+git config --global user.email "my@mail.org"
+git config --global user.name "My Name"
+```
 
 2. 安装文本编辑器
 
