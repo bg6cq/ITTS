@@ -2,6 +2,9 @@
 
 1. 安装git软件 
 Linux可以安装git，windows建议到 [https://git-for-windows.github.io/](https://git-for-windows.github.io/) 下载安装
+设置好自己的邮件地址和姓名：
+`git config --global user.email "me@yunkai.org"
+git config --global user.name "Zhang Yunkai"`
 2. 安装文本编辑器
 Linux可以使用自带的编辑器如vim等，windows系统下建议安装 [Notepad++](https://notepad-plus-plus.org/download/)
 3. 在github.com上申请账号（略）
