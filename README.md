@@ -45,3 +45,4 @@
     7. dhcp
 8. 其他
 
+[Markdown 语法](http://wowubuntu.com/markdown/)
