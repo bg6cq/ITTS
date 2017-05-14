@@ -27,7 +27,7 @@
     3. CentOS/Redhat
     4. Debian
     5. ubuntu
-    6. 主机防火墙
+    6. [主机防火墙](OS/firewall/README.md)
 5. 数据库
     1. MS SQL Server
     2. Oracle
