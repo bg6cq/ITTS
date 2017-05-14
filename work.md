@@ -50,4 +50,9 @@ git push origin xxx
 
     访问 https://github.com/xxx/ITTS/pulls，“New pull request", 最右边方框选 compare:xxx, 然后 "Create pull request"
 
+12. 等修改被接收后，执行以下命令
+```
+git pull bg6cq master
+```
+
 
