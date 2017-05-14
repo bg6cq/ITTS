@@ -22,3 +22,4 @@ Windows主机可以使用以下两种方式来设置：
 7. 在 “名称” 对话框中，输入此规则的名称和说明，再单击 “完成”。
 
 
+您也可以参考这里 [Windows防火墙限制端口/IP/应用访问的方法以及例外的配置](https://help.aliyun.com/knowledge_detail/40699.html)
