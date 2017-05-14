@@ -41,7 +41,7 @@ git checkout -b xxx
 ```
 git add ??.md
 git commit -m commit_message
-git push origin xxx`
+git push origin xxx
 ```
 
 10. 到服务器上可以看到效果，注意要选择branch xxx
