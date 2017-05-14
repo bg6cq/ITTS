@@ -45,5 +45,6 @@
     7. dhcp
 8. 其他
 
-欢迎[参加我们整理资料]{work.md}
+欢迎 [加入我们整理资料]{work.md}
+
 [Markdown 语法](http://wowubuntu.com/markdown/)
