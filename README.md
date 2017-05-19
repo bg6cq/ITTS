@@ -42,7 +42,10 @@
     4. ftp
     5. dns
     6. ntp
-    7. dhcp
+    7. dhcp
+8. 相关法律法规
+    1. [网络安全法](http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm)
+    2. [刑法修正案（九）](http://www.npc.gov.cn/npc/xinwen/2015-08/31/content_1945587.htm)
 8. 其他
 
 欢迎 [加入我们整理资料](work.md)
