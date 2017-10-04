@@ -31,28 +31,28 @@
 以下过程使用域名blackip.ustc.edu.cn演示。
 
 1. 安装过程
-·
+````
 mkdir /usr/src/getssl
 cd /usr/src/getsll
 curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
-·
+````
 
 2. 生成基本配置
-····
+````
 cd /usr/src/getsll
- ./getssl -c blackip.ustc.edu.cn
-····
+./getssl -c blackip.ustc.edu.cn
+````
 3. 修改配置
-···· 
- vi /root/.getssl/getssl.cfg /root/.getssl/blackip.ustc.edu.cn/getssl.cfg
-····
+````
+vi /root/.getssl/getssl.cfg /root/.getssl/blackip.ustc.edu.cn/getssl.cfg
+````
 其中/root/.getssl/getssl.cfg修改为：
-····
+````
 CA="https://acme-v01.api.letsencrypt.org"
 ACCOUNT_EMAIL="james@ustc.edu.cn"
-····
+````
 /root/.getssl/blackip.ustc.edu.cn/getssl.cfg修改为：
-····
+````
 ACL=('/var/www/html/.well-known/acme-challenge')
 
 DOMAIN_CERT_LOCATION="/etc/ssl/blackip.ustc.edu.cn.crt"
@@ -60,17 +60,17 @@ DOMAIN_KEY_LOCATION="/etc/ssl/blackip.ustc.edu.cn.key"
 DOMAIN_CHAIN_LOCATION="/etc/ssl/blackip.ustc.edu.cn.chain.pem"
 
 RELOAD_CMD="/sbin/service httpd restart"
-····
+````
 
 4. 获取证书
 
 执行命令获取证书
-····
+````
 ./getssl -d blackip.ustc.edu.cn
 ````
 执行完毕后/root/.getssl/blackip.ustc.edu.cn会有四个文件，使用以下命令可以看到文件的内容：
 
-····
+````
 #服务器私钥
 openssl rsa -noout -text -in blackip.ustc.edu.cn.key 
 #证书签名请求
@@ -84,17 +84,17 @@ openssl x509 -in chain.crt -text
 5. 证书使用
 
 编辑/etc/httpd/conf.d/ssl.conf，修改以下内容：
-····
+````
 SSLCertificateFile /etc/ssl/blackip.ustc.edu.cn.crt
 SSLCertificateKeyFile /etc/ssl/blackip.ustc.edu.cn.key
 SSLCertificateChainFile /etc/ssl/blackip.ustc.edu.cn.chain.pem
-····
-执行·service httpd restart·证书生效。 
+````
+执行````service httpd restart````证书生效。 
 
 6. 证书自动更新
 
 Let's encrypt证书有效期为90天，需要在90天内更新，更新方式是执行命令
-·/usr/src/get/ssl -d blackip.ustc.edu.cn`
+````/usr/src/get/ssl -d blackip.ustc.edu.cn````
 即可，可以使用crontab每天执行一次。
 
 ***
