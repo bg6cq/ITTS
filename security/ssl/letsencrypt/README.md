@@ -57,7 +57,7 @@ ACL=('/var/www/html/.well-known/acme-challenge')
 
 DOMAIN_CERT_LOCATION="/etc/ssl/blackip.ustc.edu.cn.crt"
 DOMAIN_KEY_LOCATION="/etc/ssl/blackip.ustc.edu.cn.key"
-DOMAIN_CHAIN_LOCATION="/etc/ssl/blackip.ustc.edu.cn.chain.pem"
+CA_CERT_LOCATION="/etc/ssl/chain.crt"
 
 RELOAD_CMD="/sbin/service httpd restart"
 ````
@@ -87,7 +87,7 @@ openssl x509 -in chain.crt -text
 ````
 SSLCertificateFile /etc/ssl/blackip.ustc.edu.cn.crt
 SSLCertificateKeyFile /etc/ssl/blackip.ustc.edu.cn.key
-SSLCertificateChainFile /etc/ssl/blackip.ustc.edu.cn.chain.pem
+SSLCertificateChainFile /etc/ssl/chain.crt
 ````
 执行````service httpd restart````证书生效。 
 
