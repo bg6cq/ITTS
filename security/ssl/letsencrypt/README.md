@@ -14,7 +14,7 @@
 
 * 证书：扩展名一般是.crt。服务器将.csr文件交给CA服务器，CA服务器验证服务器真实拥有该域名后，用CA服务器的私钥对这些信息签名，生成.crt文件。
 
-证书链：CA服务器的根证书是安装到客户机系统的，为了安全起见，CA服务器会对自己的二级CA签发证书，最后由该二级CA对普通用户签发证书，证书链是记录该关系的。
+* 证书链：CA服务器的根证书是安装到客户机系统的，为了安全起见，CA服务器会对自己的二级CA签发证书，最后由该二级CA对普通用户签发证书，证书链是记录该关系的。不提供证书链可以工作，但有时候会有告警。
 
 2. Let's encrypt免费证书颁发过程
 
@@ -91,11 +91,13 @@ SSLCertificateChainFile /etc/ssl/blackip.ustc.edu.cn.chain.pem
 ````
 执行````service httpd restart````证书生效。 
 
+这时可以使用 https://www.ssllabs.com/ssltest/analyze.html?d=blackip.ustc.edu.cn 测试服务器证书是否工作正常。
+
 6. 证书自动更新
 
 Let's encrypt证书有效期为90天，需要在90天内更新，更新方式是执行命令
 ````/usr/src/get/ssl -d blackip.ustc.edu.cn````
-即可，可以使用crontab每天执行一次。
+即可，离失效期还有30天的证书会得到更新，并自动执行上面定义的RELOAD_CMD启动服务进程。可以使用crontab每天执行一次。
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
