@@ -8,11 +8,12 @@
 
 1. SSL证书产生过程涉及以下几个概念：
 
-* 服务器私有密钥：扩展名一般是.key，一般我们使用的是rsa算法，服务器自己生成的一组随机数做为私钥，同时产生对应的公钥。私钥需要安全存放，不让其他人知道。
+* 服务器私有密钥：扩展名一般是.key。一般我们使用的是rsa算法，服务器自己生成的一组随机数做为私钥，同时产生对应的公钥。私钥需要安全存放，不让其他人知道。
 
-* 证书签名请求：Certificate Signing Request，扩展名一般是.csr，服务器将自己的公钥hash后，加上希望绑定的域名信息，生成.csr文件。
+* 证书签名请求：Certificate Signing Request，扩展名一般是.csr。服务器将自己的公钥hash后，加上希望绑定的域名信息，生成.csr文件。
 
 * 证书：扩展名一般是.crt。服务器将.csr文件交给CA服务器，CA服务器验证服务器真实拥有该域名后，用CA服务器的私钥对这些信息签名，生成.crt文件。
+
 证书链：CA服务器的根证书是安装到客户机系统的，为了安全起见，CA服务器会对自己的二级CA签发证书，最后由该二级CA对普通用户签发证书，证书链是记录该关系的。
 
 2. Let's encrypt免费证书颁发过程
@@ -30,11 +31,11 @@
 以下过程使用域名blackip.ustc.edu.cn演示。
 
 1. 安装过程
-····
+·
 mkdir /usr/src/getssl
 cd /usr/src/getsll
 curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
-····
+·
 
 2. 生成基本配置
 ····
