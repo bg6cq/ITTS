@@ -62,6 +62,7 @@ vi /root/test/jiankong.sh
 #!/bin/sh
 cd /root/test
 while true; do
+ git add www
  git commit -a -m `date '+%Y%m%d%H%M%S'`
  sleep 5
 done
@@ -78,6 +79,7 @@ vi /root/test/.gitignore
 ````
 写入以下内容
 ````
+.gitignore
 jiankong.sh
 change.log
 ````
@@ -132,6 +134,7 @@ git checkout -b `date '+%Y%m%d%H%M%S'`
 #!/bin/sh
 cd /root/test
 while true; do
+ git add www
  git commit -a -m `date '+%Y%m%d%H%M%S'`
  sleep 5
 done
@@ -153,7 +156,7 @@ my change
 ````
 注意已经自动切换到分支 20171005085844
 
-4. 运行监控脚本，jiankong.sh，这时不会有任何变化
+4. 运行监控脚本jiankong.sh，这时不会有任何变化
 
 5. 模拟其他人修改
 
@@ -193,6 +196,24 @@ Thu Oct  5 08:58:44 CST 2017
 change!
 Thu Oct  5 09:06:31 CST 2017
 change!
+
+````
+
+7. 模拟新增一个文件的恢复
+````
+[root@blackhole test]# echo "test2" > www/new.html
+[root@blackhole test]# sh jiankong.sh
+Switched to branch 'master'
+Switched to a new branch '20171005091700'
+[20171005091700 bd34034] 20171005091700
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 www/new.html
+^C
+[root@blackhole test]# ls -al www
+total 12
+drwxr-xr-x. 2 root root 4096 Oct  5 09:17 .
+drwxr-xr-x. 4 root root 4096 Oct  5 09:16 ..
+-rw-r--r--. 1 root root   16 Oct  5 09:06 index.html
 
 ````
 
