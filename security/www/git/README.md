@@ -10,14 +10,14 @@
 
 * 自己更新的www文件在master分支
 
-* 其他分支被认为是异常更新
+* 其他分支被用来记录异常更新
 
 * 平时处于其他分支（以时间戳为分支名字）
 
 * 设置post-commit 钩子，当有新提交时，做如下工作：
     触发修改报警
     执行`git checkout master`恢复文件
-    执行`git checkout -b \`date '+%Y%m%d%H%M%S'\``生成新的分支
+    执行``git checkout -b `date '+%Y%m%d%H%M%S'` ``生成新的分支
 
 * 接到报警后，可以从之前的某个分支看到修改的内容
 
