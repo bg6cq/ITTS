@@ -46,6 +46,8 @@
 8. 安全管理
     1. [系统上线前安全评测技术要求](security/checklist/README.md)
     2. [使用Let's encrypt免费SSL证书](security/ssl/letsencrypt/README.md)
+    3. [使用git监控www文件并自动恢复](security/www/git/README.md)
+	
 9. 相关法律法规
     1. [中华人民共和国网络安全法](http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm)
     2. [中华人民共和国国家安全法](http://www.npc.gov.cn/npc/xinwen/2015-07/07/content_1941161.htm)
