@@ -224,7 +224,7 @@ drwxr-xr-x. 4 root root 4096 Oct  5 09:16 ..
 cd /root/test
 while true; do
  echo wait file system change..
- inotifywait -e modify,create -r /root/test
+ inotifywait -e modify,move,create,delete -r /root/test
  git add www
  git commit -a -m `date '+%Y%m%d%H%M%S'`
 done
