@@ -106,5 +106,19 @@ Let's encrypt证书有效期为90天，需要在90天内更新，更新方式是
 ````/usr/src/get/ssl -d blackip.ustc.edu.cn````
 即可，离失效期还有30天的证书会得到更新，并自动执行上面定义的RELOAD_CMD启动服务进程。可以使用crontab每天执行一次。
 
+7. 一台服务器有多个域名时的证书生成
+
+假如一台服务器同时服务多个域名，可以生成含有多个域名的证书。
+
+假定blackip.ustc.edu.cn服务器还需要服务noc.ustc.edu.cn live.ustc.edu.cn，它们的根目录分别是/var/www/html/noc /var/www/html/live，则
+在/root/.getssl/blackip.ustc.edu.cn应增加如下的配置：
+````
+SANS="noc.ustc.edu.cn,live.ustc.edu.cn"
+ACL=('/var/www/html/.well-known/acme-challenge'
+     '/var/www/html/noc/.well-known/acme-challenge'
+     '/var/www/html/live/.well-known/acme-challenge')
+````
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
