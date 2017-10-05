@@ -217,6 +217,18 @@ drwxr-xr-x. 4 root root 4096 Oct  5 09:16 ..
 
 ````
 
+## 五、优化
+如果觉得傻傻的不停的git add; git commit太无聊，可以使用inotify-tools监测到文件变化再执行，把jiankong.sh修改为：
+````
+#!/bin/sh
+cd /root/test
+while true; do
+ echo wait file system change..
+ inotifywait -e modify,create -r /root/test
+ git add www
+ git commit -a -m `date '+%Y%m%d%H%M%S'`
+done
+
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
