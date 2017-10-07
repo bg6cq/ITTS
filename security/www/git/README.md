@@ -6,9 +6,9 @@
 
 ## 一、使用git监控www文件并自动恢复思路
 
-使用多个分支来工作，其中：
+使用多个分支来完成监控工作，其中：
 
-* 自己更新的www文件在master分支
+* master分支为自己更新的www文件，一旦监测到文件修改，会立即恢复到master分支的最后版本
 
 * 其他分支被用来记录异常更新
 
@@ -16,25 +16,40 @@
 
 * 设置post-commit 钩子，当有新提交时，做如下工作：  
     触发修改报警  
-    执行`git checkout master`恢复文件  
+    执行`git checkout master`恢复master分支最后版本文件  
     执行``git checkout -b `date '+%Y%m%d%H%M%S'` ``生成新的分支
 
-* 接到报警后，之前的某个分支记录有修改的内容
+* 触发报警后，之前的某个以时间戳命名的分支记录有修改的内容
 
 
 ## 二、设置过程
 
-下文假定 /root/test/www下文件需要保护，设置过程为：
+下文假定 /root/test/www 下文件需要保护，设置过程为：
 
-1. 初始化git库，并把www目录下文件全部加如git跟踪
+1. 初始化git库
 ````
 cd /root/test
 git init
+````
+
+2. 编辑.gitignore，记录需要忽略的文件
+````
+vi /root/test/.gitignore
+````
+写入以下内容
+````
+.gitignore
+jiankong.sh
+change.log
+````
+
+3. 把需要跟踪的文件（这里是www目录）全部加入git跟踪
+````
 git add www
 git commit -m init
 ````
 
-2. 生成post-commit 钩子文件
+4. 生成 post-commit 钩子脚本
 ````
 vi /root/test/.git/hooks/post-commit
 ````
@@ -45,13 +60,13 @@ vi /root/test/.git/hooks/post-commit
 cd /root/test
 
 date >> change.log
-echo "change!" >> change.log
+echo "file change!" >> change.log
 
 git checkout master
 git checkout -b `date '+%Y%m%d%H%M%S'`
 ````
 
-3. 生成监控脚本程序
+5. 生成监控脚本程序
 
 ````
 vi /root/test/jiankong.sh
@@ -68,21 +83,11 @@ while true; do
 done
 ````
 
-4. 把脚本改为可执行
+6. 把脚本改为可执行
 ````
 chmod u+x .git/hooks/post-commit jiankong.sh
 ````
 
-5. 编辑.gitignore，记录需要忽略的文件
-````
-vi /root/test/.gitignore
-````
-写入以下内容
-````
-.gitignore
-jiankong.sh
-change.log
-````
 
 ## 三、修改www文件步骤
 
@@ -103,13 +108,13 @@ change.log
 
 1. www目录只有一个文件index.html，内容是"index"，初始化步骤是：
 ````
-[root@blackhole www]# cd /root/test
-[root@blackhole test]# cat www/index.html
+[root@localhost www]# cd /root/test
+[root@localhost test]# cat www/index.html
 index
-[root@blackhole test]# git init
+[root@localhost test]# git init
 Initialized empty Git repository in /root/test/.git/
-[root@blackhole test]# git add www
-[root@blackhole test]# git commit -m init
+[root@localhost test]# git add www
+[root@localhost test]# git commit -m init
 [master (root-commit) 96de862] init
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 www/index.html
@@ -117,10 +122,10 @@ Initialized empty Git repository in /root/test/.git/
 
 2. 两个脚本文件内容如下：
 ````
-[root@blackhole test]# ls -al  .git/hooks/post-commit jiankong.sh
+[root@localhost test]# ls -al  .git/hooks/post-commit jiankong.sh
 -rwxr--r--. 1 root root 134 Oct  5 08:56 .git/hooks/post-commit
 -rwxr--r--. 1 root root 153 Oct  5 08:57 jiankong.sh
-[root@blackhole test]# cat  .git/hooks/post-commit
+[root@localhost test]# cat  .git/hooks/post-commit
 #!/bin/sh
 
 cd /root/test
@@ -130,7 +135,7 @@ echo "change!" >> change.log
 
 git checkout master
 git checkout -b `date '+%Y%m%d%H%M%S'`
-[root@blackhole test]# cat jiankong.sh
+[root@localhost test]# cat jiankong.sh
 #!/bin/sh
 cd /root/test
 while true; do
@@ -142,15 +147,15 @@ done
 ````
 3. 自己修改文件演示，增加"my change"
 ````
-[root@blackhole test]# cd /root/test; git checkout master
+[root@localhost test]# cd /root/test; git checkout master
 Already on 'master'
-[root@blackhole test]# echo "my change" >> www/index.html
-[root@blackhole test]# git commit -a -m "my change"
+[root@localhost test]# echo "my change" >> www/index.html
+[root@localhost test]# git commit -a -m "my change"
 Already on 'master'
 Switched to a new branch '20171005085844'
 [20171005085844 a0e3e00] my change
  1 files changed, 1 insertions(+), 0 deletions(-)
-[root@blackhole test]# cat www/index.html
+[root@localhost test]# cat www/index.html
 index
 my change
 ````
@@ -162,8 +167,8 @@ my change
 
 没有切换到master分支的修改都被认为是其他人修改。
 ````
-[root@blackhole test]# echo "other change" >> www/index.html
-[root@blackhole test]# cat www/index.html
+[root@localhost test]# echo "other change" >> www/index.html
+[root@localhost test]# cat www/index.html
 index
 my change
 other change
@@ -171,9 +176,9 @@ other change
 
 6. 运行监控脚本jiankong.sh
 
-other change会被记录到分支20171005085844，并被删除，切换到一个新的分支20171005090631
+other change这行文字变化会被记录到分支20171005085844，并被删除，切换到一个新的分支20171005090631
 ````
-[root@blackhole test]# sh jiankong.sh
+[root@localhost test]# sh jiankong.sh
 Switched to branch 'master'
 Switched to a new branch '20171005090631'
 [20171005090631 254a22d] 20171005090631
@@ -182,16 +187,15 @@ Switched to a new branch '20171005090631'
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
 #
-nothing added to commit but untracked files present (use "git add" to track)
 ^C
-[root@blackhole test]# git branch
+[root@localhost test]# git branch
   20171005085844
 * 20171005090631
   master
-[root@blackhole test]# cat www/index.html
+[root@localhost test]# cat www/index.html
 index
 my change
-[root@blackhole test]# cat change.log
+[root@localhost test]# cat change.log
 Thu Oct  5 08:58:44 CST 2017
 change!
 Thu Oct  5 09:06:31 CST 2017
@@ -201,15 +205,15 @@ change!
 
 7. 模拟新增一个文件的恢复
 ````
-[root@blackhole test]# echo "test2" > www/new.html
-[root@blackhole test]# sh jiankong.sh
+[root@localhost test]# echo "test2" > www/new.html
+[root@localhost test]# sh jiankong.sh
 Switched to branch 'master'
 Switched to a new branch '20171005091700'
 [20171005091700 bd34034] 20171005091700
  1 files changed, 1 insertions(+), 0 deletions(-)
  create mode 100644 www/new.html
 ^C
-[root@blackhole test]# ls -al www
+[root@localhost test]# ls -al www
 total 12
 drwxr-xr-x. 2 root root 4096 Oct  5 09:17 .
 drwxr-xr-x. 4 root root 4096 Oct  5 09:16 ..
@@ -218,7 +222,7 @@ drwxr-xr-x. 4 root root 4096 Oct  5 09:16 ..
 ````
 
 ## 五、优化
-如果觉得傻傻的不停的git add; git commit太无聊，可以使用inotify-tools监测到文件变化再执行，把jiankong.sh修改为：
+如果觉得傻傻的不停的git add; git commit太无聊，可以使用inotify-tools监测到目录下有文件变化时再执行，把jiankong.sh修改为：
 ````
 #!/bin/sh
 cd /root/test
@@ -229,8 +233,6 @@ while true; do
  git commit -a -m `date '+%Y%m%d%H%M%S'`
 done
 ````
-
-
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)

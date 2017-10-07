@@ -8,7 +8,7 @@
 
 1. SSL证书产生过程涉及以下几个概念：
 
-* 服务器私有密钥：扩展名一般是.key。一般我们使用的是rsa算法，服务器自己生成的一组随机数做为私钥，同时产生对应的公钥。私钥需要安全存放，不让其他人知道。
+* 服务器密钥：扩展名一般是.key。一般我们使用的是rsa算法，服务器自己生成的一组数为私钥和对应的公钥。私钥需要安全存放，不让其他人知道。
 
 * 证书签名请求：Certificate Signing Request，扩展名一般是.csr。服务器将自己的公钥hash后，加上希望绑定的域名信息，生成.csr文件。
 
@@ -18,10 +18,9 @@
 
 2. CA服务机构
 
-CA服务机构的存在是做为公认的第三方来验证服务器身份，这中间收取服务费。
+CA服务机构的存在是做为公认的第三方来验证服务器身份，这中间可能需要收取服务费。
 
-为了方便使用，可以选择Let's encrypt免费CA机构。Let's encrypt已被广泛接受，申请证书也比较快捷，一般来说5分钟内可以完成从开始安装程序到申请证书过程。需要说明的是Let's encrypt签发的证书有效期是90天，需要在到期之前完成证书更新。
-
+为了方便使用，可以选择Let's encrypt免费CA机构签发证书。Let's encrypt已被广泛接受，申请证书也比较快捷，一般来说5分钟内可以完成从开始安装程序到申请证书过程。需要说明的是Let's encrypt签发的证书有效期是90天，在到期之前需完成证书更新。
 
 3. Let's encrypt免费证书颁发过程
 
@@ -33,7 +32,7 @@ CA服务机构的存在是做为公认的第三方来验证服务器身份，这
 
 ## 二、Let's encrypt 证书生成工具
 
-有很多中Let's encrypt 证书生成工具，这里介绍完全由shell脚本完成整个过程的getssl。
+有很多种Let's encrypt 证书生成工具，这里介绍完全由shell脚本完成整个过程的getssl [https://github.com/srvrco/getssl](https://github.com/srvrco/getssl)。
 
 以下过程使用域名blackip.ustc.edu.cn演示，服务器是apache。
 
@@ -110,7 +109,15 @@ Let's encrypt证书有效期为90天，需要在90天内更新，更新方式是
 
 假如一台服务器同时服务多个域名，可以生成含有多个域名的证书。
 
-假定blackip.ustc.edu.cn服务器还需要服务noc.ustc.edu.cn live.ustc.edu.cn，它们的根目录分别是/var/www/html/noc /var/www/html/live，则
+如果这些域名完全是同一个网站，如blackip.ustc.edu.cn 还有个域名是www.blackip.ustc.edu.cn、blacklist.ustc.edu.cn、www.blacklist.ustc.edu.cn，他们是同一个网站，
+只要在/root/.getssl/blackip.ustc.edu.cn应增加如下的配置：
+````
+SANS="www.blackip.ustc.edu.cn,blacklist.ustc.edu.cn,www.blacklist.ustc.edu.cn"
+ACL=('/var/www/html/.well-known/acme-challenge')
+USE_SINGLE_ACL="true"
+````
+
+如果域名是不同的网站，如blackip.ustc.edu.cn服务器通过虚拟主机的方式需要服务noc.ustc.edu.cn live.ustc.edu.cn，它们的根目录分别是/var/www/html/noc /var/www/html/live，则
 在/root/.getssl/blackip.ustc.edu.cn应增加如下的配置：
 ````
 SANS="noc.ustc.edu.cn,live.ustc.edu.cn"
