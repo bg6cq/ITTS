@@ -25,9 +25,14 @@
 
     访问 https://github.com/xxx/ITTS/pulls，“New pull request", 最右边方框选head fork:xxx/ITTS compare:master, 然后 "Create pull request"
 
+## 与上游保持更新
+上游更新后，访问 https://github.com/xxx/ITTS/ 自己的拷贝，会提示“This branch is ? commit behind bg6cq:master."。
 
-12. 等修改被接收后，执行以下命令
+最好的解决办法是使用命令行更新，最简单的办法是把自己的拷贝删除，重新fork。
 
+单击提示右侧的"Compare", 单击 "bg6cq:master is up to date with all commits from xxx:master. Try switching the base for your comparison." 这里的 "switching the base"，单击"Create pull request", 在出来的页面单击"Merge pull request", "Confirm merge"
+
+请参考[https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository](https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository)
 
 ## 离线修改文件
 
@@ -84,6 +89,5 @@ git push origin xxx
 12. 等修改被接收后，执行以下命令
 ```
 git pull bg6cq master
+git push origin xxx
 ```
-
-
