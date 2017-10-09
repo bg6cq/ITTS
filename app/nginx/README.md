@@ -155,7 +155,26 @@ http {
 ````
 感谢 **西财 王伟** 老师指出的$host $proxy_host区别。
 
-## 五、专业支持的系统
+
+## 五、HTTPS站点的配置
+可以使用Nginx作为反向代理，在源站点无需任何修改的情况下，将普通站点转换为HTTPS站点。
+在server段需要增加
+````
+......
+        listen 443 ssl;
+	ssl_certificate /etc/letsencrypt/live/yousite/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/yousite/privkey.pem;
+	ssl_session_timeout 5m;
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+......
+````
+此时，通过Nginx访问该站点，浏览器会自动将HTTP协议切换为HTTPS协议。
+
+关于HTTPS证书的申请，请参考https://github.com/bg6cq/ITTS/tree/master/security/ssl/letsencrypt
+
+
+
+## 六、专业支持的系统
 
 如果觉得以上操作太麻烦，可以考虑购买专业支持的系统，运行起来省事省心，如网瑞达的产品除了提供反向代理外，还提供了VPN等更多功能：
 
