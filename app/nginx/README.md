@@ -155,7 +155,7 @@ http {
 
 如果觉得以上操作太麻烦，可以考虑购买专业支持的系统，运行起来省事省心，如网瑞达的产品除了提供反向代理外，还提供了VPN等更多功能：
 
-[网瑞达 资源安全访问解决方案](http://v.wrdtech.com/vod-show?id=66)
+感兴趣的请看视频 [网瑞达 资源安全访问解决方案](http://v.wrdtech.com/vod-show?id=66)
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
