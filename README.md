@@ -46,15 +46,18 @@
     1. [系统上线前安全评测技术要求](security/checklist/README.md)
     2. [使用Let's encrypt免费SSL证书](security/ssl/letsencrypt/README.md)
     3. [使用git监控www文件并自动恢复](security/www/git/README.md)
+
+9. 标杆文档
+    1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
 	
-9. 相关法律法规
+10. 相关法律法规
     1. [中华人民共和国网络安全法](http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm)
     2. [中华人民共和国国家安全法](http://www.npc.gov.cn/npc/xinwen/2015-07/07/content_1941161.htm)
     3. [中华人民共和国保守国家秘密法](http://www.npc.gov.cn/huiyi/cwh/1114/2010-04/29/content_1571766.htm)
     4. [中华人民共和国反恐怖主义法](http://www.npc.gov.cn/npc/xinwen/2015-12/28/content_1957401.htm)
     5. [中华人民共和国反间谍法](http://www.npc.gov.cn/npc/xinwen/2014-11/02/content_1884660.htm)
     6. [刑法修正案（九）](http://www.npc.gov.cn/npc/xinwen/2015-08/31/content_1945587.htm)
-10. 其他
+11. 其他
     1. [ISP地址段](https://ispip.clang.cn)
 
 欢迎 [加入我们整理资料](work.md)
