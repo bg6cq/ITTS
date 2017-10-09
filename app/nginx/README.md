@@ -134,7 +134,7 @@ http {
 
 使用以上配置时，nginx 访问后台站点时，自动设置了Host: 头为server_name，因此后台站点需要处理对应的server_name域请求。
 
-还有一种使用方式，假定 www.ustc.edu.cn 是nginx对外提供服务的域名，而后台站点使用 p-www.ustc.edu.cn（p-前缀代表是后台站点）。
+还有一种使用方式，假定 http://www.ustc.edu.cn 是nginx对外提供服务的域名，而后台站点使用 http://p-www.ustc.edu.cn （p-前缀代表是后台站点）。
 这时nginx可以采用如下配置方式：
 ````
 ......
