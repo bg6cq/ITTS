@@ -95,6 +95,7 @@ http {
         proxy_set_header   Host             $host;
         proxy_set_header   X-Real-IP        $remote_addr;
 
+	# 默认站点，使用IP或非授权域名访问时出现错误提示
         server {
                 listen 80 default_server;
                 server_name _;
@@ -127,6 +128,27 @@ http {
         }
 
 }
+````
+
+## 四、后台站点配置
+
+使用以上配置时，nginx 访问后台站点时，自动设置了Host: 头为server_name，因此后台站点需要处理对应的server_name域请求。
+
+还有一种使用方式，假定 www.ustc.edu.cn 是nginx对外提供服务的域名，而后台站点使用 p-www.ustc.edu.cn（p-前缀代表是后台站点）。
+这时nginx可以采用如下配置方式：
+````
+......
+        proxy_set_header   Host             $proxy_host;
+......
+        # 普通的站点
+        server {
+                listen 80;
+                server_name www.ustc.edu.cn;
+                access_log /var/log/nginx/host.www.ustc.edu.cn.access.log;
+                location / {
+                        proxy_pass http://p-www.ustc.edu.cn;
+                }
+        }
 ````
 
 ***

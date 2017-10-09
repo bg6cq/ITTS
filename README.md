@@ -36,7 +36,7 @@
     1. tomcat
 7. 应用系统
     1. apache
-    2. [nginx](app/nginx/README.md)
+    2. [nginx反向代理服务器](app/nginx/README.md)
     3. iis
     4. ftp
     5. dns
