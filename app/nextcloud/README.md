@@ -102,10 +102,10 @@
 
 打开`NC`的`config.php`中，增加：
 ```
-  "customclient_desktop" => "https://yun.nau.edu.cn/s/uY0mAhtcGPelMNx",
-  "customclient_android" => "https://yun.nau.edu.cn/s/J01ipMIqNyPrgQd",
+  "customclient_desktop" => "https://nc.abc.edu.cn/s/uY0mAhtcGPelMNx",
+  "customclient_android" => "https://nc.abc.edu.cn/s/J01ipMIqNyPrgQd",
   "customclient_ios"     => "https://itunes.apple.com/us/app/nextcloud/id1125420102?mt=8",
-  "customclient_mac"     => "https://yun.nau.edu.cn/s/5z52GmGFDAtasJa"
+  "customclient_mac"     => "https://nc.abc.edu.cn/s/5z52GmGFDAtasJa"
 ```
 
 ## 六、使用技巧
