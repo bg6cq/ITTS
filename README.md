@@ -42,6 +42,7 @@
     5. dns
     6. ntp
     7. dhcp
+    8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
     1. [系统上线前安全评测技术要求](security/checklist/README.md)
     2. [使用Let's encrypt免费SSL证书](security/ssl/letsencrypt/README.md)
