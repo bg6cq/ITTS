@@ -154,7 +154,21 @@ http {
         }
 ````
 感谢 **西财 王伟** 老师指出的$host $proxy_host区别。
-
+补充：
+发现一个问题，如下配置
+````
+	location / {
+		proxy_pass http://p-www.ustc.edu.cn
+	}
+````	
+如果目标主机的主页是自动刷新跳转的，或者是登录页面验证后跳转的，那么浏览器会跳转到http://p-www.ustc.edu.cn
+原因还没有完全分析明白，目前的解决方案是上面的代码补充为：
+````
+	location / {
+		proxy_pass http://p-www.ustc.edu.cn;
+		proxy_redirect	http://p-www.ustc.edu.cn/ /;
+	}
+````
 
 ## 五、HTTPS站点的配置
 可以使用Nginx作为反向代理，在源站点无需任何修改的情况下，将普通站点转换为HTTPS站点。
