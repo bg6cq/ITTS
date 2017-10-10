@@ -45,6 +45,8 @@
 
 ## 三、安装
 - 到`NC`官网，选择`20G`的镜像并下载，地址：`https://www.techandme.se/nextcloud-vm/`，可以多测几次，我使用的是澳大利亚镜像。相对较快。
+- 或者直接下载nextcloud的ova，链接：
+https://cloud.techandme.se/s/whxC00V1I0l4CY8/download?path=%2F&files=Nextcloud_Community_VM_PRODUCTION.ova
 - 压缩包中为`VMDK`文件，请使用`VMWare vCenter Converter`转换。具体使用方法本文跳过。
 - 转换完成后，启动，默认账号为`ncadmin`，密码为`nextcloud`
 - 随后检测网络，注意网络需要`提前准备好`DHCP才行。配置过程里会让你设置静态IP。
