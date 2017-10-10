@@ -180,5 +180,22 @@ http {
 
 感兴趣的请看视频 [网瑞达 资源安全访问解决方案](http://v.wrdtech.com/vod-show?id=66)
 
+## 五、HTTPS站点的配置
+可以使用Nginx作为反向代理，在源站点无需任何修改的情况下，将普通站点转换为HTTPS站点。
+在server段需要增加
+````
+......
+        listen 443 ssl;
+	ssl_certificate /etc/letsencrypt/live/yousite/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/yousite/privkey.pem;
+	ssl_session_timeout 5m;
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+......
+````
+此时，通过Nginx访问该站点，浏览器会自动将HTTP协议切换为HTTPS协议。
+
+关于HTTPS证书的申请，请参考https://github.com/bg6cq/ITTS/tree/master/security/ssl/letsencrypt
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
