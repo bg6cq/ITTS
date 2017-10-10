@@ -93,3 +93,8 @@ git push origin xxx
 git pull bg6cq master
 git push origin xxx
 ```
+
+
+## 推荐阅读
+
+1. [Pro Git 第二版（中文版）](https://www.kancloud.cn/kancloud/progit/70158)
