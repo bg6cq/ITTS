@@ -133,7 +133,7 @@ http {
 }
 ````
 
-若出现出现错误: `setrlimit(RLIMIT_NOFILE, 10240) failed (1: Operation not permitted) `
+对于 CentoS7，启动nginx时 若出现出现错误: `setrlimit(RLIMIT_NOFILE, 10240) failed (1: Operation not permitted) `
 
 先查看目前系统的设定值
 `
