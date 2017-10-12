@@ -163,7 +163,7 @@ http {
 		proxy_pass http://p-www.ustc.edu.cn
 	}
 ````	
-如果目标主机的主页是自动刷新跳转的，或者是登录页面验证后跳转的，那么浏览器会跳转到http://p-www.ustc.edu.cn
+如果目标主机的主页是自动刷新跳转的，或者是登录页面验证后跳转的，那么浏览器会跳转到 http://p-www.ustc.edu.cn
 原因还没有完全分析明白，目前的解决方案是上面的代码补充为：
 ````
 	location / {
@@ -175,8 +175,8 @@ http {
 
 采用$proxy_host，会带来一些问题。
 
-proxy_host传递给后台站点的主机头是 p-www.ustc.edu.cn，这样的主机头一般情况是不希望用户之间看到，或者根本就是不存在的域名。
-如果一些网站有自动跳转（js跳转、meta refresh等等）语句，将跳转到 p-www.ustc.edu.cn。如果域名不存在，将返回404错误。
+proxy_host传递给后台站点的主机头是 p-www.ustc.edu.cn ， 这样的主机头一般情况是不希望用户之间看到，或者根本就是不存在的域名。
+如果一些网站有自动跳转（js跳转、meta refresh等等）语句，将跳转到 p-www.ustc.edu.cn 。 如果域名不存在，将返回404错误。
 
 所以一般情况仍建议使用$host。除非了解，不要使用$proxy_host。
 
