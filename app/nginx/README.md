@@ -188,7 +188,7 @@ proxy_host传递给后台站点的主机头是 `p-www.ustc.edu.cn` ， 这样的
 
 * DNS解析全部执行Nginx服务器
 
-* Nginx中写hosts文件，将这些域名的ip执行后台服务器
+* Nginx中写hosts文件，将这些域名指向后台服务器的ip
 
 * Nginx中使用$host参数，然后每个网站的配置方式：
 ````
