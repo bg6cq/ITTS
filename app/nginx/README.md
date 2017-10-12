@@ -154,7 +154,9 @@ http {
         }
 ````
 感谢 **西财 王伟** 老师指出的$host $proxy_host区别。
+
 补充：
+
 发现一个问题，如下配置
 ````
 	location / {
@@ -169,6 +171,52 @@ http {
 		proxy_redirect	http://p-www.ustc.edu.cn/ /;
 	}
 ````
+**需要注意**
+
+采用$proxy_host，会带来一些问题。
+
+proxy_host传递给后台站点的主机头是 p-www.ustc.edu.cn，这样的主机头一般情况是不希望用户之间看到，或者根本就是不存在的域名。
+如果一些网站有自动跳转（js跳转、meta refresh等等）语句，将跳转到 p-www.ustc.edu.cn。如果域名不存在，将返回404错误。
+
+所以一般情况仍建议使用$host。除非了解，不要使用$proxy_host。
+
+**一个现实的例子**
+
+一台服务器上运行了30个网站，分别绑定了不同的域名，现在要做反向代理，需要如何实现？
+
+其实过程很简单：
+
+* DNS解析全部执行Nginx服务器
+
+* Nginx中写hosts文件，将这些域名的ip执行后台服务器
+
+* Nginx中使用$host参数，然后每个网站的配置方式：
+````
+······
+   proxy_pass http://www.ustc.edu.cn;#真实指向Nginx的那个域名
+······
+````
+* **后台站点什么操作都不用做**
+
+**再次注意**
+
+* $proxy_host和$host的区别
+
+* proxy_pass地址的不同
+
+````
+······
+   proxy_pass http://www.ustc.edu.cn;
+······
+````
+和
+
+````
+······
+   proxy_pass http://www.ustc.edu.cn/;
+······
+````
+的区别。
 
 ## 五、HTTPS站点的配置
 可以使用Nginx作为反向代理，在源站点无需任何修改的情况下，将普通站点转换为HTTPS站点。
