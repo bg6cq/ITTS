@@ -59,3 +59,14 @@ RRDs::graph "$img/requests-$ServerName-$period.png",
 #### 4. 效果图
 
 ![image](https://raw.githubusercontent.com/webwei73/ITTS/d5476136062ca40d6e45af683470e61f2277f2f8/nginx-rrdtool.png)
+
+#### 5.数据抓取
+
+一些基本参数是由`nginx-rrd.conf`文件完成，可以监控多个nginx主机，用空格分隔。
+
+```
+# server_url;server_name
+SERVERS_URL="http://127.0.0.1/status;127.0.0.1 http://localhost/status;localhost"
+```
+对于每个目标，用`;`分隔，`server_url`是nginx-rrd可以访问的url地址，`server_name`是生成图像的标题，可以随便命名。
+
