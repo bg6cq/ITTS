@@ -4,6 +4,7 @@
 
 参与修改：  
 **审计大学 吴鑫**
+**西安财经学院 王伟**
 
 修改时间：2017.10.09
 
@@ -187,7 +188,36 @@ vi /etc/security/limits.conf
 
 关于HTTPS证书的申请，请参考https://github.com/bg6cq/ITTS/tree/master/security/ssl/letsencrypt
 
-## 六、专业支持的系统
+## 六、Nginx充当反向代理时设置自定义403页面
+
+````
+server {
+     listen 80;
+     server_name  site;
+
+     proxy_intercept_errors on;
+     error_page 403   /403.html;
+
+     location = /403.html {
+        root	/data/html;
+     }
+ 
+     location / {
+        allow 10.0.0.0/8;
+        allow 172.16.0.0/12;
+        deny all;
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://site;
+        recursive_error_pages   on;
+     }
+}
+````
+
+## 七、专业支持的系统
+
 
 如果觉得以上操作太麻烦，强烈建议购买专业支持的系统，运行起来省事省心，界面高大上，如网瑞达的产品除了提供反向代理外，还提供了VPN等更多功能：
 
