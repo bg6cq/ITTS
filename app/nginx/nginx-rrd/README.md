@@ -5,7 +5,7 @@
 创建时间：2017.10.13
 
 nginx-rrd工具为nginx提供了一个简单的监控图，但是默认生成的监控图实在不好看。
-![image](https://raw.githubusercontent.com/webwei73/ITTS/7778617a2120cb3578be66256f53e65d240f40dc/app/nginx/nginx-rrdtool-old.png)
+![image](https://raw.githubusercontent.com/webwei73/ITTS/master/app/nginx/upload/nginx-rrd-old.png)
 
 这里不提如何下载及安装，教程及源码网上很多，对于`rrdtool`图像参数的例子非常少。这里主要讲几个绘图可以使用参数。
 
@@ -59,7 +59,7 @@ RRDs::graph "$img/requests-$ServerName-$period.png",
 
 #### 4. 效果图
 
-![image](https://raw.githubusercontent.com/webwei73/ITTS/d5476136062ca40d6e45af683470e61f2277f2f8/nginx-rrdtool.png)
+![image](https://raw.githubusercontent.com/webwei73/ITTS/master/app/nginx/upload/nginx-rrd.png)
 
 #### 5.数据抓取
 
