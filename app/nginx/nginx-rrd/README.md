@@ -5,7 +5,7 @@
 创建时间：2017.10.13
 
 nginx-rrd工具为nginx提供了一个简单的监控图，但是默认生成的监控图实在不好看。
-![image](https://raw.githubusercontent.com/webwei73/ITTS/master/app/nginx/upload/nginx-rrd-old.png)
+![image](upload/nginx-rrd-old.png)
 
 这里不提如何下载及安装，教程及源码网上很多，对于`rrdtool`图像参数的例子非常少。这里主要讲几个绘图可以使用参数。
 
@@ -24,6 +24,7 @@ RRDs::graph "$img/requests-$ServerName-$period.png",
 "-n","TITLE:10:'/usr/share/fonts/zh_CN/SIMHEI.TTF'",
 ```
 `SIMHEI.TTF`从Windows系统拷贝就可以。
+
 #### 2. 修改样式
 
 原始的参数：
@@ -59,7 +60,7 @@ RRDs::graph "$img/requests-$ServerName-$period.png",
 
 #### 4. 效果图
 
-![image](https://raw.githubusercontent.com/webwei73/ITTS/master/app/nginx/upload/nginx-rrd.png)
+![image](upload/nginx-rrd.png)
 
 #### 5.数据抓取
 
@@ -71,3 +72,5 @@ SERVERS_URL="http://127.0.0.1/status;127.0.0.1 http://localhost/status;localhost
 ```
 对于每个目标，用`;`分隔，`server_url`是nginx-rrd可以访问的url地址，`server_name`是生成图像的标题，可以随便命名。
 
+***
+欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
