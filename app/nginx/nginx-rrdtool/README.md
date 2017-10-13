@@ -54,7 +54,7 @@ RRDs::graph "$img/requests-$ServerName-$period.png",
 ```
 "--slope-mode",
 ```
-默认`rrdtool`绘图是画水平线，这个参数可以话比较流畅的线性。
+默认`rrdtool`绘图是画水平线，这个参数可以画比较流畅的线性。
 
 #### 4. 效果图
 
