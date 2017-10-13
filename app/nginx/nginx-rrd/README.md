@@ -1,4 +1,4 @@
-## nginx-rrdtool绘图参数
+## nginx-rrd绘图参数
 
 **西安财经学院 王伟**
 
