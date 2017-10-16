@@ -34,7 +34,7 @@ fi
 
 date >> run.log
 
-#统计当日用户的发信来源IP个数，格式是 数量  用户
+#统计当日用户的发信来源IP个数，格式是 数量  邮件地址
 grep -h cmd:DATA /home/coremail/logs/mtatrans/mta`date +%Y_%m_%d`/* | grep Local:1 | grep ",Result:Deliver," \
  | sed -e "s/.*,ClientIp://" -e "s/,FreeIP.*Sender:/ /" -e "s/,SenderEmail.*//"  | sort | uniq  \
  | cut -f2 -d' ' | sort | uniq -c | sort -n -r |awk  '$1>30 {print $2}' | sort > send30.txt
@@ -44,7 +44,7 @@ cnt=`cat send30.txt | wc -l`
 if [ $cnt -gt 20 ]
 then
   echo "From: <autotun@xxx.edu.cn>" > $MFILE
-  echo "Subject: $cnt mailaccounts blocked due to mail send, need you check" >> $MFILE
+  echo "Subject: $cnt mailaccounts will be blocked due to mail send, need you check" >> $MFILE
   echo >> $MFILE
   echo "Dear admin user:" >> $MFILE
   echo >> $MFILE
@@ -60,7 +60,7 @@ fi
 
 #对每个新的异常帐号修改密码
 
-#blocked.txt 存放的是已经修改过密码的用户，就不再修改了
+#blocked.txt 存放的是已经修改过密码的用户，修改一次后就不再修改了
 sort blocked.txt > sortblocked.txt
 
 for u in `comm -13 sortblocked.txt send30.txt`; do
