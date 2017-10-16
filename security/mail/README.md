@@ -8,11 +8,11 @@
 
 有人专门通过尝试或撞库的方式获取邮件系统密码，并利用这些账号发送垃圾邮件。
 
-本脚本定时运行，统计当日每个用户发信的IP来源个数，如果超过30，这种一般是发送垃圾邮件的行为，直接修改用户的密码。
+本脚本定时运行，统计coremail系统当日每个用户发信的IP来源个数，如果超过30，这种一般是发送垃圾邮件的行为，直接修改用户的密码。
 
 ## 二、相关代码
 
-假定程序放在`/home/coremail/auto_stop_spam_send`目录下
+假定程序放在`/home/coremail/auto_stop_spam_send`目录下，脚本名字是`auto_stop_spam_send.sh`
 
 ```
 #!/bin/bash
@@ -84,7 +84,7 @@ done
 
 在 `crontab -e`中增加以下内容，每10分钟运行一次即可
 ````
-*/10 * * * * /home/coremail/auto_stop_spam_send/auto_stop_100_spam_user.sh
+*/10 * * * * /home/coremail/auto_stop_spam_send/auto_stop_spam_send.sh
 ````
 
 ***
