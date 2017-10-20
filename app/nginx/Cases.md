@@ -1,8 +1,8 @@
-## Nginx 400错误案例
+#### Nginx 40x错误案例
 
 **西安财经学院 王伟**
 
-修改时间：2017.10.17
+修改时间：2017.10.20
 
 **前言**
 
@@ -61,7 +61,71 @@
 
 这样的死循环造成400错误。
 
-**3. 注意事项**
+**3. 一个404错误案例**
+
+直接看配置：
+
+````
+......
+	#第一段配置
+	location  /tzcs/ 	{
+		proxy_pass http://tzcs.xaufe.edu.cn/;
+	}
+	#第二段配置
+	location / {
+		proxy_pass http://tiyubu.xaufe.edu.cn;	
+	}
+......
+````
+
+这是发布在不同服务器上的网站，还是利用“欺骗”规则，只是多了一段配置，目的是访问`http://tiyubu.xaufe.edu.cn/tzcs/`时，可以显示`http://tzcs.xaufe.edu.cn`的内容。
+
+配置看着是没什么问题的，第二段的跳转也正常。但第一段的跳转却会出现404错误。
+
+问题还是出在$host参数上！因为“欺骗”规则需要nginx服务器和目标主机合作才能完成。
+
+先考虑第二段配置（使用$host参数）：
+
+* 用户请求`tiyubu.xaufe.edu.cn`，从DNS解析认为`tiyubu.xaufe.edu.cn`是nginx服务器
+* nginx服务器认为`tiyubu.xaufe.edu.cn`是目标主机
+* 目标主机认为`tiyubu.xaufe.edu.cn`是自己
+* 整个过程$host都是`tiyubu.xaufe.edu.cn`
+
+所以，用户请求`tiyubu.xaufe.edu.cn`会指向nginx服务器，nginx服务器根据规则跳转到目标主机，目标主机应答请求。
+
+再看看第一段配置（同样是使用$host参数）：
+
+* 用户请求`tiyubu.xaufe.edu.cn/tzcs/`，从DNS解析认为`tiyubu.xaufe.edu.cn`是nginx服务器
+* nginx服务器认为`tiyubu.xaufe.edu.cn/tzcs/`是目标主机（根据配置，目标主机变成了`tzcs.xaufe.edu.cn`）
+* 整个过程$host都是`tiyubu.xaufe.edu.cn`
+* 目标主机认为`tzcs.xaufe.edu.cn`是自己，所以不会应答主机头`tiyubu.xaufe.edu.cn`，返回404错误
+* 这种404错误，目前测试只会在IIS上出现，非IIS发布的网站仍然可以正常显示（应该和主机头判断的机制有关）
+
+要修改这种错误，需要将：
+````
+proxy_set_header   Host   $host;
+````
+
+改为
+
+````
+proxy_set_header   Host   $proxy_host;
+
+````
+即可解决。
+
+**注意**
+
+这种解决方案并不通用，如果目标主机存在自动刷新，便会跳转至`$proxy_host`，即`tzcs.xaufe.edu.cn`。
+
+**4.关于`/`符号**
+
+注意到上面的例子`/tzcs/`和`http://tzcs.xaufe.edu.cn/`后面都有`/`，两者的含义如下：
+
+* `/tzcs/`后面带`/`，输入`http://tiyubu.xaufe.edu.cn/tzcs`时会自动补齐后面的`/`
+* `http://tzcs.xaufe.edu.cn/`后面带`/`，会传递`/tzcs/`；否则，`http://tiyubu.xaufe.edu.cn/tzcs/TiYuChengJi/123.html`会变成`http://tiyubu.xaufe.edu.cn/TiYuChengJi/123.html`
+
+**5. 总结**
 
 * “欺骗”规则需要DNS和Nginx两者共同完成，任何一方都不能出问题。
 
@@ -73,12 +137,12 @@ service  NetworkManager stop
 ```
 或者
 
-
+ 
 ```
 /bin/systemctl stop NetworkManager.service
 ```
 
-* 这种方式并不是通用解决办法，如果没有特殊情况，还是强烈建议使用：
+* 这种“欺骗”规则并不是通用解决办法，容易出现各种意想不到的问题。如果没有特殊情况，还是**强烈建议**使用：
 
 ````
    proxy_pass http://ip:port;#
