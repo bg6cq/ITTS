@@ -278,6 +278,68 @@ server {
 }
 ````
 
+中科大的反向代理上，有若干服务器仅仅允许校内IP访问，做法是：
+
+文件/etc/nginx/ustc.conf
+````
+allow 114.214.160.0/19;
+allow 114.214.192.0/18;
+allow 202.38.64.0/19;
+allow 210.45.64.0/20;
+allow 210.45.112.0/20;
+allow 211.86.144.0/20;
+allow 222.195.64.0/19;
+
+allow 218.22.21.0/29;
+allow 202.141.160.0/19;
+allow 202.104.71.160/28;
+
+allow 210.72.22.0/24;
+
+deny all;
+````
+
+文件 /etc/nginx/html/403.html
+````
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>403 Access denied</title>
+<style>
+div{font-size:12px;}
+a{color:#1463da;text-decoration:none}
+a:hover{color:#1463da;text-decoration:underline;}
+</style>
+</head>
+<body bgcolor="white">
+<center><h1>禁止被访问/Access denied!</h1></center>
+<p>
+<center><h1>您访问的域名只能从中国科大校内访问</h1></center><p>
+<center>We are sorry you are denied to access this URL</center><p>
+<center>请单击<a href=http://revproxy.ustc.edu.cn:8000/yourip.php>这里</a>获取您的IP信息</center><p>
+<center>如果您在中国科大校内上网，出现本页提示，请检查浏览器是否使用了代理服务器</center><p>
+<center>如有问题请联系<a href=http://ustcnet.ustc.edu.cn>中国科学技术大学网络信息中心</a></center>
+</body>
+</html>
+````
+
+文件nginx.conf
+````
+	server {
+		listen 80;
+		server_name image.ustc.edu.cn;
+		access_log /var/log/nginx/host.image.ustc.edu.cn.access.log;
+		error_page 403   /403.html;
+ 		location = /403.html {
+ 			root	/etc/nginx/html;
+		}
+		location / {
+			include /etc/nginx/ustc.conf;
+			proxy_pass http://202.38.64.115/;
+		}
+	}
+````
+
 ## 七、专业支持的系统
 
 
