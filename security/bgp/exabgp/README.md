@@ -9,12 +9,12 @@
 BGP是路由协议，通过BGP协议可以方便的控制路由器上的路由表，运维中最常用是用于引流或黑洞路由。
 
 把某个IP的next-hop设置为特定的IP，称为引流。用于黑洞路由时，
-通常是把IP的next-hop设置为192.0.2.1，并通过ip route 192.0.2.1/32 null0 丢包。
+通常是把IP的next-hop设置为192.0.2.1，并通过`ip route 192.0.2.1/32 null0` 丢包。
 
 ## 二、ExaBGP简介
 
 [ExaBGP](https://github.com/Exa-Networks/exabgp) 是一个python开发的BGP客户端，被称为BGP的瑞士军刀，
-可以与路由器建立BGP连接，并发送和接收BGP更新消息。
+可以与路由器建立BGP连接，发送和接收BGP更新消息。
 
 其他程序可以方便的利用简单的文本协议与ExaBGP通信，发送和接收BGP更新消息。
 
@@ -36,7 +36,7 @@ healthcheck能运行说明程序安装正常。
 
 ## 四、ExaBGP配置文件
 
-假定本机IP是210.45.230.89，ASN65500；路由器是210.45.230.90，ASN 24362
+假定本机IP是210.45.230.89，ASN 65500；路由器是210.45.230.90，ASN 24362
 
 vi /etc/exabgp.conf
 
@@ -88,7 +88,7 @@ done
 在screen中按住CTRL键，连续按AD，可以将screen放到后台运行。
 如果需要重新连接回ExaBGP的screen，执行 `screen -r -d`即可。
 
-##七、增加删除路由
+## 七、增加删除路由
 
 向/var/run/exabgp.cmd 管道写文本就可以控制ExaBGP发送BGP消息，简单的例子如下：
 
