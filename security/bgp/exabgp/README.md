@@ -107,5 +107,10 @@ display bgp routing-table pee 210.45.230.89 received-routes
 ```
 可以看到发来的路由信息。
 
+## 八、使用ExaBGP发送路由处理DDoS攻击
+
+我们使用ExaBGP给上游路由器发送受DDoS攻击的IP，把DDoS流量引流到Linux服务器，Linux服务器清洗流量后注入网络。
+
+具体细节敬请期待。
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
