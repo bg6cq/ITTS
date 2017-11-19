@@ -68,25 +68,21 @@ ip route-static 192.0.2.1 32 null0
 
 ## 六、ExaBGP启动
 
-为了方便查看运行状态，可以使用screen启动ExaBGP。
+/var/run/exabgp.cmd是其他程序与ExaBGP通信的管道文件。
 
-/var/run/exabgp.cmd是其他程序与ExaBGP通信的管道文件，ExaBGP启动后会以nobody运行，因此要确保/var/run/exabgp.cmd nobody可写。
+如果是调试，可以使用以下命令启动
+````
+env exabgp.daemon.user=root /usr/src/exabgp/sbin/exabgp /etc/exabgp.conf
+````
+启动后，程序的输出在屏幕上，从路由器上看到BGP连接建立说明正常。
+
+调试完毕，可以使用如下命令启动：
 
 ````
-screen
-
-mkfifo /var/run/exabgp.cmd
-chmod a+rwx /var/run/exabgp.cmd
-
-while true; do
-        /usr/src/exabgp/sbin/exabgp /etc/exabgp.conf
-        sleep 10;
-done
+env exabgp.daemon.user=root exabgp.daemon.daemonize=true exabgp.daemon.pid=/var/run/exabgp.pid \
+        exabgp.log.destination=/var/log/exabgp.log /usr/src/exabgp/sbin/exabgp /etc/exabgp.conf
 ````
-启动后可以看到屏幕输出，从路由器上看到BGP连接建立说明正常。
-
-在screen中按住CTRL键，连续按AD，可以将screen放到后台运行。
-如果需要重新连接回ExaBGP的screen，执行 `screen -r -d`即可。
+/var/log/exabgp.log记录有日志输出。
 
 ## 七、增加删除路由
 
