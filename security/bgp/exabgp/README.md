@@ -107,7 +107,7 @@ display bgp routing-table pee 210.45.230.89 received-routes
 
 请参考 https://github.com/bg6cq/blackip-exabgp
 
-使用mysql数据库存放信息，php程序与 ExaBGP 通信。
+使用mysql数据库存放信息，一个php程序不停的轮询数据库，如果有新的路由需要发送或旧的路由需要撤回，会与 ExaBGP 通信。
 
 ## 九、使用ExaBGP发送路由处理DDoS攻击
 
