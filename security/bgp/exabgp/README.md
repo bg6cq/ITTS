@@ -29,10 +29,15 @@ BGP是路由协议，通过BGP协议可以方便的控制路由器上的路由�
 ````
 cd /usr/src/
 git clone https://github.com/Exa-Networks/exabgp.git
+cd exabgp
 git checkout 3.4
 ./bin/healthcheck --help
 ````
-healthcheck能运行说明程序安装正常。
+healthcheck能运行说明程序安装正常。对于CentOS系统，可能需要安装以下软件包：
+````
+yum install python-argparse python-ipaddr
+
+````
 
 ## 四、ExaBGP配置文件
 
@@ -107,7 +112,7 @@ display bgp routing-table pee 210.45.230.89 received-routes
 
 请参考 https://github.com/bg6cq/blackip-exabgp
 
-使用mysql数据库存放信息，一个php程序不停的轮询数据库，如果有新的路由需要发送或旧的路由需要撤回，会与 ExaBGP 通信。
+使用mysql数据库存放信息，blackip-exabgp.php程序不停的轮询数据库，如果有新的路由需要发送或旧的路由需要撤回，会与 ExaBGP 通信。
 
 ## 九、使用ExaBGP发送路由处理DDoS攻击
 
