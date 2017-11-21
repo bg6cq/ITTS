@@ -140,7 +140,35 @@ iptables -I INPUT -j ACCEPT -p ah
         allocated: 629  hard: 0 soft: 0
         sadb_seq=0 pid=30211 refcnt=0
 ````
-
+使用setkey -DP 可以查看设置的安全策略配置
+````
+# setkey -DP
+202.141.176.3[any] 202.141.176.2[any] 255
+        fwd prio def ipsec
+        esp/transport//require
+        ah/transport//require
+        created: Nov 21 08:42:43 2017  lastused:
+        lifetime: 0(s) validtime: 0(s)
+        spid=90 seq=1 pid=28450
+        refcnt=1
+202.141.176.3[any] 202.141.176.2[any] 255
+        in prio def ipsec
+        esp/transport//require
+        ah/transport//require
+        created: Nov 21 08:42:43 2017  lastused:
+        lifetime: 0(s) validtime: 0(s)
+        spid=80 seq=2 pid=28450
+        refcnt=1
+202.141.176.2[any] 202.141.176.3[any] 255
+        out prio def ipsec
+        esp/transport//require
+        ah/transport//require
+        created: Nov 21 08:42:43 2017  lastused:
+        lifetime: 0(s) validtime: 0(s)
+        spid=73 seq=0 pid=28450
+        refcnt=1
+````
+		
 使用tcpdump抓包可以验证2台Linux主机间的通信是经过加密的。
 
 ## 六、参考资料
