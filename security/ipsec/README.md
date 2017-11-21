@@ -170,6 +170,20 @@ iptables -I INPUT -j ACCEPT -p ah
 ````
 		
 使用tcpdump抓包可以验证2台Linux主机间的通信是经过加密的。
+````
+#ping 202.141.176.3
+PING 202.141.176.3 (202.141.176.3) 56(84) bytes of data.
+64 bytes from 202.141.176.3: icmp_seq=1 ttl=64 time=0.553 ms
+64 bytes from 202.141.176.3: icmp_seq=2 ttl=64 time=0.290 ms
+
+# tcpdump  -i eth0 -nn -c 100 host 202.141.176.3 &
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+09:08:22.323311 IP 202.141.176.2 > 202.141.176.3: AH(spi=0x00003d54,seq=0x1): ESP(spi=0x00003d55,seq=0x1), length 88
+09:08:22.323767 IP 202.141.176.3 > 202.141.176.2: AH(spi=0x00005fb4,seq=0x586): ESP(spi=0x00005fb5,seq=0x586), length 88
+09:08:23.323527 IP 202.141.176.2 > 202.141.176.3: AH(spi=0x00003d54,seq=0x2): ESP(spi=0x00003d55,seq=0x2), length 88
+09:08:23.323765 IP 202.141.176.3 > 202.141.176.2: AH(spi=0x00005fb4,seq=0x587): ESP(spi=0x00005fb5,seq=0x587), length 88
+````
 
 ## 六、参考资料
 
