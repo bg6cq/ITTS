@@ -50,6 +50,7 @@
     4. [自动修改发垃圾邮件的账号密码(针对coremail环境)](security/mail/README.md)
     5. [ntpd/bind/IOS/JunOS等安全配置模板](http://www.team-cymru.org/templates.html)
     6. [使用ExaBGP发送BGP路由信息和清洗DDoS流量](security/bgp/exabgp/README.md)
+	7. [使用ipsec加密Linux主机间通信](security/ipsec/README.md)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
