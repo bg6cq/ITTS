@@ -1,4 +1,4 @@
-## [原创]使用ipsec协议加密Linux主机间通信
+## [原创]使用ipsec加密Linux主机间通信
 
 本文原创：**中国科学技术大学 张焕杰**
 
@@ -8,11 +8,11 @@
 
 ipsec是工作在IP层的安全协议，本文介绍使用ipsec协议加密Linux主机间的IP通信。
 
-本文仅仅介绍简单的静态密钥设置，并使用加密分组流的封装安全载荷协议（ESP协议）和认证头协议（AH协议）协议来保证数据的机密性、来源可靠性（认证）、无连接的完整性并提供抗重播服务
+本文仅仅介绍简单的静态密钥设置，并使用加密分组流的封装安全载荷协议（ESP协议）和认证头协议（AH协议）协议来保证数据的机密性、来源可靠性（认证）、无连接的完整性并提供抗重播服务。
 
 ## 二、使用的ipsec实现
 
-ipsec在Linux下有若干实现，本文介绍的是kernel 2.5.49引入的实现，并不是通常的FeeS/WAN。
+ipsec在Linux下有若干实现，本文介绍的是kernel 2.5.49引入的native实现，并不是通常的FeeS/WAN。
 
 在CentOS 6，需要安装epel中ipsec-tools包。
 ```
@@ -22,7 +22,7 @@ yum install ipsec-tools
 ## 三、静态密钥配置
 
 假定2台Linux主机，IP分别是202.141.176.2和202.141.176.3，需要使用ipsec安全通信，在
-202.141.176.2上的配置如下：
+202.141.176.2主机的配置如下：
 
 ipsec.sh
 ````
@@ -49,7 +49,7 @@ spdadd 202.141.176.3 202.141.176.2 any -P in ipsec
            ah/transport//require;
 ````
 
-202.141.176.3上的配置如下：
+202.141.176.3主机的配置如下：
 
 ipsec.sh
 ````
@@ -76,13 +76,13 @@ spdadd 202.141.176.2 202.141.176.3 any -P in ipsec
            ah/transport//require;
 ````
 
-从以上设置可以看到，两台机器的AH和ESP配置是完全相同的，安全策略处 in/out是相反的。
+从以上设置可以看到，两台主机的AH和ESP配置是完全相同的，安全策略处 in/out是相反的。
 
-在2台Linux服务器上，分别执行以上命令即可完成设置。
+在2台Linux主机上，分别执行以上命令即可完成设置。
 
 ## 四、iptables有关注意事项
 
-使用ipsec加密数据包时，每个数据包会有2次经过iptables过滤规则。如果同时使用了AH/ESP，第一次经过iptables过滤时看到的协议是最外层的AH。
+使用ipsec加密数据包时，每个数据包会两次通过iptables过滤规则。如果同时使用了AH/ESP，第一次经过iptables过滤时看到的协议是最外层的AH。
 
 如在202.141.176.3上，接收到来自202.141.176.2发送的`ping 202.141.176.3`产生的数据包，第一次经过iptables过滤时，看到的协议是最外层的AH；
 第二次经过iptables过滤时，数据包才是解密后的icmp数据包。因此设置以下规则允许AH数据包经过。
@@ -135,7 +135,6 @@ iptables -I INPUT -j ACCEPT -p ah
         current: 51096(bytes)   hard: 0(bytes)  soft: 0(bytes)
         allocated: 629  hard: 0 soft: 0
         sadb_seq=0 pid=30211 refcnt=0
-
 ````
 
 使用tcpdump抓包可以验证2台Linux主机间的通信是经过加密的。
