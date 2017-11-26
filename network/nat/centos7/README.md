@@ -168,5 +168,13 @@ conntrack -L
 ls -al /home/natlog
 ```
 
+## 七、注意事项
+
+/home/natlog 中每天产生一个NAT日志文件，请注意磁盘空间的占用。
+
+可以增加如下的crontab自动清理200天的文件：
+```
+0 5 * * * find /home/natlog -maxdepth 1 -mtime +200 -name "2*gz" -exec  rm -rf {} \;
+```
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
