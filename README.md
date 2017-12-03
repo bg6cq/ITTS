@@ -65,7 +65,8 @@
     6. [刑法修正案（九）](http://www.npc.gov.cn/npc/xinwen/2015-08/31/content_1945587.htm)
 11. 其他
     1. [每日更新的电信,联通,移动等ISP地址段](https://ispip.clang.cn)
-    2. [中国大陆根DNS服务器的奥秘](other/dns/README.md)
+    2. [中国运营商IP地址库(每日更新)](https://github.com/gaoyifan/china-operator-ip/tree/ip-lists)
+    3. [中国大陆根DNS服务器的奥秘](other/dns/README.md)
 
 欢迎 [加入我们整理资料](work.md)
 
