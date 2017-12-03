@@ -86,6 +86,8 @@ A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:ba3e::2:30
 ``` 
 这个文件DNS服务器软件会附带提供，一般很少修改，IANA也有提供，放在 [Root Hints File](https://www.iana.org/domains/root/files)。如果你维护有DNS服务器，建议从这里下载最新的。
 
+如果每次域名查询都这样处理，查询响应的速度会很慢。实际上DNS服务器会尽量使用缓存，减少不必要的查询，大大加快域名查询的响应速度。
+
 
 # 三、一共有多少个根DNS服务器呢
 
