@@ -109,6 +109,8 @@ A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:ba3e::2:30
 为了方便使用，需要在公布的那些IP地址提供服务，一般来说需要利用BGP/OSPF之类的把路由注入到网络中
 （注入是文雅的说法，其实就是劫持到根DNS服务器IP的路由），因此最好是ISP来做才比较方便。
 
+使用BGP注入路由并不复杂，远比想象的简单，可以参考 [使用ExaBGP发送BGP路由信息和清洗DDoS流量](../../security/bgp/exabgp/README.md)
+
 # 五、国内有ISP做根DNS服务器吗
 
 当然有了，比如中国教育和科研计算机网，从合肥测试的话，与a-m.root-servers.net的通信延迟，主要分3档：
