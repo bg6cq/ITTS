@@ -178,7 +178,7 @@ vi /etc/security/limits.conf
 	location / {
 		proxy_pass http://p-www.ustc.edu.cn
 	}
-````	
+````
 如果目标主机的主页是自动刷新跳转的，或者是登录页面验证后跳转的，那么浏览器会跳转到 `http://p-www.ustc.edu.cn`
 原因还没有完全分析明白，目前的解决方案是上面的代码补充为：
 ````
@@ -340,13 +340,161 @@ a:hover{color:#1463da;text-decoration:underline;}
 	}
 ````
 
-## 七、专业支持的系统
+## 七、统一反向代理配置
+
+当反向代理服务器同时服务众多网站时，管理配置将变得十分繁琐。为了方便维护，可以借助映射("map")统一反向代理配置。
+
+### 1. 一个基本的例子
+
+```
+map $http_host $upstream {
+	default			nil;
+	www.ustc.edu.cn		www-p.ustc.edu.cn;
+	bbs.ustc.edu.cn		10.38.95.2;
+	// more rules here ...
+}
+
+server {
+	listen 80;
+	listen 443 ssl http2;
+	server_name _;
+
+	if ($upstream = nil) {
+		return 404;
+	}
+
+	location / {
+		proxy_pass	http://$upstream$request_uri;
+		proxy_set_header Host $http_host;
+	}
+}
+```
+
+*注：上例中省略了http配置块。*
+
+映射("map")是一个惰性求值器，与数学中的[映射](https://baike.baidu.com/item/%E6%98%A0%E5%B0%84/20402621)极为相似。nginx在处理HTTP请求时，如果使用到了映射，则会触发一次求值。
+
+`$http_host`是nginx的一个内建变量，他的值总是等于用户请求头的主机名("Host")字段。`$request_uri`是另一个内建变量，值为请求的URI部分（包含参数）。
+
+在上例中，定义了一个映射`$upstream`，映射的变量是`$http_host`，值为`$upstream`（即：后端的地址），默认值为`nil`。 
+
+举例说明：对于请求`http://www.ustc.edu.cn/index.html`。
+
+* `$http_host`的值为`www.ustc.edu.cn`, 那么映射`$upstream`就会被赋予`www-p.ustc.edu.cn`。
+* `$request_uri`的值为`/index.html`。
+* `proxy_pass http://$upstream$request_uri;` 将这条指令中的变量用字面值代替，就变为了：`proxy_pass http://www-p.ustc.edu.cn/index.html`。
+* `proxy_set_header Host $http_host;` 这条指令的作用是：在访问后端时使用用户发来的Host（即`www.ustc.edu.cn`），而非`www-p.ustc.edu.cn`。
+
+如果用户请求了一个不在映射内的地址，如`http://unknown.ustc.edu.cn/`，则映射`$upstream`被赋予默认值`nil`，因此会被判断指令`if ($upstream = nil)`捕获，返回404错误。
+
+### 2. 更加丰富的功能
+
+同理，可以借助配置不同的映射来实现不同的功能，如：
+
+* 限制来源IP
+* 强制使用HTTPS（HTTP->HTTPS跳转）
+* 301站点跳转
+
+但受限于 nginx 的 if 指令的实现方式，部分功能无法在纯 nginx 配置中实现。为了解决这个问题， nginx 官方引入了 lua 扩展，可以使用 lua 语言扩展出许多灵活的特性。
+
+下面是一个更加丰富的例子：
+
+```
+map $http_host $upstream {
+	default			nil;
+	www.ustc.edu.cn		www-p.ustc.edu.cn;
+	bbs.ustc.edu.cn		10.38.95.2;
+	test.ustc.edu.cn	192.168.95.100/test;
+	// more rules here ...
+}
+
+map $http_host $ustcnet_only {
+	default				0;
+	internal.ustc.edu.cn		1;
+}
+
+map $http_host $https_only {
+	default				0;
+	mail.ustc.edu.cn		1;
+}
+
+map $http_host $upstream_scheme {
+	default				"http";
+	huodong.ustc.edu.cn		"https";
+}
+
+map $https_only $redirect_replacement {
+	default				"http";
+	1				"https";
+}
+
+map $http_host $redirect {
+	default 			nil;
+	overdue.ustc.edu.cn		new.ustc.edu.cn;
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name _;
+
+	if ($redirect != nil) {
+		return 301 $scheme://$redirect$request_uri;
+	}
+
+	if ($upstream = nil) {
+		return 404;
+	}
+
+	access_by_lua_block {
+		-- block non-ustcnet user
+		if ngx.var.ustcnet == "0" and
+		   ngx.var.ustcnet_only == "1"
+		then
+			ngx.exit(ngx.HTTP_FORBIDDEN)
+		end
+
+		-- redirect from HTTP to HTTPS
+		if ngx.var.scheme == "http" and
+		   ngx.var.https_only == "1"
+		then
+			return ngx.redirect("https://" .. ngx.var.http_host .. ngx.var.request_uri, ngx.HTTP_MOVED_PERMANENTLY)
+		end
+	}
+
+	location / {
+		proxy_pass	http://$upstream$request_uri;
+		proxy_set_header Host $http_host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+```
+
+对各个映射做一些说明：
+
+* upstream：反向代理的后端地址。默认值为`nil`。
+* ustcnet_only：仅限科大校内地址访问。默认允许所有IP。
+* https_only：仅限使用HTTPS协议访问，将HTTP请求跳转为HTTPS。默认不跳转。
+* upstream_scheme：访问后端服务器使用的协议。默认为http。
+* redirect_replacement：对后端30x跳转指令的协议修正。无需手动更改。
+* redirect：对整个域名做301跳转。
+
+`access_by_lua_block`指令需要 nginx 模块 [lua-nginx-module](https://github.com/openresty/lua-nginx-module) ，且版本大于v0.9.17。如果使用 Debian 系的发行版，`nginx-extras`这个软件包中已经包含了我们需要的一切模块，只需要执行`apt install nginx-extras`即可。
+
+作为另一种选择，可以使用 [openresty](https://openresty.org/) 这个 nginx 发行版，提供了几乎所有常见系统的 nginx 预编译软件包。
+
+上面的例子只是抛砖引玉，nginx + lua 能实现十分丰富的功能，可以与数据库通讯，可以生成响应体，也可以发起新的请求，且能承载极大量的并发访问。甚至有许多公司使用这种方式构建复杂的商业服务。
+
+## 八、专业支持的系统
 
 
 如果觉得以上操作太麻烦，强烈建议购买专业支持的系统，运行起来省事省心，界面高大上，如网瑞达的产品除了提供反向代理外，还提供了VPN等更多功能：
 
 感兴趣的请看视频 [网瑞达 资源安全访问解决方案](http://v.wrdtech.com/vod-show?id=66)
-
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
