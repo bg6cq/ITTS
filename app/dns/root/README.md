@@ -97,7 +97,7 @@ wget http://www.internic.net/domain/root.zone
 
 ## 2.5 允许53端口
 
-使用iptables对外开放udp/tcp 53端口
+使用iptables对外开放udp/tcp 53端口，注意IPv4/IPv6的都要允许。
 
 ## 2.6 启动named服务，测试
 
