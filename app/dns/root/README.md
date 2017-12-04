@@ -50,7 +50,7 @@ ip addr add 2001:dc3::35/128 dev lo
 
 ## 2.3 设置bind
 
-`vi /etc/named.conf`修改配置，仅仅修改了默认文件的 `listen-on listen-on-v6 allow-query recursion zone`等很少的地方
+`vi /etc/named.conf`修改配置，仅仅修改了默认文件的 `listen-on listen-on-v6 allow-query recursion zone`等很少的地方，增加了zone root-servers.net
 
 ```
 options {
@@ -84,9 +84,67 @@ zone "." IN {
         file "root.zone";
 };
 
+zone "ROOT-SERVERS.NET." IN {
+        type master;
+        file "root-servers.net.zone";
+};
+
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
 ```
+
+编辑 /var/named/root-servers.net.zone文件(之前我没有加这个域，会有问题，原因可以参见 [这里](https://yeti-dns.org/documents.html)的Root Server Glue and BIND9)，内容为：
+```
+$TTL 1D
+@       IN SOA  @ fake.root. (
+                                        1       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        IN      NS      a.root-servers.net.
+        IN      NS      b.root-servers.net.
+        IN      NS      c.root-servers.net.
+        IN      NS      d.root-servers.net.
+        IN      NS      e.root-servers.net.
+        IN      NS      f.root-servers.net.
+        IN      NS      g.root-servers.net.
+        IN      NS      h.root-servers.net.
+        IN      NS      i.root-servers.net.
+        IN      NS      j.root-servers.net.
+        IN      NS      k.root-servers.net.
+        IN      NS      l.root-servers.net.
+        IN      NS      m.root-servers.net.
+
+A.ROOT-SERVERS.NET.      A     198.41.0.4
+A.ROOT-SERVERS.NET.      AAAA  2001:503:ba3e::2:30
+B.ROOT-SERVERS.NET.      A     199.9.14.201
+B.ROOT-SERVERS.NET.      AAAA  2001:500:200::b
+C.ROOT-SERVERS.NET.      A     192.33.4.12
+C.ROOT-SERVERS.NET.      AAAA  2001:500:2::c
+D.ROOT-SERVERS.NET.      A     199.7.91.13
+D.ROOT-SERVERS.NET.      AAAA  2001:500:2d::d
+E.ROOT-SERVERS.NET.      A     192.203.230.10
+E.ROOT-SERVERS.NET.      AAAA  2001:500:a8::e
+F.ROOT-SERVERS.NET.      A     192.5.5.241
+F.ROOT-SERVERS.NET.      AAAA  2001:500:2f::f
+G.ROOT-SERVERS.NET.      A     192.112.36.4
+G.ROOT-SERVERS.NET.      AAAA  2001:500:12::d0d
+H.ROOT-SERVERS.NET.      A     198.97.190.53
+H.ROOT-SERVERS.NET.      AAAA  2001:500:1::53
+I.ROOT-SERVERS.NET.      A     192.36.148.17
+I.ROOT-SERVERS.NET.      AAAA  2001:7fe::53
+J.ROOT-SERVERS.NET.      A     192.58.128.30
+J.ROOT-SERVERS.NET.      AAAA  2001:503:c27::2:30
+K.ROOT-SERVERS.NET.      A     193.0.14.129
+K.ROOT-SERVERS.NET.      AAAA  2001:7fd::1
+L.ROOT-SERVERS.NET.      A     199.7.83.42
+L.ROOT-SERVERS.NET.      AAAA  2001:500:9f::42
+M.ROOT-SERVERS.NET.      A     202.12.27.33
+M.ROOT-SERVERS.NET.      AAAA  2001:dc3::35
+```
+注意这个文件需要对named可读。
+
 
 ## 2.4 下载 root.zone 文件
 
