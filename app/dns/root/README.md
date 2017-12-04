@@ -90,7 +90,7 @@ include "/etc/named.root.key";
 
 ```
 cd /var/named
-wget https://www.iana.org/domains/root/files
+wget http://www.internic.net/domain/root.zone
 ```
 
 ## 2.5 允许53端口
