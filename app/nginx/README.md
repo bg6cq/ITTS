@@ -402,10 +402,10 @@ server {
 
 ```
 map $http_host $upstream {
-	default			nil;
-	www.ustc.edu.cn		www-p.ustc.edu.cn;
-	bbs.ustc.edu.cn		10.38.95.2;
-	test.ustc.edu.cn	192.168.95.100/test;
+	default				nil;
+	internal.ustc.edu.cn		internal-p.ustc.edu.cn;
+	mail.ustc.edu.cn		10.38.95.2;
+	test.ustc.edu.cn		192.168.95.100/test;
 	// more rules here ...
 }
 
@@ -421,7 +421,7 @@ map $http_host $https_only {
 
 map $http_host $upstream_scheme {
 	default				"http";
-	huodong.ustc.edu.cn		"https";
+	test.ustc.edu.cn		"https";
 }
 
 map $https_only $redirect_replacement {
