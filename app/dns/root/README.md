@@ -221,8 +221,107 @@ dig @a.root-servers.net
 ```
 延迟应该为0ms
 
-# 五、后续更新
+# 五、优化措施
 
+根DNS服务器中，CERNET已经对除了h.root-servers.net之外的做了镜像（劫持），所以我们仅仅对
+以下14个IP地址进行劫持
+```
+ip addr add 198.97.190.53/32 dev lo
+ip addr add 2001:503:ba3e::2:30/128 dev lo
+ip addr add 2001:500:200::b/128 dev lo
+ip addr add 2001:500:2::c/128 dev lo
+ip addr add 2001:500:2d::d/128 dev lo
+ip addr add 2001:500:a8::e/128 dev lo
+ip addr add 2001:500:2f::f/128 dev lo
+ip addr add 2001:500:12::d0d/128 dev lo
+ip addr add 2001:500:1::53/128 dev lo
+ip addr add 2001:7fe::53/128 dev lo
+ip addr add 2001:503:c27::2:30/128 dev lo
+ip addr add 2001:7fd::1/128 dev lo
+ip addr add 2001:500:9f::42/128 dev lo
+ip addr add 2001:dc3::35/128 dev lo
+
+```
+为了能在named进程正常时发布路由，异常时自动撤回路由，增加了脚本
+`/var/named/healthcheck.sh`
+
+```
+#!/bin/bash
+
+status=0
+
+while true; do
+        dig +time=1 @127.0.0.1 a.root-servers.net > /dev/null 2>/dev/null
+        newstatus=$?
+        if [ $newstatus -eq 0 ];  then
+                newstatus=1
+        else
+                newstatus=0
+        fi
+
+#       echo status $status newstatus $newstatus
+
+        if [ $status -eq 0 ] ; then
+                if [ $newstatus -eq 1 ]; then   # service up
+                        status=1
+echo announce route 198.97.190.53/32 next-hop 202.38.64.12
+echo announce route 2001:503:ba3e::2:30/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:200::b/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:2::c/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:2d::d/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:a8::e/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:2f::f/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:12::d0d/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:1::53/128 next-hop 2001:da8:d800::12
+echo announce route 2001:7fe::53/128 next-hop 2001:da8:d800::12
+echo announce route 2001:503:c27::2:30/128 next-hop 2001:da8:d800::12
+echo announce route 2001:7fd::1/128 next-hop 2001:da8:d800::12
+echo announce route 2001:500:9f::42/128 next-hop 2001:da8:d800::12
+echo announce route 2001:dc3::35/128 next-hop 2001:da8:d800::12
+                fi
+        fi
+        if [ $status -eq 1 ] ; then
+                if [ $newstatus -eq 0 ]; then   # service down
+                        status=0
+echo withdraw route 198.97.190.53/32
+echo withdraw route 2001:503:ba3e::2:30/128
+echo withdraw route 2001:500:200::b/128
+echo withdraw route 2001:500:2::c/128
+echo withdraw route 2001:500:2d::d/128
+echo withdraw route 2001:500:a8::e/128
+echo withdraw route 2001:500:2f::f/128
+echo withdraw route 2001:500:12::d0d/128
+echo withdraw route 2001:500:1::53/128
+echo withdraw route 2001:7fe::53/128
+echo withdraw route 2001:503:c27::2:30/128
+echo withdraw route 2001:7fd::1/128
+echo withdraw route 2001:500:9f::42/128
+echo withdraw route 2001:dc3::35/128
+                fi
+        fi
+
+        sleep 1
+done
+```
+
+然后把 `/etc/exabgp.conf`修改为
+
+```
+neighbor 202.38.64.126 {
+        local-address 202.38.64.12;
+        peer-as 45081;
+        local-as 65500;
+        router-id 202.38.64.12;
+        process service-dns {
+                run /var/named/healthcheck.sh;
+        }
+}
+
+```
+
+# 六、后续更新
 定期下载root.zone文件，有更新时重启named服务即可。
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
