@@ -1,5 +1,7 @@
 ## 参与我们的工作
 
+如果您对git不熟悉，建议参考 [大家一起学git](https://github.com/bg6cq/learngit) 花2个小时把熟悉git基本概念和操作。
+
 如果您使用国内的gitee.com，请将下面的github替换为gitee即可。
 
 由于github的存在，参与我们的工作非常简单，只需要3步：
