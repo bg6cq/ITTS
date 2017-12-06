@@ -327,8 +327,8 @@ neighbor 202.38.64.126 {
 all:
         wget -O root.zone http://www.internic.net/domain/root.zone
         chgrp named *
-        service named configtest
-        service named restart
+        /sbin/service named configtest
+        /sbin/service named restart
         git commit -a -m `date +"%F_%T"`
 ```
 
