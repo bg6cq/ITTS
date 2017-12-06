@@ -322,6 +322,20 @@ neighbor 202.38.64.126 {
 # 六、后续更新
 定期下载root.zone文件，有更新时重启named服务即可。
 
+建立 `/var/named/Makefile`:
+```
+all:
+        wget -O root.zone http://www.internic.net/domain/root.zone
+        chgrp named *
+        service named configtest
+        service named restart
+        git commit -a -m `date +"%F_%T"`
+```
+
+增加如下crontabl
+```
+15 * * * * (cd /var/named; make )
+```
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
