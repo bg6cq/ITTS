@@ -334,7 +334,7 @@ all:
 
 增加如下crontabl
 ```
-15 * * * * (cd /var/named; make )
+15 * * * * cd /var/named && make
 ```
 
 ***
