@@ -11,6 +11,7 @@
 安装CentOS 7系统，选择最小安装即可。
 
 安装后执行以下命令更新和安装必备软件。
+
 ```
 yum -y update
 
@@ -26,6 +27,7 @@ tcpdump ntpdate conntrack-tools gd-devel net-tools bind-utils telnet
 `vi /etc/sysconfig/selinux`把其中的`SELINUX=enforcing`修改为`SELINUX=disabled`
 
 2. 禁止系统防火墙、启用httpd服务
+
 ```
 systemctl stop firewalld.service
 systemctl disable firewalld.service
@@ -98,6 +100,7 @@ screen -d -m /usr/src/natlog/run  &
 ````
 
 `vi /etc/rc.d/rc.firewall`
+
 ````
 #!/bin/sh
 
@@ -133,6 +136,7 @@ chmod u+x /etc/rc.d/rc.local /etc/rc.d/rc.firewall
 `natlog`使用conntrack把连接终止时的NAT信息保存成文本文件，放在/home/natlog目录下。
 
 安装:
+
 ```
 cd /usr/src/
 git clone https://github.com/bg6cq/natlog.git
@@ -146,6 +150,7 @@ mkdir /home/natlog
 traffic监视用于快速监视网卡的流量，每秒钟更新。
 
 安装：
+
 ```
 cd /usr/src/
 git clone https://github.com/bg6cq/traffic.git
@@ -159,6 +164,7 @@ cp traffic.html /var/www/html/index.html
 ## 六、调试和功能验证
 
 1. 重启CentOS 7服务器后，使用root登录，使用以下命令查看状态是否正常
+
 ```
 ip addr
 ip route
@@ -173,8 +179,10 @@ ls -al /home/natlog
 /home/natlog 中每天产生一个NAT日志文件，请注意磁盘空间的占用。
 
 可以增加如下的crontab自动清理200天的文件：
+
 ```
 0 5 * * * find /home/natlog -maxdepth 1 -mtime +200 -name "2*gz" -exec  rm -rf {} \;
 ```
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
