@@ -39,13 +39,13 @@ CA服务机构的存在是做为公认的第三方来验证服务器身份，这
 1. 安装过程
 ````
 mkdir /usr/src/getssl
-cd /usr/src/getsll
+cd /usr/src/getssl
 curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
 ````
 
 2. 生成基本配置
 ````
-cd /usr/src/getsll
+cd /usr/src/getssl
 ./getssl -c blackip.ustc.edu.cn
 ````
 3. 修改配置
