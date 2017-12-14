@@ -9,7 +9,7 @@
     2. 路由器
     3. 交换机
     4. AC控制器
-    5. VPN
+    5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md))
     6. 流量控制
 3. 服务器存储
     1. 服务器
