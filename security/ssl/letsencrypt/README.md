@@ -102,7 +102,7 @@ SSLCertificateChainFile /etc/ssl/chain.crt
 6. 证书自动更新
 
 Let's encrypt证书有效期为90天，需要在90天内更新，更新方式是执行命令
-````/usr/src/get/ssl -d blackip.ustc.edu.cn````
+````/usr/src/getssl -d blackip.ustc.edu.cn````
 即可，离失效期还有30天的证书会得到更新，并自动执行上面定义的RELOAD_CMD启动服务进程。可以使用crontab每天执行一次。
 
 7. 一台服务器有多个域名时的证书生成
