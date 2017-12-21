@@ -39,8 +39,8 @@
     2. nginx([nginx反向代理服务器](app/nginx/README.md), [nginx-rrd绘图参数](app/nginx/nginx-rrd/README.md), [Nginx 400错误案例](app/nginx/Cases.md))
     3. iis
     4. ftp
-    5. dns([自己建立根DNS服务器](app/dns/root/README.md))
-    6. [ntp](app/ntp)
+    5. dns([自己建立根DNS服务器](app/dns/root/README.md), [为何DNS服务器要禁用连接跟踪](app/dns/whynoconntrack/README.md))
+    6. ntp([建立ntp服务器](app/ntp)
     7. dhcp
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
