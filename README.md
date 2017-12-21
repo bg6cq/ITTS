@@ -67,7 +67,7 @@
     1. [每日更新的电信,联通,移动等ISP地址段](https://ispip.clang.cn)
     2. [中国运营商IP地址库(每日更新)](https://github.com/gaoyifan/china-operator-ip/tree/ip-lists)
     3. [中国大陆根DNS服务器的奥秘](other/dns/README.md)
-    4. [简单视频直播设施建设](other/live/README.md)
+    4. [可扩展视频直播设施建设](other/live/README.md)
 
 欢迎 [加入我们整理资料](work.md)
 
