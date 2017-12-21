@@ -40,7 +40,7 @@
     3. iis
     4. ftp
     5. dns([自己建立根DNS服务器](app/dns/root/README.md))
-    6. ntp
+    6. [ntp](app/ntp)
     7. dhcp
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
