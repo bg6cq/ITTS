@@ -25,7 +25,9 @@
  
 # 一、RTMP编码器
 
-购买自..
+RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/11190135281.html](https://item.jd.com/11190135281.html)。
+
+设置IP地址，改为RTMP模式，推送地址为  rtmp://x.x.x.x/live/ustc   （x.x.x.x是下面安装的RTMP服务器IP地址）
 
 # 二、RTMP服务器(nginx)的安装过程
 
@@ -118,11 +120,13 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 ```
 如果nginx服务器`/run/shm/hls`有文件生成，说明nginx配置基本正确。
 
-5. 播放页面
+5. 安全加强
+
+使用iptables保护服务器的端口，仅仅对外开放80端口，其他1935/22等端口对特定IP开放。
+
+# 三、播放页面
 
 请参考 http://live.ustc.edu.cn 
-
-
 
 
 ***
