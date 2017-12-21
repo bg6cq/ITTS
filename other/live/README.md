@@ -131,7 +131,7 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 
 # 四、系统扩展
 
-以上工作完成后，可以播放，但受限于以上单台nginx服务器的容量，负载能力有限。
+以上工作完成后，可以播放，但受限于单台nginx服务器的容量，负载能力有限。
 
 可以增加更多的nginx服务器做缓存和分发，支持更大规模的用户。
 
