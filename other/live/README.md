@@ -90,7 +90,7 @@ http {
     sendfile off;
     tcp_nopush on;
     #aio on;
-    directio 512;
+    #directio 512;
     default_type application/octet-stream;
     server {
         listen 80;
