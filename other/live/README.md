@@ -127,7 +127,9 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 
 # 三、播放页面
 
-请参考 http://live.ustc.edu.cn 
+假定rtmp推送的是 rtmp://x.x.x.x/live/ustc ，播放的url是 http://x.x.x.x/hls/ustc.m3u8。
+
+请参考 http://live.ustc.edu.cn ，这里有个简单的播放器，可以适配大部分支持html5 video的浏览器。
 
 # 四、系统扩展
 
@@ -138,7 +140,6 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 以下是做分发的nginx服务器关键配置：
 
 ```
-
 #缓存路径，使用 /dev/shm ramdisk，注意内存要大
 proxy_temp_path   /dev/shm/tmp 1;
 proxy_cache_path  /dev/shm/hls-cache   levels=1:1 keys_zone=hls-cache:100m inactive=2m max_size=3500m;
@@ -149,7 +150,7 @@ upstream live-server {
 }
 
 server {
-#    listen       0.0.0.0:90 ;
+#    listen       0.0.0.0:80 ;
     listen       [::]:80 ;
     server_name  live.ustc.edu.cn;   # 域名
 
