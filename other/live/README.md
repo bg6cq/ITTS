@@ -1,4 +1,4 @@
-## [原创] RTMP直播设施
+## [原创] 简单视频直播设施建设
 
 本文原创：**中国科学技术大学 张焕杰**
 
@@ -20,7 +20,7 @@
 
 3. 客户端
 
-使用浏览器访问nginx，获取.ts文件和.m3u8索引文件，播放给用户。
+使用浏览器使用HTTP协议访问nginx，获取.ts文件和.m3u8索引文件，播放视频。
 
  
 # 一、RTMP编码器
@@ -35,9 +35,9 @@ RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/1119013
 
 安装过程：
 
-1. 使用ISO文件 http://mirrors.ustc.edu.cn/ubuntu-cdimage/releases/14.04.5/release/ubuntu-14.04.5-server-amd64%2Bmac.iso 安装系统。
+1. 有人称14.0版本比较容易安装，我使用ISO文件 http://mirrors.ustc.edu.cn/ubuntu-cdimage/releases/14.04.5/release/ubuntu-14.04.5-server-amd64%2Bmac.iso 安装系统。
 
-2. 系统安装后执行命令
+2. 系统安装后执行命令编译安装带rtmp支持的nginx
 
 ```
 sudo bash
@@ -67,12 +67,12 @@ sudo apt-get install ffmpeg
 worker_processes  auto;
 
 events {
-    worker_connections  1024;
+    worker_connections  10240;
 }
 
 rtmp {
     server {
-        listen 1935; # Listen on standard RTMP port
+        listen 1935;
         chunk_size 4000;
         application live {
             live on;
