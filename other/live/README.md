@@ -79,6 +79,7 @@ rtmp {
             hls on;
             hls_path /run/shm/hls;
             hls_fragment 3;
+            hls_fragment_naming system;
             hls_playlist_length 60;
             deny play all;
         }
@@ -128,6 +129,54 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 
 请参考 http://live.ustc.edu.cn 
 
+# 四、系统扩展
+
+以上工作完成后，可以播放，但受限于以上单台nginx服务器的容量，负载能力有限。
+
+可以增加更多的nginx服务器做缓存和分发，支持更大规模的用户。
+
+以下是做分发的nginx服务器关键配置：
+
+```
+
+#缓存路径，使用 /dev/shm ramdisk，注意内存要大
+proxy_temp_path   /dev/shm/tmp 1;
+proxy_cache_path  /dev/shm/hls-cache   levels=1:1 keys_zone=hls-cache:100m inactive=2m max_size=3500m;
+proxy_cache_path  /dev/shm/m3u8-cache  levels=1   keys_zone=m3u8-cache:1m  inactive=5s max_size=10m;
+
+upstream live-server {
+   server x.x.x.x:80;   # 上面配置的rtmp nginx ip
+}
+
+server {
+#    listen       0.0.0.0:90 ;
+    listen       [::]:80 ;
+    server_name  live.ustc.edu.cn;   # 域名
+
+    location / {
+       proxy_pass http://live-server;
+    }
+
+    location ~ \.ts$ {
+       proxy_pass http://live-server;
+       proxy_cache hls-cache;
+       proxy_cache_key $host$uri;
+       proxy_cache_valid 200 304 2m;
+       proxy_set_header  Host $http_host;
+       expires 2m;
+   }
+
+   location ~ \.m3u8$ {
+       proxy_pass http://live-server;
+       proxy_cache m3u8-cache;
+       proxy_cache_key $host$uri;
+       proxy_cache_valid 200 304 1s;
+       proxy_set_header  Host $http_host;
+       expires -1;
+   }
+}
+
+```
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
