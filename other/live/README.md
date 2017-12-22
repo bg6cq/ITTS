@@ -56,6 +56,8 @@ cd nginx-1.10.3/
 make
 make install
 
+cp /usr/src/nginx-rtmp-module/stat.xsl /usr/local/nginx/html
+
 add-apt-repository ppa:mc3man/trusty-media
 sudo apt-get update
 sudo apt-get install ffmpeg
@@ -98,6 +100,14 @@ http {
         location / {
             root /usr/local/nginx/html;
         }
+ 	location /stat {
+            rtmp_stat all;   # NOTE: please copy file `stat.xsl` from `nginx-rtmp-module` to nginx's html folder
+            rtmp_stat_stylesheet stat.xsl;
+        }
+        location /stat.xsl {
+            root /usr/local/nginx/html;
+        }
+
         location /hls {
             types {
                 application/dash+xml mpd;
