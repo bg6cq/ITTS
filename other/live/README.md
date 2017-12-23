@@ -123,9 +123,9 @@ http {
 
 4. 增加发布用户名和密码检查
 
-如果发布者IP固定，建议使用限制发布者访问1935端口方式控制（删除上面nginx.conf中的`on_publish http://localhost:8000/on_publish.php`
+如果发布者IP固定，建议使用限制发布者访问1935端口方式控制（删除上面nginx.conf中的`on_publish http://localhost:8000/on_publish.php`)
 
-我使用本机8000端口的on_publish.php来检查user和pass，需要修改`/etc/apache2/ports.conf`把端口修改为8000。并增加
+我使用本机8000端口的on_publish.php来检查user和pass，需要修改`/etc/apache2/ports.conf`把端口改为8000以免与nginx使用的80冲突。并增加
 如下的`/var/www/html/on_publish.php`(注意参数是POST过来的，很多的例子GET是错误的)：
 ```
 <?php
@@ -167,13 +167,15 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 ```
 如果nginx服务器`/run/shm/hls`有文件生成，说明nginx配置基本正确。
 
+浏览器访问 http://x.x.x.x/stat 可以看到统计信息。
+
 6. 安全加强
 
 使用iptables保护服务器的端口，仅仅对外开放80端口，其他1935/22等端口对特定IP开放。
 
 # 三、播放页面
 
-假定rtmp推送的是 rtmp://x.x.x.x/live/ustc ，播放的url是 http://x.x.x.x/hls/ustc.m3u8。
+假定rtmp推送的是 rtmp://x.x.x.x/live/ustc?user=username&pass=password ，播放的url是 http://x.x.x.x/hls/ustc.m3u8。
 
 请参考 http://live.ustc.edu.cn ，这里有个简单的播放器，可以适配大部分支持html5 video的浏览器。
 
