@@ -25,7 +25,7 @@
  
 # 一、RTMP编码器
 
-RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/11190135281.html](https://item.jd.com/11190135281.html)。
+RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/11190135281.html](https://item.jd.com/11190135281.html)，使用时要注意：修改各种参数后需重启一下。
 
 设置IP地址，改为RTMP模式，推送地址为  rtmp://x.x.x.x/live/ustc   （x.x.x.x是下面安装的RTMP服务器IP地址）
 
