@@ -83,7 +83,7 @@ rtmp {
             hls_fragment 3;
             hls_fragment_naming system;
             hls_playlist_length 60;
-            deny play all;
+#            deny play all;
 	    on_publish http://localhost:8000/on_publish.php;
         }
     }
@@ -169,13 +169,15 @@ ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 
 
 浏览器访问 http://x.x.x.x/stat 可以看到统计信息。
 
+使用支持RTMP的播放器，如vlc，可以通过 rtmp://x.x.x.x/live/ustc 播放。
+
 6. 安全加强
 
 使用iptables保护服务器的端口，仅仅对外开放80端口，其他1935/22等端口对特定IP开放。
 
-# 三、播放页面
+# 三、WEB播放页面
 
-假定rtmp推送的是 rtmp://x.x.x.x/live/ustc?user=username&pass=password ，播放的url是 http://x.x.x.x/hls/ustc.m3u8。
+假定rtmp推送的是 rtmp://x.x.x.x/live/ustc?user=username&pass=password ，web hls播放的url是 http://x.x.x.x/hls/ustc.m3u8。
 
 请参考 http://live.ustc.edu.cn ，这里有个简单的播放器，可以适配大部分支持html5 video的浏览器。
 
