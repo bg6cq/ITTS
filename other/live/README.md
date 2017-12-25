@@ -25,7 +25,7 @@
  
 # 一、RTMP编码器
 
-RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/11190135281.html](https://item.jd.com/11190135281.html)。
+RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/11190135281.html](https://item.jd.com/11190135281.html)，使用时要注意：修改各种参数后需重启一下。
 
 设置IP地址，改为RTMP模式，推送地址为  rtmp://x.x.x.x/live/ustc   （x.x.x.x是下面安装的RTMP服务器IP地址）
 
@@ -43,7 +43,7 @@ RTMP编码器有很多，我用的购买自jd.com，[https://item.jd.com/1119013
 sudo bash
 apt-get update
 apt-get upgrade
-apt-get install build-essential libpcre3 libpcre3-dev libssl-dev git
+apt-get install build-essential libpcre3 libpcre3-dev libssl-dev php5 git
 
 cd /usr/src
 git clone https://github.com/arut/nginx-rtmp-module.git
@@ -83,7 +83,8 @@ rtmp {
             hls_fragment 3;
             hls_fragment_naming system;
             hls_playlist_length 60;
-            deny play all;
+#            deny play all;
+	    on_publish http://localhost:8000/on_publish.php;
         }
     }
 }
@@ -120,24 +121,63 @@ http {
 }
 ```
 
-4. 测试
+4. 增加发布用户名和密码检查
+
+如果发布者IP固定，建议使用限制发布者访问1935端口方式控制（删除上面nginx.conf中的`on_publish http://localhost:8000/on_publish.php`)
+
+我使用本机8000端口的on_publish.php来检查user和pass，需要修改`/etc/apache2/ports.conf`把端口改为8000以免与nginx使用的80冲突。并增加
+如下的`/var/www/html/on_publish.php`(注意参数是POST过来的，很多的例子GET是错误的)：
+```
+<?php
+
+$user = isset($_POST['user']) ? $_POST['user'] : '';
+$pass = isset($_POST['pass']) ? $_POST['pass'] : '';
+
+if (empty($user) || empty($pass)) {
+    echo "wrong query input";
+    header('HTTP/1.0 404 Not Found');
+    exit();
+}
+
+$saveuser = "myuser";
+$savepass = "mypass";
+
+if (strcmp($user, $saveuser) == 0 && strcmp($pass, $savepass) == 0) {
+    echo "Username and Password OK";
+} else {
+    echo "Username or Password wrong";
+    header('HTTP/1.0 404 Not Found');
+    exit();
+}
+
+?>
+```
+
+5. 测试
 
 执行`/usr/local/nginx/sbin/nginx -t`测试配置是否正确，如果正确，执行
 `/usr/local/nginx/sbin/nginx`启动nginx进程。
 
 下载一个 .mp4文件(我下载的是USTCStory.mp4)，使用如下命令行测试通过rtmp协议给nginx：
 ```
+如果有on_publish检查，使用
+ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 -acodec aac -strict -2 -f flv "rtmp://x.x.x.x/live/ustc?user=myuser&pass=mypass"
+否则使用
 ffmpeg -re -i USTCStory.mp4 -vcodec libx264 -s 640*480 -vprofile baseline -g 30 -acodec aac -strict -2 -f flv rtmp://x.x.x.x/live/ustc
 ```
 如果nginx服务器`/run/shm/hls`有文件生成，说明nginx配置基本正确。
 
-5. 安全加强
+浏览器访问 http://x.x.x.x/stat 可以看到统计信息。
+
+使用支持RTMP的播放器，如vlc，可以通过 rtmp://x.x.x.x/live/ustc 播放。
+
+6. 安全加强
 
 使用iptables保护服务器的端口，仅仅对外开放80端口，其他1935/22等端口对特定IP开放。
 
-# 三、播放页面
+# 三、WEB播放页面
 
-假定rtmp推送的是 rtmp://x.x.x.x/live/ustc ，播放的url是 http://x.x.x.x/hls/ustc.m3u8。
+假定rtmp推送的是 rtmp://x.x.x.x/live/ustc?user=username&pass=password ，web hls播放的url是 http://x.x.x.x/hls/ustc.m3u8。
 
 请参考 http://live.ustc.edu.cn ，这里有个简单的播放器，可以适配大部分支持html5 video的浏览器。
 
