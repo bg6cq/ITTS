@@ -65,7 +65,7 @@ DOMAIN_CERT_LOCATION="/etc/ssl/blackip.ustc.edu.cn.crt"
 DOMAIN_KEY_LOCATION="/etc/ssl/blackip.ustc.edu.cn.key"
 CA_CERT_LOCATION="/etc/ssl/chain.crt"
 
-#对于nginx, 需要full_chain.pem，可以使用
+#对于nginx, 需要full_chain.pem(其实这个文件就是blackip.ustc.edu.cn.crt + chain.crt)，可以使用
 #DOMAIN_CHAIN_LOCATION="/etc/ssl/blackip.ustc.edu.cn.full_chain.pem"
 
 RELOAD_CMD="/sbin/service httpd restart"
