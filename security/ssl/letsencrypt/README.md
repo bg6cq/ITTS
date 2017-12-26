@@ -65,6 +65,9 @@ DOMAIN_CERT_LOCATION="/etc/ssl/blackip.ustc.edu.cn.crt"
 DOMAIN_KEY_LOCATION="/etc/ssl/blackip.ustc.edu.cn.key"
 CA_CERT_LOCATION="/etc/ssl/chain.crt"
 
+#对于nginx, 需要full_chain.pem，可以使用
+#DOMAIN_CHAIN_LOCATION="/etc/ssl/blackip.ustc.edu.cn.full_chain.pem"
+
 RELOAD_CMD="/sbin/service httpd restart"
 ````
 
@@ -98,6 +101,18 @@ SSLCertificateChainFile /etc/ssl/chain.crt
 执行````service httpd restart````证书生效。 
 
 这时可以使用 https://www.ssllabs.com/ssltest/analyze.html?d=blackip.ustc.edu.cn 测试服务器证书是否工作正常。
+
+如果是nginx，配置是：
+```
+server {
+	listen 443 ssl;
+	server_name blackip.ustc.edu.cn;
+	ssl_certificate /etc/ssl/blackip.ustc.edu.cn.full_chain.pem
+	ssl_certificate_key /etc/ssl/blackip.ustc.edu.cn.key
+	location / {
+		root /usr/share/nginx/html;
+	}
+```
 
 6. 证书自动更新
 
