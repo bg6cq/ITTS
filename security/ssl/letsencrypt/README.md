@@ -107,8 +107,8 @@ SSLCertificateChainFile /etc/ssl/chain.crt
 server {
 	listen 443 ssl;
 	server_name blackip.ustc.edu.cn;
-	ssl_certificate /etc/ssl/blackip.ustc.edu.cn.full_chain.pem
-	ssl_certificate_key /etc/ssl/blackip.ustc.edu.cn.key
+	ssl_certificate /etc/ssl/blackip.ustc.edu.cn.full_chain.pem;
+	ssl_certificate_key /etc/ssl/blackip.ustc.edu.cn.key;
 	location / {
 		root /usr/share/nginx/html;
 	}
