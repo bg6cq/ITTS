@@ -41,7 +41,7 @@
     4. ftp
     5. dns([自己建立根DNS服务器](app/dns/root/README.md), [为何DNS服务器要禁用连接跟踪](app/dns/whynoconntrack/README.md))
     6. ntp([建立ntp服务器](app/ntp)
-    7. dhcp
+    7. dhcp([ Linux下ISC dhcpd分配状态显示](dhcp/dhcpd-pool/README.md))
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
     1. [系统上线前安全评测技术要求](security/checklist/README.md)
