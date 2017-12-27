@@ -51,6 +51,9 @@ crontab
 
 [http://202.38.64.17/dhcp.html](http://202.38.64.17/dhcp.html)
 
+8. 汉化版本
+
+[https://github.com/bg6cq/dhcpd-pools-cn](https://github.com/bg6cq/dhcpd-pools-cn) 有我汉化了html输出的版本，如果需要可以安装。
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
