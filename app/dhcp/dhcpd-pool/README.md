@@ -12,8 +12,10 @@ dhcpd-pool可以显示dhcpd的分配状态，的主页在 [http://dhcpd-pools.so
 
 1. 下载文件
 
+```
 cd /usr/src
 从 [https://sourceforge.net/projects/dhcpd-pools/files/](https://sourceforge.net/projects/dhcpd-pools/files/) 下载，我下载的是 dhcpd-pools-3.0.tar.xz 
+```
 
 2. 解压文件
 
@@ -25,21 +27,25 @@ cd /usr/src
 
 4. 编译
 
-`
+```
 cd dhcpd-pools
 ./configure --with-dhcpd-leases=/var/lib/dhcpd/dhcpd.leases
 make
-`
+```
 
 5. 测试运行
+```
 ./dhcpd-pool
+```
 
 注意：如果使用shared-network, 在dhcpd.conf中 `shared-network xxx {`，xxx与后面的{一定要有空格。
 
 6. 定时运行，输出html
 
 crontab
-`* * * * * /usr/src/dhcpd-pools-3.0/dhcpd-pools  -f H > /var/www/html/dhcp.html`
+```
+* * * * * /usr/src/dhcpd-pools-3.0/dhcpd-pools  -f H > /var/www/html/dhcp.html
+```
 
 7. 案例
 
