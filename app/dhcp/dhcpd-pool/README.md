@@ -43,7 +43,7 @@ crontab
 
 7. 案例
 
-[http://202.38.64.17/dns.html](http://202.38.64.17/dns.html)
+[http://202.38.64.17/dhcp.html](http://202.38.64.17/dhcp.html)
 
 
 ***
