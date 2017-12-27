@@ -6,7 +6,7 @@
 
 Linux下的ISC dhcpd是最常用的dhcp服务器，本文记录一个显示dhcpd分配状态的程序dhcpd-pool安装过程。
 
-dhcpd-pool可以显示dhcpd的分配状态，的主页在 [http://dhcpd-pools.sourceforge.net/](http://dhcpd-pools.sourceforge.net/)。
+dhcpd-pool可以显示dhcpd的分配状态，项目主页在 [http://dhcpd-pools.sourceforge.net/](http://dhcpd-pools.sourceforge.net/)。
 
 安装过程：
 
