@@ -607,7 +607,7 @@ VPN Server会向Client push路由，client通过pull指令获得Server push的�
 
 
 
-#高级篇：记录用户的访问情况，并发邮件给管理员#
+# 高级篇：记录用户的访问情况，并发邮件给管理员
 
 **导读：**
 
@@ -622,10 +622,10 @@ ldap对接成功后，OpenVPN就实现了通过用户名和密码认证，管理
 
 ## 1 记录OpenVPN用户访问日志 ##
 
+```
 ## 1.1 记录用户拨入脚本 ##
 
 建立/etc/openvpn/connect文件
-```
 
 vim etc/openvpn/connect
 
@@ -637,13 +637,11 @@ else
 touch /var/log/openvpn/log$day
 echo "`date '+%F %H:%M:%S'` User $common_name IP $trusted_ip is logged in" >>/var/log/openvpn/log$day
 fi
-```
 
 ## 1.2 记录用户退出脚本 ##
 
 建立/etc/openvpn/disconnect文件
 
-```
 [root@vpn-ldap ~]vim /etc/openvpn/disconnect
 
 #!/bin/bash
@@ -654,10 +652,8 @@ else
 touch /var/log/openvpn/log$day
 echo "`date '+%F %H:%M:%S'` User $common_name IP $trusted_ip is logged off" >>/var/log/openvpn/log$day
 fi
-```
 
 ## 1.3 要将这两个脚本赋予执行权限 ##
-```
 [root@vpn-ldap ~] chmod +x /etc/openvpn/connect
 [root@vpn-ldap ~] chmod +x /etc/openvpn/disconnect
 ```
