@@ -9,7 +9,8 @@
     2. 路由器
     3. 交换机
     4. AC控制器([H3C AC/AP隐藏调试命令](network/wireless/h3c/README.md))
-    5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md))
+    5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md), [
+OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并发送邮件）](network/vpn/openvpn_ldap/README.md))
     6. 流量控制
 3. 服务器存储
     1. 服务器
