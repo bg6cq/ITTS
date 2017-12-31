@@ -28,14 +28,14 @@ cd /usr/src
 4. 编译
 
 ```
-cd dhcpd-pools
+cd dhcpd-pools-3.0
 ./configure --with-dhcpd-leases=/var/lib/dhcpd/dhcpd.leases
 make
 ```
 
 5. 测试运行
 ```
-./dhcpd-pool
+./dhcpd-pools
 ```
 
 注意：如果使用shared-network, 在dhcpd.conf中 `shared-network xxx {`，xxx与后面的{一定要有空格。
