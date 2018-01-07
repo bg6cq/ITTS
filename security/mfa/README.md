@@ -27,11 +27,11 @@
 
 ![eky](ekey.jpg)
 
-也有APP可以提供TOTP认证功能，如Google Authenticator，这种TOTP可以以几乎0成本使用，非常方便，下图是Google Authenticator的截图:
+也有APP可以提供TOTP认证功能，如RedHat公司维护的[FreeOTP Authenticator](https://freeotp.github.io/)和Google Authenticator，这种TOTP可以以几乎0成本使用，非常方便，下图是Google Authenticator的截图:
 
 ![ga](ga.png)
 
-服务器侧认证用户的身份时工作原理如下：
+服务器侧认证用户身份的工作过程和原理如下：
 
 前提条件：
 * 服务器侧和用户的TOTP设备预先有个双方约定的同一个密钥K(每个人的均不同)和一个算法
@@ -45,24 +45,40 @@
 考虑到双方时间可能有偏差，用户输入也需要时间，因此服务器在验证时往往会计算当前时刻前后几分钟的6位数字，只要有
 一个相同即认为认证成功。
 
-## 四、Google Authenticator使用
+## 四、FreeOTP Authenticator/Google Authenticator使用
 
-1. 用户手机安装Google Authenticator
+1. 用户手机安装FreeOTP或Google Authenticator
+
+手机端下载一个即可：
+
+* FreeOTP Authenticator
+
+Android手机 可以从 [Google Play](https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp) 直接安装，也可以从[这里](https://f-droid.org/repo/org.fedorahosted.freeotp_17.apk)下载。
+
+Apple手机 可以从 [Appstore](https://itunes.apple.com/us/app/freeotp-authenticator/id872559395?mt=8)下载。
+
+* Google Authenticator
 
 Android手机 可以从 [Google Play](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2) 直接安装，也可以从[这里](http://lastpass.com/google-authenticator.apk)下载。
 
-2. 服务器侧安装相关的软件，并将密钥K交给Google Authenticator APP
+Apple手机 可以从 [Appstore](https://itunes.apple.com/gw/app/google-authenticator/id388497605?mt=8)下载。
+
+2. 服务器侧安装相关的软件，并将密钥K交给FreeOTP Authenticator或Google Authenticator APP
 
 由于协议是公开的，也有很多开源实现，因此很多服务器端都可以使用，如：
 * [Github上各种语言版本](https://github.com/search?utf8=%E2%9C%93&q=GoogleAuthenticator&type=)
 * Linux pam 模块，常用于ssh登录认证等
 
-服务器侧生成密钥K后，可以直接显示给用户以便输入Google Authenticator app，也可以通过 
-https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/infoATphpgangsta.de%3Fsecret%3DOQB6ZZGYHCPSX4AK 之类的URL生成一个两维码，由Google Authenticator扫码自己记录。
+服务器侧生成密钥K后，可以直接显示给用户以便输入FreeOTP或Google Authenticatorp，也可以产生二维码，
+由FreeOTP或Google Authenticator扫码自己记录。
 
 具体各种服务器的配置请自行google，一般来说都不复杂。
 
 对于Linux服务器的ssh增加两步认证，安装配置很快(注意SELinux的影响)，几分钟就可以。
+
+比如对于Ubuntu系统，参照参考资料中的链接很快就可以设置好。
+
+需要注意的是，Google Authenticator仅仅使用TOTP中的SHA1 HASH算法，而FreeOTP则支持更多的HASH算法。
 
 3. 安全要点
 
@@ -74,6 +90,7 @@ https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/info
 
 * [谷歌验证 (Google Authenticator) 的实现原理是什么？](https://www.zhihu.com/question/20462696)
 * [How To Set Up Multi-Factor Authentication for SSH on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-16-04)
+
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
