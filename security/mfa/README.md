@@ -13,23 +13,25 @@
 
 ## 二、2步认证（多因素）认证
 
-为了提高安全性，提出了2步认证（2-Step Verification，又称多因素认证，Multi-Factor Authentication）方式。
+为了提高安全性，提出了两步认证（2-Step Verification，又称多因素认证，Multi-Factor Authentication）方式。
 
 除了使用密码认证外，再增加一个认证因素，只有两步认证都通过，用户身份的认证过程才算完成。
 
-第二种认证因素起形态和传输渠道与密码差异很大，如银行常见的有通过短信发送认证码，定时变化的数字token(Time-based One-Time Password)等。
+第二种认证因素的形态和传输渠道与密码差异很大，如银行常见的有通过短信发送认证码，定时变化的数字token(Time-based One-Time Password)等。
 
 增加了一种认证因素，增加了攻击者的难度。
 
 ## 三、TOTP认证原理
 
 多因素认证中，使用最方便的就是TOTP，国内有些银行在用的TOTP是一个实体的key，如下图所示：
+
 ![eky](ekey.jpg)
 
 也有APP可以提供TOTP认证功能，如Google Authenticator，这种TOTP可以以几乎0成本使用，非常方便，下图是Google Authenticator的截图:
+
 ![ga](ga.png)
 
-假定服务器侧需要认证某个用户的身份，这种TOTP的工作原理是：
+服务器侧需要认证某个用户的身份时，TOTP的工作原理如下：
 
 前提条件：
 * 服务器侧和用户的TOTP设备预先有个双方约定的同一个密钥K(每个人的均不同)和一个算法
@@ -53,13 +55,19 @@ Android手机 可以从 [Google Play](https://play.google.com/store/apps/details
 
 由于协议是开源的，因此任何服务器端都可以使用，如：
 * [Github上各种语言版本](https://github.com/search?utf8=%E2%9C%93&q=GoogleAuthenticator&type=)
-* Linux pam 模块，可以用ssh登录验证等，安装配置很快，几分钟就可以
+* Linux pam 模块，可以用ssh登录验证等
 
 服务器侧生成密钥K后，可以直接显示给用户输入Google Authenticator app，也可以通过 
 https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/infoATphpgangsta.de%3Fsecret%3DOQB6ZZGYHCPSX4AK 之类的URL生成一个两维码，由Google Authenticator扫码自己记录。
 
-具体各种服务器的配置请自行google。
- 
+具体各种服务器的配置请自行google，对于Linux服务器的ssh增加两步认证，安装配置很快，几分钟就可以。。
+
+3. 安全要点
+
+双方共享的密钥K需安全保存，一旦泄漏，两步认证就无法起到认证的作用。
+
+以Linux服务器的ssh两步认证为例，用户目录下`.google_authenticator`文件存放有密钥K，如果这个密钥泄漏，两步认证就没有意义了。
+
 ## 五、参考资料
 
 * [谷歌验证 (Google Authenticator) 的实现原理是什么？](https://www.zhihu.com/question/20462696)
