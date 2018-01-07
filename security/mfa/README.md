@@ -31,7 +31,7 @@
 
 ![ga](ga.png)
 
-服务器侧需要认证某个用户的身份时，TOTP的工作原理如下：
+服务器侧认证用户的身份时工作原理如下：
 
 前提条件：
 * 服务器侧和用户的TOTP设备预先有个双方约定的同一个密钥K(每个人的均不同)和一个算法
@@ -60,7 +60,7 @@ Android手机 可以从 [Google Play](https://play.google.com/store/apps/details
 服务器侧生成密钥K后，可以直接显示给用户输入Google Authenticator app，也可以通过 
 https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/infoATphpgangsta.de%3Fsecret%3DOQB6ZZGYHCPSX4AK 之类的URL生成一个两维码，由Google Authenticator扫码自己记录。
 
-具体各种服务器的配置请自行google，对于Linux服务器的ssh增加两步认证，安装配置很快，几分钟就可以。。
+具体各种服务器的配置请自行google，对于Linux服务器的ssh增加两步认证，安装配置很快(注意SELinux的影响)，几分钟就可以。
 
 3. 安全要点
 
