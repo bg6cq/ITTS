@@ -35,7 +35,7 @@
 
 前提条件：
 * 服务器侧和用户的TOTP设备预先有个双方约定的同一个密钥K(每个人的均不同)和一个算法
-* 算法可以根据时间戳和密钥K计算出6位数字
+* 算法可以根据时间戳和密钥K计算出6位数字 (RFC6238 TOTP: Time-Based One-Time Password Algorithm)
 
 验证过程：
 * TOTP设备: 根据时间戳和密钥K计算出6位数字，显示给用户
@@ -78,7 +78,7 @@ Apple手机 可以从 [Appstore](https://itunes.apple.com/gw/app/google-authenti
 
 比如对于Ubuntu系统，参照参考资料中的链接很快就可以设置好。
 
-需要注意的是，Google Authenticator仅仅使用TOTP中的SHA1 HASH算法，而FreeOTP则支持更多的HASH算法。
+需要注意的是，Google Authenticator仅仅使用TOTP中的SHA1 HASH算法，而FreeOTP则支持更多的HASH算法，此外FreeOTP还支持HOTP（RFC4226 HMAC-based One-Time Password (HOTP) algorithm）。
 
 3. 安全要点
 
