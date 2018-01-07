@@ -53,14 +53,16 @@ Android手机 可以从 [Google Play](https://play.google.com/store/apps/details
 
 2. 服务器侧安装相关的软件，并将密钥K交给Google Authenticator APP
 
-由于协议是开源的，因此任何服务器端都可以使用，如：
+由于协议是公开的，也有很多开源实现，因此很多服务器端都可以使用，如：
 * [Github上各种语言版本](https://github.com/search?utf8=%E2%9C%93&q=GoogleAuthenticator&type=)
-* Linux pam 模块，可以用ssh登录验证等
+* Linux pam 模块，常用于ssh登录认证等
 
-服务器侧生成密钥K后，可以直接显示给用户输入Google Authenticator app，也可以通过 
+服务器侧生成密钥K后，可以直接显示给用户以便输入Google Authenticator app，也可以通过 
 https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/infoATphpgangsta.de%3Fsecret%3DOQB6ZZGYHCPSX4AK 之类的URL生成一个两维码，由Google Authenticator扫码自己记录。
 
-具体各种服务器的配置请自行google，对于Linux服务器的ssh增加两步认证，安装配置很快(注意SELinux的影响)，几分钟就可以。
+具体各种服务器的配置请自行google，一般来说都不复杂。
+
+对于Linux服务器的ssh增加两步认证，安装配置很快(注意SELinux的影响)，几分钟就可以。
 
 3. 安全要点
 
@@ -72,7 +74,6 @@ https://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/info
 
 * [谷歌验证 (Google Authenticator) 的实现原理是什么？](https://www.zhihu.com/question/20462696)
 * [How To Set Up Multi-Factor Authentication for SSH on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-16-04)
-
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
