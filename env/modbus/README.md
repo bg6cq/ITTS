@@ -27,7 +27,8 @@
 
 本文使用libmodbus库来处理底层通信。
 
-需要说明的是，上面的网络转RS485转换器，是直接利用TCP传输modbus rtu数据包(通常称为RTU over TCP)，这种协议并不是modbus-tcp，原作者https://github.com/stephane/libmodbus中并不支持这种方式。
+需要说明的是，上面的网络转RS485转换器，是直接利用TCP传输modbus rtu数据包(通常称为RTU over TCP)，这种协议并不是modbus-tcp，
+原作者 https://github.com/stephane/libmodbus 中并不支持这种方式。
 
 https://github.com/v-zhuravlev/libzbxmodbus 做了修改，支持RTU over TCP，我把两者结合放在 https://github.com/bg6cq/libmodbus-rtutcp
 
