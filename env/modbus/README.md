@@ -56,7 +56,7 @@ read485: read485.c
 ```
 
 采集程序 read485.c， 程序逻辑很简单，每秒钟采集一次，采集的数据保存在文件中：
-读入L1-L6的状态，分别写入文件L1-L6；读入温度和湿度信息，分别写入文件Utemp和Uhum；把最后的更新时间写入文件Ulast。
+读入L1-L6的状态，分别写入文件L1-L6；读入温度和湿度信息，分别写入文件Utemp和Uhum；把最后的更新时间写入文件Ulastrun。
 
 ```
 #include <stdio.h>
@@ -80,7 +80,7 @@ void Process(char *server, char * port)
         uint8_t buf[MAXLEN];
         char fname[MAXLEN];
         FILE *fp;
-        int n,i;
+        int i;
         short int v;
         struct timeval tv;
         mb = modbus_new_rtutcp(server, atoi(port));
