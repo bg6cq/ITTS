@@ -4,7 +4,7 @@
     1. 门禁
     2. 精密空调
     3. UPS
-    4. 环境监测([通过RS485总线使用Modbus RTU over TCP 协议采集环境传感器信息](enc/modbus/README.md))
+    4. 环境监测([通过RS485总线使用Modbus RTU over TCP 协议采集环境传感器信息](env/modbus/README.md))
 2. 网络
     1. 网络防火墙([使用CentOS 7做NAT设备](network/nat/centos7/README.md))
     2. 路由器
