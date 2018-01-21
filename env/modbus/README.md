@@ -45,8 +45,6 @@ cp /usr/local/lib/libmodbus.so.5 /lib
 
 ## 四、简单的采集程序
 
-程序逻辑很简单，每秒钟采集一次，采集的数据保存在文件中：
-
 程序文件放在目录 /usr/src/powermon 下
 
 Makefile
@@ -57,7 +55,8 @@ read485: read485.c
         gcc -g -o read485 read485.c -L/usr/local/lib -lmodbus
 ```
 
-read485.c，读入L1-L6的状态，分别写入文件L1-L6；读入温度和湿度信息，分别写入文件Utemp和Uhum；把最后的更新时间写入文件Ulast。
+采集程序 read485.c， 程序逻辑很简单，每秒钟采集一次，采集的数据保存在文件中：
+读入L1-L6的状态，分别写入文件L1-L6；读入温度和湿度信息，分别写入文件Utemp和Uhum；把最后的更新时间写入文件Ulast。
 
 ```
 #include <stdio.h>
