@@ -11,6 +11,8 @@
 系统中有一个网口转RS485的转换器([taobao链接](https://detail.tmall.com/item.htm?id=520676764679))，转换器的RS485总线上连接了2个传感器，分别是
 6路市电交流供电状态传感器([taobao链接](https://item.taobao.com/item.htm?id=524649936848))和温湿度传感器(10多年前购买的，型号为TH-802)。
 
+![modbus](modbus.jpg)
+
 ## 二、设备参数和命令格式
 
 网口转RS 485的转换器IP地址是202.38.64.142，工作于TCP-SERVER模式，TCP端口是8000。
