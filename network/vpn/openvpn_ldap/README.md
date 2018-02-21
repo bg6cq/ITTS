@@ -2,7 +2,7 @@
 
 本文原创：**中国药科大学 申继年**
 
-修改时间：2017.12.28
+修改时间：2018/02/21
 
 **前言：**
 
@@ -662,7 +662,9 @@ fi
 
 因为openvpn是以nodody帐号在运行，因此必须赋予nodody帐号对/var/log/openvpn这个目录的写权限，否则openvpn的运行将受到影响，用户登录过程不能完成。
 
-我这里赋予/var/log/openvpn的777权限，心里甚是忐忑，但又没有想到其它更好的办法，还请大神指点
+```bash
+sudo chown -R nobody:nobody /var/log/openvpn
+```
 
 ## 2.1 修改openvpn服务器配置文件，启用脚本 ##
 
