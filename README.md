@@ -55,6 +55,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     7. [使用ipsec加密Linux主机间通信](security/ipsec/README.md)
     8. [安全责任书模板](security/anquanzerenshu.md)
     9. [两步(多因素)认证原理及应用](security/mfa/README.md)
+   10. [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
