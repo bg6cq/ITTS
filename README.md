@@ -47,7 +47,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
     1. [系统上线前安全评测技术要求](security/checklist/README.md)
-    2. [使用Let's encrypt免费SSL证书](security/ssl/letsencrypt/README.md)
+    2. [使用Let's encrypt免费SSL证书/getssl](security/ssl/letsencrypt/README.md)
     3. [使用git监控www文件并自动恢复](security/www/git/README.md)
     4. [自动修改发垃圾邮件的账号密码(针对coremail环境)](security/mail/README.md)
     5. [ntpd/bind/IOS/JunOS等安全配置模板](http://www.team-cymru.org/templates.html)
@@ -56,6 +56,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     8. [安全责任书模板](security/anquanzerenshu.md)
     9. [两步(多因素)认证原理及应用](security/mfa/README.md)
    10. [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
+    11. [使用Let's encrypt免费SSL证书/acme.sh](security/ssl/acme.sh/README.md)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
