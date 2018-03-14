@@ -101,7 +101,7 @@ nginx.conf的配置如下所示
                 }
         }
 ````
-
+使用以上配置，https://www.ssllabs.com/ssltest/analyze.html?d=ustcnet.ustc.edu.cn 测试评分是A (IPv4/IPv6双栈)
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
