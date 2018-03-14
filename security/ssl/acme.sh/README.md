@@ -103,5 +103,15 @@ nginx.conf的配置如下所示
 ````
 使用以上配置，https://www.ssllabs.com/ssltest/analyze.html?d=ustcnet.ustc.edu.cn 测试评分是A (IPv4/IPv6双栈)
 
+
+5. 关联邮件
+
+以上已经可以工作了，但建议使用
+```
+./acme.sh --updateaccount --accountemail xyz@xya.edu.cn
+```
+关联自己的邮箱，这样证书快过期时可以收到提醒邮件。
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
