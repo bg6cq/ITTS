@@ -2,7 +2,7 @@
 
 本文原创：**中国科学技术大学 张焕杰**
 
-修改时间：2017.10.04
+修改时间：2018.03.14
 
 ## 一、SSL证书产生过程介绍
 
@@ -26,9 +26,9 @@ CA服务机构的存在是做为公认的第三方来验证服务器身份，这
 
 * 服务器生成私钥，产生.csr文件
 * 服务器将.csr文件交给Let's encrypt服务器
-* Let's encrypt服务器提供一个随机字符串，要求放在网站的.well-known/acme-challenge目录下
-* 服务器将随机字符串放在.well-known/acme-challenge目录下
-* Let's encrypt服务器通过http访问到该随机字符串，验证服务器拥有该域名，颁发证书
+* Let's encrypt服务器提供一个随机字符串，要求放在网站的.well-known/acme-challenge目录下 或者 在DNS上进行发布
+* 服务器将随机字符串放在.well-known/acme-challenge目录下 或通过DNS发布
+* Let's encrypt服务器通过http或DNS访问到该随机字符串，验证服务器拥有该域名，颁发证书
 
 ## 二、Let's encrypt 证书生成工具
 
