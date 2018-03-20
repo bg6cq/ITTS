@@ -29,7 +29,7 @@ iptables -I INPUT -j dnsin -p udp --dport 53
 iptables -A OUTPUT -j dnsout -m u32 -p udp --sport 53 --u32 "28&0xFFFF=0x8105"
 
 #禁止大包应答
-iptables -A OUTPUT -j LOG -p udp --sport 53 -m length --length 1300:  -m limit --limit 10/sec
+iptables -A OUTPUT -j DROP -p udp --sport 53 -m length --length 1300:
 
 ```
 
