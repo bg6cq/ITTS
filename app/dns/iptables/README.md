@@ -4,8 +4,7 @@
 
 修改时间：2018.03.19
 
-本文给出我校对内提供DNS服务的iptables规则和简单说明
-
+本文给出我校对内提供DNS服务的iptables规则和简单说明，供参考。
 
 ```
 #!/bin/sh
@@ -20,13 +19,13 @@ iptables -A dnsin -m hashlimit --hashlimit-name dns --hashlimit 20/sec --hashlim
 	--hashlimit-mode srcip --hashlimit-htable-expire 10000 -j ACCEPT
 iptables -A dnsin -j DROP
 
-#对决绝查询应答包限速每秒10个
+#对非授权拒绝查询应答包限速每秒10个
 iptables -A dnsout -j ACCEPT -m limit --limit 10/sec
 iptables -A dnsout -j DROP
 
 iptables -I INPUT -j dnsin -p udp --dport 53
 
-#对拒绝查询的应答限速
+#对非授权拒绝查询的应答包限速
 iptables -A OUTPUT -j dnsout -m u32 -p udp --sport 53 --u32 "28&0xFFFF=0x8105"
 
 #禁止大包应答
