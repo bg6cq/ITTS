@@ -85,7 +85,7 @@ local3.*                                                /var/log/sw.log;swlog
 ```
 ## 四、TC事件的处理例子
 
-如发现有如下的TC日志，说明Ten-GigabitEthernet1/4/6触发了TC事件：
+如发现有以下的TC日志，说明Ten-GigabitEthernet1/4/6触发了TC事件：
 ```
 202.38.xx.xx Mar 24 15:38:18 2018 Core-7504-ZhongQu %%10STP/6/STP_NOTIFIED_TC: Instance 0's port Ten-GigabitEthernet1/4/6 was notified a topology change.
 202.38.xx.xx Mar 24 15:38:21 2018 Core-7504-ZhongQu %%10STP/6/STP_NOTIFIED_TC: Instance 0's port Ten-GigabitEthernet1/4/6 was notified a topology change.
@@ -93,9 +93,9 @@ local3.*                                                /var/log/sw.log;swlog
 202.38.xx.xx Mar 24 15:38:34 2018 Core-7504-ZhongQu %%10STP/6/STP_NOTIFIED_TC: Instance 0's port Ten-GigabitEthernet1/4/6 was notified a topology change.
 202.38.xx.xx Mar 24 15:38:36 2018 Core-7504-ZhongQu %%10STP/6/STP_NOTIFIED_TC: Instance 0's port Ten-GigabitEthernet1/4/6 was notified a topology change.
 ```
-登录该交换机，执行命令`dis lldp neighbor-information interface ten1/4/6 ver`得知连接的是一台接入交换机。
+登录该汇聚交换机，执行命令`dis lldp neighbor-information interface ten1/4/6 ver`得知连接的是一台接入交换机。
 
-登录该接入交换机，查看命令后看到对应时间有个与其他交换机相连的接口up/down引发了TC。经检查连接的是视频监控交换机，估计是管理人员调试断电引起的。
+登录该接入交换机，查看对应时间的日志，可以看到那时一个与其他交换机相连的接口up/down引发了TC。经检查连接的是视频监控交换机，估计是管理人员调试插拔网线引起的。
 
 
 ***
