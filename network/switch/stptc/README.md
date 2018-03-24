@@ -26,15 +26,16 @@ interface GigabitEthernet1/0/1
 
 ## 二、TC事件产生的原因
 
-设置成`spanning tree edge port`的接口up/down时不会触发TC更新。这样2层交换机设置在运行时，正常情况下不应该出现TC事件。
+设置成`spanning tree edge port`的接口up/down时不会触发TC更新。这样的2层交换机设置在运行时，正常情况下不应该出现TC事件。
 
 对于上述设置，交换机出现TC事件有以下几种原因：
 
-1. 用户侧接口间存在环路，使得`spanning tree edge port`不起作用，并且触发环路，这是需要尽快发现并解决的。
-2. 户侧接口又连接了交换机，并且开启了生成树。如果该交换机未将接入端口设置为`spanning tree edge port`，接口up/down时引发TC。
-3. 某些交换机重启，重启时与其他交换机间链路的up/down会引发TC。
+1. 管理员忘记将用户侧的接口设置为`spanning tree edge port`。
+2. 用户侧接口间存在环路，使得`spanning tree edge port`不起作用，并且触发环路，这是需要尽快发现并解决的。
+3. 户侧接口又连接了交换机，并且开启了生成树。如果该交换机未将接入端口设置为`spanning tree edge port`，接口up/down时引发TC。
+4. 某些交换机重启，重启时与其他交换机间链路的up/down会引发TC。
 
-对于上述1、2要重点关注。
+对于上述1、2、3都要重点关注。
 
 ## 三、TC事件的集中记录和处理
 
@@ -73,9 +74,6 @@ local3.*                                                /var/log/sw.log;swlog
 
 
 ### 3.3 TC 事件的筛选
-
-
-## 四、注意事项
 
 设置以下crontab任务，定时将TC事件日志存成文件，管理员定期查看文件`topology.txt`即可了解发生过的TC事件。
 
