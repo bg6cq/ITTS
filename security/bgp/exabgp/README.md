@@ -20,6 +20,8 @@ BGP是路由协议，通过BGP协议可以方便的控制路由器上的路由�
 
 本文给出一个简单例子，使用简单文本发送BGP更新消息。
 
+需要说明的是，exabgp 4.0版本的配置文件有较大变化，本文使用的是3.4版本。
+
 ## 三、ExaBGP安装
 
 不少系统发行版有ExaBGP，可以直接安装。
@@ -35,7 +37,7 @@ git checkout 3.4
 ````
 healthcheck能运行说明程序安装正常。对于CentOS系统，可能需要安装以下软件包：
 ````
-yum install python-argparse python-ipaddr
+yum install python-argparse python-ipaddr socat
 
 ````
 
