@@ -80,7 +80,7 @@ acme.sh --install-cert -d *.ustc.edu.cn \
 
 4. 证书使用
 
-nginx.conf的配置如下所示
+nginx.conf的配置如下所示(需使用命令`openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048`生成dhparam.pem文件)
 ````
         server {
                 listen 80;
