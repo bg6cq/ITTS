@@ -23,7 +23,7 @@
 假定运行sflowtool.exe的机器IP是x.x.x.x，采集 Gi1/0/1端口数据包(采集比例是1000:1，即每1000个包采集1个)的配置如下：
 
 ```
- sflow collector 1 ip 202.38.64.143 description "CLI Collector"
+ sflow collector 1 ip x.x.x.x description "CLI Collector"
 
 interface GigabitEthernet1/0/1
  sflow flow collector 1
