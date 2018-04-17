@@ -113,5 +113,53 @@ nginx.conf的配置如下所示(需使用命令`openssl dhparam -out /etc/nginx/
 关联自己的邮箱，这样证书快过期时可以收到提醒邮件。
 
 
+6. 自动化处理
+
+我校的DNS服务器采用bind，为了自动化证书的更新过程，采取的措施如下：
+
+文件 `/named/zones/ustc.edu.cn.common`是ustc.edu.cn域文件，增加一行
+```
+_acme-challenge IN TXT  any
+```
+
+编辑文件 `/root/.acme.sh/dns_ustc.sh`，内容是：
+
+```
+#!/bin/bash
+########  Public functions #####################
+
+#Usage: dns_ustc_add   _acme-challenge.www.domain.com   "XKrxpRBosdIKFzxW_CT3KLZNf6q0HG9i01zxXp5CPBs"
+dns_ustc_add() {
+  fulldomain=$1
+  txtvalue=$2
+  _info "Using ustc"
+  _debug fulldomain "$fulldomain"
+  _debug txtvalue "$txtvalue"
+  cd /named
+  sed -i "s/^_acme-challenge.*$/_acme-challenge IN TXT ${txtvalue}/" /named/zones/ustc.edu.cn.common 
+  git diff
+  git commit -a -m "_acme-challenge"
+}
+
+#Usage: fulldomain txtvalue
+#Remove the txt record after validation.
+dns_ustc_rm() {
+  fulldomain=$1
+  txtvalue=$2
+  _info "Using myapi"
+  _debug fulldomain "$fulldomain"
+  _debug txtvalue "$txtvalue"
+}
+```
+
+现在只要执行
+
+```
+/usr/src/acme.sh/acme.sh --issue --dns dns_ustc -d "*.ustc.edu.cn"
+```
+
+就可以自动更新了
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
