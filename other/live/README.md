@@ -228,5 +228,16 @@ server {
 }
 ```
 
+# 五、录像保存
+
+如果需要将rtmp实时流保存为flv文件，可以安装rtmpdump：
+
+```
+apt-get install rtmpdump
+
+rtmpdump -v -m 0 -r rtmp://x.x.x.x/live/ustc -o output.flv
+```
+
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
