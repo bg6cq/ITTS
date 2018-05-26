@@ -244,7 +244,7 @@ proxy_host传递给后台站点的主机头是 `p-www.ustc.edu.cn` ， 这样的
 	ssl_certificate /etc/letsencrypt/live/yousite/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/yousite/privkey.pem;
 	ssl_session_timeout 5m;
-	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+	add_header Strict-Transport-Security "max-age=31536000" always;
 ......
 ````
 此时，通过Nginx访问该站点，浏览器会自动将HTTP协议切换为HTTPS协议。
@@ -506,8 +506,43 @@ server {
 
 上面的例子只是抛砖引玉，nginx + lua 能实现十分丰富的功能，可以与数据库通讯，可以生成响应体，也可以发起新的请求，且能承载极大量的并发访问。甚至有许多公司使用这种方式构建复杂的商业服务。
 
-## 八、专业支持的系统
+## 八、CentOS 6.9 nginx支持http2
 
+参考 https://linwm.com/16.html
+系统安装有默认的nginx，但是不支持http/2
+
+```
+1. 准备
+yum update
+yum upgrade
+yum install -y patch libtool gcc gcc-c++ autoconf automake zlib zlib-devel pcre-devel make unzip git wget libxslt-devel
+
+2. 下载openssl
+cd /usr/src
+wget https://www.openssl.org/source/openssl-1.1.0h.tar.gz
+tar zxvf openssl-1.1.0h.tar.gz
+
+3. 下载 nginx 安装包
+cd /usr/src
+wget http://nginx.org/download/nginx-1.14.0.tar.gz
+tar zxvf nginx-1.14.0.tar.gz
+cd nginx-1.14.0
+
+4. 开始执行编译安装
+除了安装的位置，禁用perl、geoip，其余都是用系统默认
+./configure --prefix=/usr/local/nginx --with-openssl=/usr/src/openssl-1.1.0h  --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module=dynamic --with-http_image_filter_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-mail=dynamic --with-mail_ssl_module --with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic' --with-ld-opt=' -Wl,-E'
+
+make
+mkdir -p /usr/local/nginx/sbin/
+cp objs/nginx /usr/local/nginx/sbin
+
+vi /etc/init.d/nginx, 把
+nginx="/usr/sbin/nginx"
+修改为
+nginx="/usr/local/nginx/sbin/nginx"
+```
+
+## 九、专业支持的系统
 
 如果觉得以上操作太麻烦，强烈建议购买专业支持的系统，运行起来省事省心，界面高大上，如网瑞达的产品除了提供反向代理外，还提供了VPN等更多功能：
 
