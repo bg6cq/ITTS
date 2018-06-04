@@ -551,9 +551,18 @@ nginx="/usr/local/nginx/sbin/nginx"
 
 为了解决平滑切换，可以采用如下方法：
 
-在nginx中配置如下，当访问/dummy_hsts时返回空内容，但是有个特殊的HTTP header: Strict-Transport-Security "max-age=3600"。
+在nginx中配置如下，当访问/dummy_hsts时返回空内容，但是有个特殊的HTTP header: Strict-Transport-Security "max-age=604800"。
 
 ```
+
+http {
+
+        map $scheme $hsts_header {
+                https   "max-age=604800";
+        }
+
+...
+
 server {
 	listen 80 ;
 	listen [::]:80 ;
@@ -568,11 +577,11 @@ server {
 	ssl_dhparam /etc/nginx/ssl/dhparam.pem;
 	server_name ustcnet.ustc.edu.cn;
 	access_log /var/log/nginx/host.ustcnet.ustc.edu.cn.access.log main;
+	add_header Strict-Transport-Security $hsts_header;
 	location / {
 		proxy_pass http://x.x.x.x/;
 	}
 	location /dummy_hsts {
-		add_header Strict-Transport-Security "max-age=3600" always;
 		return 200 "";
 	}
 }
@@ -586,10 +595,11 @@ server {
 其工作原理是：
 
 1. 浏览器访问 http://ustcnet.ustc.edu.cn 时，由于iframe会去访问https://ustcnet.ustc.edu.cn/dummy_hsts
-2. 如果访问https://ustcnet.ustc.edu.cn/dummy_hsts成功，会得到HTTP Header: Strict-Transport-Security "max-age=3600"
-3. 对于现代浏览器，在3600秒，即1小时内对http://ustcnet.ustc.edu.cn的访问，都会强制使用https
+2. 如果访问https://ustcnet.ustc.edu.cn/dummy_hsts成功，会得到HTTP Header: Strict-Transport-Security "max-age=604800"
+3. 对于现代浏览器，在604800秒，即7天内对http://ustcnet.ustc.edu.cn的访问，都会强制使用https
+4. 对于每次https访问，都会返回HTTP Header: Strict-Transport-Security "max-age=604800"，也就是只要7天内访问过，一直会用https
 
-如果经测试工作稳定，可以将上面的3600换成一个足够大的值。
+如果经测试工作稳定，可以将上面的604800换成一个足够大的值。
 
 ## 十、专业支持的系统
 
