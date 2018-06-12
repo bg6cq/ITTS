@@ -62,6 +62,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     9. [两步(多因素)认证原理及应用](security/mfa/README.md)
    10. [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
     11. [使用Let's encrypt免费SSL证书/acme.sh](security/ssl/acme.sh/README.md)
+    12. [高校等保一级应用系统的管理模式探究](security/l1.md)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
