@@ -59,12 +59,29 @@ network:
 
 ```
 
+## 三、设置防火墙
 
-## 三、安装nginx
+安全是第一要务，对于nginx服务器，对外需开通80、443端口，对部分地址开通22端口以方便管理。
+
+使用如下命令设置，请根据自己的管理地址段，替换下面的`202.38.64.0/24`
+```
+sudo ufw enable
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 22/tcp 
+sudo ufw allow proto tcp from 202.38.64.0/24 to any port 22
+sudo ufw default deny
+```
+您可以使用命令`sudo ufw status numbered`查看设置的规则，如果设置错误，可以使用`sudo ufw delete [序号]`删除规则。
+
+如果您有强烈的好奇心，可以执行`sudo iptables -L -nv | more`看看系统实际使用的规则。
+
+
+## 四、安装nginx
 
 执行`sudo apt-get install -y nginx`即可。
 
-
+## 
 
 
 
