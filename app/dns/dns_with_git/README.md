@@ -75,5 +75,13 @@ if [ $? = 0 ] ; then
 fi
 ```
 
+## 四、使用
+
+管理员修改主域名服务器上配置后，只要执行
+```
+git commit -a -m "msg"
+```
+即可触发工作流程，完成配置文件检查、重启bind、commit、push到git服务器，并由git服务器触发其他辅助域名服务器来pull变更，并检查配置后，重启各自的bind，实现域名配置的生效。
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
