@@ -18,6 +18,8 @@ DNS服务器一般有若干台，这些服务器间需要数据同步。
 
 首先有套可以工作的git，我们是自己建立的gitlab ce服务器。
 
+![data_flow](data_flow.jpg)
+
 ## 一、主DNS服务器
 
 1.1 设置`pre-commit` hook，只有一条命令，用于检查配置是否正确，只有正确的配置，才会允许commit
