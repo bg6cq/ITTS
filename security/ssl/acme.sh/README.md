@@ -160,6 +160,10 @@ dns_ustc_rm() {
 
 就可以自动更新了
 
+7. 更新证书时自动重启nginx等服务
+
+可以在执行acme.sh 时使用`--reloadcmd  "service nginx force-reload"` 参数，在证书成功更新后重启nginx服务。
+
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
