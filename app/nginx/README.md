@@ -135,21 +135,6 @@ http {
 }
 ````
 
-对于 CentoS7，启动nginx时 若出现出现错误: `setrlimit(RLIMIT_NOFILE, 10240) failed (1: Operation not permitted) `
-
-先查看目前系统的设定值
-`
-ulimit -n
-`
-
-若设定值太小，修改 /etc/security/limits.conf  
-vi /etc/security/limits.conf  
-加上或修改以下两行设定
-````
-* soft nofile 65535
-* hard nofile 65535
-````
-
 ## 四、后台站点配置
 
 使用以上配置时，nginx 访问后台站点时，自动设置了Host: 头为server_name，因此后台站点需要处理对应的server_name域请求。
