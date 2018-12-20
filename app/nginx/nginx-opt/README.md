@@ -31,9 +31,9 @@ nginx.conf中设置worker_rlimit_nofile虽然可以加大nginx worker进程的�
 
 正确的增加nginx打开文件数分2步：
 
-#### 1.1 编辑文件`vi /etc/sysctl.conf`，增加1行:
+#### 1.1 编辑文件`/etc/sysctl.d/file-max.conf`，增加1行:
 ```
-fs.file-max = 655360
+echo "fs.file-max = 655360" > /etc/sysctl.d/file-max.conf
 ```
 
 #### 1.2 想办法在启动nginx前执行`ulimit -HSn 655360`
@@ -49,16 +49,20 @@ ulimit -HSn 655360
 
 * CentOS 7等使用systemd的系统
 
-编辑文件`/usr/lib/systemd/system/nginx.service`，在[Service]段添加行：
+编辑文件`/usr/lib/systemd/system/nginx.service.d/my-limit.conf`，增加[Service]段并添加行：
 ```
-LimitNOFILE=655360
+mkdir /usr/lib/systemd/system/nginx.service.d/
+echo "[Service]" > /usr/lib/systemd/system/nginx.service.d/my-limit.conf
+echo "LimitNOFILE=655360" >> /usr/lib/systemd/system/nginx.service.d/my-limit.conf
 ```
 
 * Ubuntu 18.04 使用systemd的系统
 
-编辑文件`lib/systemd/system/nginx.service`，在[Service]段添加行：
+编辑文件`/lib/systemd/system/nginx.service.d/my-limit.conf`，增加[Service]段并添加行：
 ```
-LimitNOFILE=655360
+mkdir /lib/systemd/system/nginx.service.d/
+echo "[Service]" > /lib/systemd/system/nginx.service.d/my-limit.conf
+echo "LimitNOFILE=655360" >> /lib/systemd/system/nginx.service.d/my-limit.conf
 ```
 
 ### 2. Linux网络参数优化
