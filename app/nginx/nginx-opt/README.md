@@ -47,22 +47,13 @@ echo "fs.file-max = 655360" > /etc/sysctl.d/file-max.conf
 ulimit -HSn 655360
 ```
 
-* CentOS 7等使用systemd的系统
+* CentOS 7、Ubuntu 18.04 等使用systemd的系统
 
-编辑文件`/usr/lib/systemd/system/nginx.service.d/my-limit.conf`，增加[Service]段并添加行：
+编辑文件`/etc/systemd/system/nginx.service.d/my-limit.conf`，增加[Service]段并添加行：
 ```
-mkdir /usr/lib/systemd/system/nginx.service.d/
-echo "[Service]" > /usr/lib/systemd/system/nginx.service.d/my-limit.conf
-echo "LimitNOFILE=655360" >> /usr/lib/systemd/system/nginx.service.d/my-limit.conf
-```
-
-* Ubuntu 18.04 使用systemd的系统
-
-编辑文件`/lib/systemd/system/nginx.service.d/my-limit.conf`，增加[Service]段并添加行：
-```
-mkdir /lib/systemd/system/nginx.service.d/
-echo "[Service]" > /lib/systemd/system/nginx.service.d/my-limit.conf
-echo "LimitNOFILE=655360" >> /lib/systemd/system/nginx.service.d/my-limit.conf
+mkdir /etc/systemd/system/nginx.service.d/
+echo "[Service]" > /etc/systemd/system/nginx.service.d/my-limit.conf
+echo "LimitNOFILE=655360" >> /etc/systemd/system/nginx.service.d/my-limit.conf
 ```
 
 ### 2. Linux网络参数优化
