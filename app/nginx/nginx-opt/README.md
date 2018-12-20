@@ -47,7 +47,13 @@ ulimit -HSn 655360
 ```
 
 * CentOS 7等使用systemd的系统
-+编辑文件`/usr/lib/systemd/system/nginx.service`，在[Service]段添加行：
+编辑文件`/usr/lib/systemd/system/nginx.service`，在[Service]段添加行：
+```
+LimitNOFILE=655360
+```
+
+* Ubuntu 18.04 使用systemd的系统
++编辑文件`lib/systemd/system/nginx.service`，在[Service]段添加行：
 ```
 LimitNOFILE=655360
 ```
