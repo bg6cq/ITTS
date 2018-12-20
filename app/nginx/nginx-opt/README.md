@@ -31,29 +31,32 @@ nginx.conf中设置worker_rlimit_nofile虽然可以加大nginx worker进程的�
 
 正确的增加nginx打开文件数分2步：
 
-1.1 编辑文件`vi /etc/sysctl.conf`，增加1行:
+#### 1.1 编辑文件`vi /etc/sysctl.conf`，增加1行:
 ```
 fs.file-max = 655360
 ```
 
-1.2 想办法在启动nginx前执行`ulimit -HSn 655360`
+#### 1.2 想办法在启动nginx前执行`ulimit -HSn 655360`
 
 不同的系统具体配置方式不一样，主要有：
 
 * CentOS 6等使用sysinit的系统
+
 修改`/etc/sysconfig/nginx`，增加一行即可。
 ```
 ulimit -HSn 655360
 ```
 
 * CentOS 7等使用systemd的系统
+
 编辑文件`/usr/lib/systemd/system/nginx.service`，在[Service]段添加行：
 ```
 LimitNOFILE=655360
 ```
 
 * Ubuntu 18.04 使用systemd的系统
-+编辑文件`lib/systemd/system/nginx.service`，在[Service]段添加行：
+
+编辑文件`lib/systemd/system/nginx.service`，在[Service]段添加行：
 ```
 LimitNOFILE=655360
 ```
