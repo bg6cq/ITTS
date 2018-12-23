@@ -13,7 +13,7 @@ Linux系统默认的单个进程可以打开1024个文件，这对nginx来说远
 
 检查运行的nginx进程打开文件数，可以用`ps ax | grep nginx`找到nginx的pid，然后 `grep "Max open files" /proc/$pid/limits` 看到限制值。
 
-注意nginx有多个进程，要检查master和worker进程的打开文件数。
+注意nginx有多个进程，要分别检查master和worker进程的打开文件数。
 
 网上查到的很多文档有错误和误导的地方，表现在下面的地方：
 
@@ -40,7 +40,7 @@ echo "fs.file-max = 655360" > /etc/sysctl.d/file-max.conf
 
 不同的系统具体配置方式不一样，主要有：
 
-* CentOS 6等使用sysinit的系统
+* CentOS 6等使用sysvinit的系统
 
 修改`/etc/sysconfig/nginx`，增加一行即可。
 ```
