@@ -42,7 +42,7 @@ CA服务机构的存在是做为公认的第三方来验证服务器身份，这
 ````
 cd /usr/src/
 git clone https://github.com/Neilpang/acme.sh.git
-cd /acme.sh
+cd acme.sh
 ````
 
 2. 获取证书
@@ -66,6 +66,11 @@ _acme-challenge.ustc.edu.cn IN	TXT "9ihDbjYfTExAYeDs4DBUeuTo18KBzwvTEjUnSwd32-c"
 然后继续获取证书的过程，注意下面的命令行中的"renew"
 ```
 ./acme.sh --renew  -d *.ustc.edu.cn
+```
+
+注意：上面是生成 *.ustc.edu.cn 泛域名证书，如果是生成普通的域名证书，更简单：
+```
+./acme.sh --issue --webroot /etc/nginx/html/.well-known/acme-challenge -d linux.ustc.edu.cn
 ```
 
 3. 产生nginx需要的证书
