@@ -17,6 +17,7 @@
 ### 2.1 对称加解密算法
 
 对称加解密算法，它的特点是加密和解密操作使用同样的密钥key。
+![sme](img/sme.png)
 常见的对称加解密算法有AES、3DES等，一般来说性能很高，每秒钟可以加解密100MB字节或更多的信息。
 
 一旦密钥key泄漏，加密的信息就可以被解密，也就是泄漏了。
@@ -260,7 +261,8 @@ ssb   4096R/339EB9D2 2019-01-26
 
 ### 3.6 解密文件
 
-解密文件就很简单了，以下命令会把 test.txt.gpg 文件解密输出到 test.txt
+解密文件就很简单了，以下命令会把 test.txt.gpg 文件解密输出到 test.txt，中间会要求输入密码的密码。
+
 ```console
 # gpg -o test.txt -d test.txt.gpg
 
@@ -273,9 +275,6 @@ gpg: 由 4096 位的 RSA 密钥加密，钥匙号为 339EB9D2、生成于 2019-0
 # cat test.txt
 this is a test file
 ```
-
-
-* [How To Set Up Multi-Factor Authentication for SSH on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-16-04)
 
 
 ***
