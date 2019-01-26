@@ -64,7 +64,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
    11. [两步(多因素)认证原理及应用](security/mfa/README.md)
    12. [Top 20 OpenSSH Server Best Security Practices](https://www.cyberciti.biz/tips/linux-unix-bsd-openssh-server-best-practices.html)
    13. [高校等保一级应用系统的管理模式探究](security/l1.md)
-   13. [从一个简单的备份需求演示PGP的使用](security/gpg/README.md)
+   13. [从一个简单的备份需求演示gpg的使用](security/gpg/README.md)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
