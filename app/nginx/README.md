@@ -93,6 +93,7 @@ http {
         proxy_buffer_size          4k;
         proxy_buffers              4 32k;
         proxy_busy_buffers_size    64k;
+	proxy_max_temp_file_size   0;
         proxy_temp_file_write_size 64k;
         proxy_temp_path            /var/nginx/proxy_temp;
         proxy_redirect     off;
@@ -134,6 +135,10 @@ http {
 
 }
 ````
+
+
+请注意上面的`proxy_max_temp_file_size   0;`，这个配置禁止nginx写临时文件。如果不禁止，客户端并发来取几个大文件，nginx会从源服务器高速获取并写磁盘，很快占用大量磁盘空间和IO。
+
 
 ## 四、后台站点配置
 
