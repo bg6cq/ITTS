@@ -37,14 +37,15 @@ yubikey用来存放私钥，且只能灌入私钥，永远不能读出，彻底�
 | SSH | 支持ssh私钥认证，这可是系统管理员最常用的功能 |
 | OpenPGP | 支持GPG的加密、签名等操作，用gpg签名代码再也不怕私钥泄漏 |
 
-使用SSH或PGP时，有个agent forwarding功能非常好用，也就是自己的PC机上插了yubikey，利用ssh登录到服务器S，在服务器S上执行ssh连接其他服务器或者
+敲重点：使用SSH或PGP时，有个agent forwarding功能非常好用，太方便了。
+也就是自己的PC机上插了yubikey，利用ssh登录到服务器S，在服务器S上执行ssh连接其他服务器或者
 使用gpg时，仍旧可以使用PC机上的yubikey里存放的私钥来完成工作。
 
 ## 四、yubikey安全吗
 
 * yubikey宣称私钥永远不能被读出
 * 有PIN码保护，使用私钥前要输入PIN码。PIN码错误几次后锁死。
-* 有admin PIN码保护，灌入私钥或解锁PIN码需要输入admin PIN码。admin PIN码错误几次后彻底锁死。
+* 有admin PIN码保护，灌入私钥或解锁PIN码需要输入admin PIN码。admin PIN码错误几次后彻底锁死，可以扔了。
 * 有触摸确认过程，每次使用私钥前可以增加触摸按键确认动作，避免私钥被偷偷利用。
 
 
