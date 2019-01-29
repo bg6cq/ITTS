@@ -35,7 +35,7 @@ yubikey用来存放私钥，且只能灌入私钥，永远不能读出，彻底�
 | :----------------- | :-------- |
 | 身份认证 | yubikey支持FIDO U2F、FIDO2等身份认证，Google、Facebook、Github、Dropbox等大厂均已支持 | 
 | SSH | 支持ssh私钥认证，这可是系统管理员最常用的功能 |
-| OpenPGP | 支持GPG的加密、签名等操作，用gpg签名代码再也不怕私钥丢 |
+| OpenPGP | 支持GPG的加密、签名等操作，用gpg签名代码再也不怕私钥泄漏 |
 
 使用SSH或PGP时，有个agent forwarding功能非常好用，也就是自己的PC机上插了yubikey，利用ssh登录到服务器S，在服务器S上执行ssh连接其他服务器或者
 使用gpg时，仍旧可以使用PC机上的yubikey里存放的私钥来完成工作。
