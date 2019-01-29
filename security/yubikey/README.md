@@ -6,13 +6,15 @@
 
 ## 一、啥是yubikey
 
-就是下图的东西，带有一个触摸按键。可以是USB-A接口，可以是USB-C接口，可以挂在钥匙链上，也可以一直插在计算机的USB口。
+就是下图的东西，带有一个触摸按键。可以是USB-A接口，也可以是USB-C接口；可以挂在钥匙链上，也可以一直插在计算机的USB口。
 
 | YUBIKEY 5 NFC        |    YUBIKEY 5 Nano   | YUBIKEY 5C | YUBIKEY 5C NANO |
 | :----------------- | :-------- | :-------- | :-------- |
 | ![5NFC](img/YubiKey-5-NFC.png) | ![5Nano](img/YubiKey-5-Nano.png) | ![5C](img/YubiKey-5C.png) | ![5C](img/YubiKey-5C-Nano.png) 
 
-以上四种型号功能几乎相同，唯独5NFC增加了NFC通信支持。taobao价格在400元-500元。
+以上四种型号功能几乎相同，唯独5NFC增加了NFC通信支持（手机使用方便）。
+
+原厂分别是45$、50$、50$、60$，taobao价格在400元-500元。我买了最左和最右边的。
 
 ## 二、yubikey有啥用
 
@@ -36,14 +38,15 @@ yubikey用来存放私钥，且只能灌入私钥，永远不能读出，彻底�
 | OpenPGP | 支持GPG的加密、签名等操作，用gpg签名代码再也不怕私钥丢 |
 
 使用SSH或PGP时，有个agent forwarding功能非常好用，也就是自己的PC机上插了yubikey，利用ssh登录到服务器S，在服务器S上执行ssh连接其他服务器或者
-使用gpg时，仍旧可以使用PC机上的yubikey私钥来完成工作。
+使用gpg时，仍旧可以使用PC机上的yubikey里存放的私钥来完成工作。
 
 ## 四、yubikey安全吗
 
 * yubikey宣称私钥永远不能被读出
 * 有PIN码保护，使用私钥前要输入PIN码。PIN码错误几次后锁死。
-* 有admin PIN码保护，可以用来灌入私钥或解锁PIN码。admin PIN码错误几次后彻底锁死。
+* 有admin PIN码保护，灌入私钥或解锁PIN码需要输入admin PIN码。admin PIN码错误几次后彻底锁死。
 * 有触摸确认过程，每次使用私钥前可以增加触摸按键确认动作，避免私钥被偷偷利用。
+
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
