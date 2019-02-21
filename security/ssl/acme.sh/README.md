@@ -141,7 +141,7 @@ dns_ustc_add() {
   _debug fulldomain "$fulldomain"
   _debug txtvalue "$txtvalue"
   cd /named
-  sed -i "s/^_acme-challenge.*$/_acme-challenge IN TXT ${txtvalue}/" /named/zones/ustc.edu.cn.common 
+  sed -i "s/^_acme-challenge.*$/_acme-challenge IN TXT \"${txtvalue}\"/" /named/zones/ustc.edu.cn.common 
   git diff
   git commit -a -m "_acme-challenge"
 }
