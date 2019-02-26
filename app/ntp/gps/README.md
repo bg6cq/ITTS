@@ -106,7 +106,7 @@ synchronised to UHF radio at stratum 1
 
 如果其他服务器想使用带有gps模块的ntp服务器进行同步，则需要在ntp.conf中增加
 ```
-
+restrict x.x.x.x nomodify notrap 
 ```
 
 如果想监视ntp服务器的运行状况，可以参考 https://www.satsignal.eu/ntp/NTPandMRTG.html
