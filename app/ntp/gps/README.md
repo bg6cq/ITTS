@@ -4,7 +4,23 @@
 
 修改时间：2019.02.26
 
-# 一、GPS对时简单原理
+# 零、高精度时间的定义
+
+简单的说，衡量时间主要有2个参数，分别是offset和jitter。offset可以理解为与标准时间的偏差，jitter可以理解为时间均匀度。
+
+比如一个石英钟，每天对比与CCTV新闻联播时间一致，可以认为jitter为0，但offset并不一定为0，因为电视信号传播需要时间。
+
+理想的ntp服务器，offset和jitter都为0。
+
+对于现实的计算机，我们希望：
+
+* 时间单向增加，也就是不会发生往回调表的情况。
+* 时间均匀增加，也就是不会忽快忽慢，即上面描述的jitter尽量接近0。
+* 与标准时间偏差尽量少，即上面描述的offset尽量接近0。
+
+使用GPS模块授时的ntp服务器，据称offset可以到20µs(即0.02ms，大约相当于光或电波传播6km的时间)左右，jitter与服务器晶振和环境温度有关，一般可以到10µs以下(即0.01ms)。
+
+# 一、GPS授时简单原理
 
 GPS卫星有精密时钟源，GPS模块依靠接收到信号时间差来计算位置，同时可以通过以下两种方式对外输出时间信息：
 
@@ -22,17 +38,17 @@ $GNRMC,015022.00,A,3150.59184,N,11716.04078,E,0.242,,260219,,,D,V*12
 
 结合以上两种方式，可以从GPS模块得到高精度的时钟信号。
 
-# 二、GPS模块的选择
+# 二、GPS模块/接收器的选择
 
 如果是连接PC机使用，建议选择RS232信号电平的模块，如果连接树莓派机器使用，可以使用TTL信号电平的模块。
 
 绝大部分GPS模块，引出了电源、地、RX、TX四根线，而并未将1PPS信号引出。用作ntp时，可以让商家断开RX信号，引出1PPS信号。
 
-我从taobao 深圳北天通讯 购买的GPS/北斗双模BS-70DU接收器，其中USB口用来给模块供电，RS232口用来通信。
+我从taobao 深圳北天通讯 购买的 GPS/北斗双模BS-70DU接收器，其中USB口用来给模块供电，RS232口用来通信。
 
 特别注意：购买时与店主沟通，让店主断开RX信号，将1PPS信号连接到DB9的1口，即DCD信号。
 
-模块如下：
+模块外形如下：
 
 ![BS-70DU](bs-70du.png)
 
@@ -108,9 +124,73 @@ synchronised to UHF radio at stratum 1
 ```
 restrict x.x.x.x nomodify notrap 
 ```
+# 四、服务器运行状态监控
 
 如果想监视ntp服务器的运行状况，可以参考 https://www.satsignal.eu/ntp/NTPandMRTG.html
 
+下面是我参考网页的做法：
+```
+ yum install mrtg httpd
+```
+
+vi `/etc/mrtg/ntp.cfg`，输入以下内容：
+```
+HtmlDir: /var/www/mrtg
+ImageDir: /var/www/mrtg
+LogDir: /var/lib/mrtg
+
+Target[ntp]: `perl /etc/mrtg/GetNTPoffset.pl 127.0.0.1`
+MaxBytes[ntp]: 100000
+Title[ntp]: NTP statistics - offset from UTC
+Options[ntp]: integer, gauge, nopercent, growright
+Colours[ntp]: BLUE#0033FF, RED#FF0000, BLUE#0033FF, RED#FF0000, 
+YLegend[ntp]: offset +/- us
+ShortLegend[ntp]: µs
+LegendI[ntp]: offset µs (-):&nbsp;
+LegendO[ntp]: offset µs (+):&nbsp;
+Legend1[ntp]: Time offset in µs (-)
+Legend2[ntp]: Time offset in µs (+)
+PageTop[ntp]: <H1>NTP server</H1>
+```
+
+vi `/etc/mrtg/GetNTPoffset.pl`，输入以下内容:
+```
+# Expects node name as a parameter
+# Returns 1st value for positive offsets, second value for negative
+# Returns microseconds of offset
+$ntp_str = `/usr/sbin/ntpq -c rv $ARGV[0]`;       # execute "ntpq -c rv <node>"
+$val = (split(/\,/,$ntp_str))[20];      # get the offset string
+$val =~ s/offset=//i;                   # remove the "offset="
+$val = int (1000 * $val);               # convert to microseconds
+$nval = $val;                           # prepare the negative value
+if ($val < 0){
+	$nval = -$nval;                         # make the value positive
+	$val = 0;                               # ensure zero return for the positive
+} else {
+	$nval = 0;                              # ensure zero return for the negative
+}
+print "$nval\n";                        # return four numbers, incoming
+print "$val\n";                         # outgoing
+print "0\n";
+print "$ARGV[0]\n";
+```
+
+执行`crontab -e`，增加一行
+```
+*/5 * * * *  env LANG=C /usr/bin/mrtg /etc/mrtg/ntp.conf
+```
+
+`vi /etc/httpd/conf.d/mrtg.conf`，放开访问权限。
+
+执行以下命令，启动httpd：
+```
+systemctl start httpd
+systemctl enable httpd
+firewall-cmd --add-service=http --permanent
+firewall-cmd --reload
+```
+
+然后访问 http://x.x.x.x/mrtg/ntp.html 就能看到 offset 的变化情况了。
 
 参考资料：
 
