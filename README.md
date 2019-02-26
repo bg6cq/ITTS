@@ -47,7 +47,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     3. iis
     4. ftp([ProFTPd配置TLS](app/ftp/proftpd-tls.md), [ProFTPd配置LDAP](app/ftp/proftpd-ldap.md))
     5. dns([自己建立根DNS服务器](app/dns/root/README.md), [为何DNS服务器要禁用连接跟踪](app/dns/whynoconntrack/README.md), [DNS服务器的iptables规则](app/dns/iptables/README.md), [git辅助DNS服务器的运行](app/dns/dns_with_git/README.md))
-    6. ntp([建立ntp服务器](app/ntp/README.md))
+    6. ntp([建立ntp服务器](app/ntp/README.md), [用GPS模块建立高精度ntp服务器](app/ntp/gps/README.md))
     7. dhcp([Linux下ISC dhcpd分配状态显示](app/dhcp/dhcpd-pool/README.md))
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
 8. 安全管理
