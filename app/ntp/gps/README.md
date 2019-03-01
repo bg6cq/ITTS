@@ -81,7 +81,7 @@ USBAUTO="true"
 systemctl start gpsd
 systemctl enable gpsd
 ```
-这时执行`cgps`或`gpsmon`可以看到信息，分别如下图所示，其中有位置信息、PPS信息，说明GPS模块工作征程：
+这时执行`cgps`或`gpsmon`可以看到信息，分别如下图所示，其中有位置信息、PPS信息，说明GPS模块工作正常：
 
 ![CGPS](cgps.png)
 
@@ -118,7 +118,25 @@ synchronised to UHF radio at stratum 1
    polling server every 64 s
 ```
 
-此时，从其他计算机，执行`ntpdate ntp服务器IP地址`，可以完成对时操作。
+执行命令`ntpq -p`可以看到ntpd的工作状态：
+```
+# ntpq -p
+     remote           refid      st t when poll reach   delay   offset  jitter
+==============================================================================
++static-5-103-13 .GPS.            1 u   43   64  377  425.213  -51.480   1.376
+-biisoni.miuku.n 207.224.49.219   2 u   58   64  377  247.198  -16.032  11.992
+x2001:1af8:4700: 130.133.1.10     2 u   43   64  377  318.917    5.976   1.928
++SHM(0)          .GPS.            0 l    9   16  377    0.000  -109.06   7.257
+*SHM(1)          .PPS.            0 l    9   16  377    0.000    0.002   0.001
+```
+这里显示服务器时钟与 PPS 信号的offset是0.002ms（即2us），jitter是0.001ms(即1us)。
+
+而GPS NMEA信号，因为RS232串口传输慢，要慢109.06ms（大约0.1s）。GNRMC消息大约70个字节长，每个字节前有开始bit，后有结束bit，
+传输70字节的消息需要 70*(2+8)/9600=0.073 秒。
+
+此时，从其他计算机执行`ntpdate ntp服务器IP地址`，可以完成对时操作。
+
+使用ntpdate对时，可能会引起时钟往前跳变。因此，重要的服务器建议直接用ntp同步对时。
 
 如果允许其他服务器想使用带有gps模块的ntp服务器进行同步，则需要在ntp.conf中增加(其中c.c.c.c是其他ntp服务器的IP地址)
 ```
@@ -203,7 +221,7 @@ firewall-cmd --reload
 
 * http://www.catb.org/gpsd/gpsd-time-service-howto.html
 * https://www.satsignal.eu/ntp/Raspberry-Pi-NTP.html
-
+* https://pthree.org/2013/11/05/real-life-ntp/
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
