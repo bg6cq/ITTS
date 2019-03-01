@@ -18,7 +18,7 @@
 * 时间均匀增加，也就是不会忽快忽慢，即上面描述的jitter尽量接近0。
 * 与标准时间偏差尽量少，即上面描述的offset尽量接近0。
 
-使用GPS模块授时的ntp服务器，据称offset可以到20µs(即0.02ms，大约相当于光或电波传播6km的时间)左右，jitter与服务器晶振和环境温度有关，一般可以到10µs以下(即0.01ms)。
+使用GPS模块授时的ntp服务器，据称offset可以到10µs(即0.01ms，大约相当于光或电波传播3km的时间)左右，jitter与服务器晶振和环境温度有关，一般可以到10µs以下(即0.01ms)。
 
 # 一、GPS授时简单原理
 
@@ -42,7 +42,7 @@ $GNRMC,015022.00,A,3150.59184,N,11716.04078,E,0.242,,260219,,,D,V*12
 
 如果是连接PC机使用，建议选择RS232信号电平的模块，如果连接树莓派机器使用，可以使用TTL信号电平的模块。
 
-绝大部分GPS模块，引出了电源、地、RX、TX四根线，而并未将1PPS信号引出。用作ntp时，可以让商家断开RX信号，引出1PPS信号。
+绝大部分GPS模块，引出了电源、地、RX、TX四根线，而并未将1PPS信号引出。用作ntp时，购买时让商家断开RX信号，引出1PPS信号。
 
 我从taobao 深圳北天通讯 购买的 GPS/北斗双模BS-70DU接收器，其中USB口用来给模块供电，RS232口用来通信。
 
@@ -69,7 +69,7 @@ yum install -y ntp pps-tools gpsd gpsd-clients
 
 gpsd是用来读取GPS模块信息，并将信息放到一段共享内存，供ntpd之类的其他应用使用。
 
-编辑 `/etc/sysconfig/gpsd`，修改为（GPS模块接在COM1，也就是ttysS0）
+编辑 `/etc/sysconfig/gpsd`，修改为（GPS模块232口接在COM1，也就是ttysS0）
 ```
 # Options for gpsd, including serial devices
 OPTIONS="-n /dev/ttyS0"
@@ -93,10 +93,10 @@ CentOS 7默认的是chronyd，我还是使用相对熟悉的ntpd。
 
 编辑文件`/etc/ntp.conf`,增加如下内容：
 ```
-server 127.127.28.0 
+server 127.127.28.0 minpoll 4 maxpoll 4
 fudge 127.127.28.0 refid GPS
 
-server 127.127.28.1 prefer
+server 127.127.28.1 minpoll 4 max poll 4 prefer
 fudge 127.127.28.1 refid PPS
 ```
 这里的127.127.28.0和127.127.28.1是虚拟设备，含义是获取gpsd放到共享内存中的信息来对时。
