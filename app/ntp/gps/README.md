@@ -120,10 +120,17 @@ synchronised to UHF radio at stratum 1
 
 此时，从其他计算机，执行`ntpdate ntp服务器IP地址`，可以完成对时操作。
 
-如果其他服务器想使用带有gps模块的ntp服务器进行同步，则需要在ntp.conf中增加
+如果允许其他服务器想使用带有gps模块的ntp服务器进行同步，则需要在ntp.conf中增加(其中c.c.c.c是其他ntp服务器的IP地址)
 ```
-restrict x.x.x.x nomodify notrap 
+restrict c.c.c.c nomodify notrap 
 ```
+
+在其他服务器的 ntp.conf 中增加(其中s.s.s.s是其他带有GPS模块的ntp服务器IP地址)
+```
+server s.s.s.s minpoll 3 maxpoll 3 prefer
+```
+注意：有些版本的服务器minpoll和maxpoll最小允许为4，即16秒查询一次。ntpq -p 可以看到。如果设置为3或4，ntp对时后，offset可以到20us以下。
+
 # 四、服务器运行状态监控
 
 如果想监视ntp服务器的运行状况，可以参考 https://www.satsignal.eu/ntp/NTPandMRTG.html
