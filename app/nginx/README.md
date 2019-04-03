@@ -6,8 +6,9 @@
 **审计大学 吴鑫**  
 **西安财经学院 王伟**  
 **中国科学技术大学 高一凡**
+**西北农林科技大学 卞一帆**
 
-修改时间：2017.10.09
+修改时间：2019/04/03
 
 ## 一、反向代理服务器简介
 
@@ -47,9 +48,9 @@ ip route add 0/0 via 202.38.64.1 table 100
 ip route add 0/0 via 218.22.21.1 table 110
 ip route add 0/0 via 218.104.71.1 table 120
 
-ip route add from 202.38.64.2 table 100 pref 100
-ip route add from 218.22.21.2 table 110 pref 100
-ip route add from 218.104.71.2 table 120 pref 100
+ip rule add from 202.38.64.2 table 100 pref 100
+ip rule add from 218.22.21.2 table 110 pref 100
+ip rule add from 218.104.71.2 table 120 pref 100
 ````
 
 ## 三、nginx配置
