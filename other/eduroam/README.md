@@ -20,7 +20,7 @@ CERNET用户可以联系eduroam@CERNET http://www.eduroam.edu.cn
 
 其他用户请联系 eduroam 中国无线网漫游交换中心 http://eduroam.cstnet.cn
 
-填写申请表，打印盖章，寄快递。等北大的老师收到快递后，开通服务。然后就可以到 https://analysis.eduroam.edu.cn 登录，并获取到相关的key.
+https://analysis.eduroam.edu.cn/admin/univ/create 填写申请表，打印盖章，寄快递，等北大的老师收到快递后，开通服务。然后就可以到 https://analysis.eduroam.edu.cn 登录，并获取到相关的key.
 
 ## 2. 安装radius服务器
 
