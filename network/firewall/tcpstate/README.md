@@ -20,7 +20,7 @@
 
 ```
 IP_client:2000 --> IP_server:80 SYN
-IP_server:2000 <-- IP_server:80 SYN+ACK
+IP_client:2000 <-- IP_server:80 SYN+ACK
 IP_client:2000 --> IP_server:80 ACK 
 IP_client:2000 --> IP_server:80 SYN (这个包会被禁止通过)
 ```
