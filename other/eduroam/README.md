@@ -230,7 +230,10 @@ radiusd -X
 systemctl start radiusd
 systemctl enable radiusd
 ```
-不过我测试重启时，可能因为mariadb启动有点慢，自动启动会出错。
-
+默认的设置，可能因为mariadb启动有点慢，自动启动会出错，修改以下文件：
+```
+vi /usr/lib/systemd/system/radiusd.service
+After后增加 mariadb.service
+```
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
