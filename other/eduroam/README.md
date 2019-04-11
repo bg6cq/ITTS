@@ -1,4 +1,4 @@
-## [原创] centos7 eduroam 安装记录
+## [原创] centos7 eduroam freeradius 安装记录
 
 本文原创：**中国科学技术大学 张焕杰**
 
@@ -73,14 +73,13 @@ firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" sourc
 firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address="162.105.129.2" service name="radius" accept"
 firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address="121.194.2.97" service name="radius" accept
 firewall-cmd --reload
-"
 ```
 
 ## 7. 修改配置
 
 7.1 ca有关配置
 
-生成一个足够长的证书，省的使用中更换。
+生成一个有效期足够长的证书，以免使用中更换。
 
 ```
 cd /etc/raddb/certs
@@ -200,13 +199,17 @@ sql
 
 ## 8. 启用sql模块
 
+```
 cd /etc/raddb/mods-enabled
 ln -s ../mods-available/sql .
+```
 
 
 ## 9. 测试用户
+```
 mysql radius
 INSERT INTO radcheck VALUES (1,'test','Cleartext-Password',':=','test123');
+```
 建立一个用户test，密码test123
 
 ## 10. 测试
@@ -217,4 +220,7 @@ radiusd -X
 
 输入 test@fsyy.ustc.edu.cn test 测试正常
 
+如果测试通过，说明本地用户已经可以在其他地方登录。
 
+***
+欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
