@@ -8,8 +8,6 @@
 
 [Protocol and Password Compatibility](http://deployingradius.com/documents/protocols/compatibility.html)
 
-注意：本文仅仅设置用户认证部分，可以完成本地用户在其他地方上网的认证，未包含无线控制器有关设置(clients.conf增加即可)。
-
 ## 0. 基础
 
 1. 有用户名和明文密码，以便radius使用（加密的密码未测试过)
@@ -19,9 +17,10 @@
 ## 1. 联系eduroam认证中心
 
 CERNET用户可以联系eduroam@CERNET http://www.eduroam.edu.cn
+
 其他用户请联系 eduroam 中国无线网漫游交换中心 http://eduroam.cstnet.cn
 
-填写申请表，发送邮件，等待对方的电话联系，并获取到相关的key.
+填写申请表，打印盖章，寄快递。等北大的老师收到快递后，开通服务。然后就可以到 https://analysis.eduroam.edu.cn 登录，并获取到相关的key.
 
 ## 2. 安装radius服务器
 
@@ -220,7 +219,7 @@ radiusd -X
 
 2. 访问 http://eduroam.ustc.edu.cn
 
-输入 test@fsyy.ustc.edu.cn test 测试正常
+输入 test@fsyy.ustc.edu.cn test123 测试正常
 
 如果测试通过，说明本地用户已经可以在其他地方登录。
 
@@ -235,5 +234,73 @@ systemctl enable radiusd
 vi /usr/lib/systemd/system/radiusd.service
 After后增加 mariadb.service
 ```
+
+## 12. 本地无线网络控制器设置
+
+12.1 修改clients.conf，增加类似如下信息
+
+其中x.x.x.x是无线控制器IP地址，secret是密码。
+
+```
+client x.x.x.x{
+	secret = *****
+	shortname = myac
+}
+```
+
+注意每次修改后，需要重启radiusd后才生效。
+
+12.2 防火墙允许无线控制器通信
+
+```
+firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address="x.x.x.x" service name="radius" accept
+firewall-cmd --reload
+```
+
+12.3 无线控制器设置
+
+这里以H3C的为例，设置如下：
+
+假定用户在vlan 196，radius服务器IP是s.s.s.s
+
+```
+ dot1x authentication-method eap
+
+wlan service-template 5
+ ssid eduroam
+ vlan 196
+ akm mode dot1x
+ cipher-suite ccmp
+ cipher-suite tkip
+ security-ie rsn
+ security-ie wpa
+ client-security authentication-mode dot1x
+ dot1x domain eduroam
+ service-template enable
+#
+
+#
+radius scheme eduroam
+ primary authentication s.s.s.s key cipher *************************************
+ primary accounting s.s.s.s key cipher *************************************
+ timer realtime-accounting 0
+#
+domain eduroam
+ authentication lan-access radius-scheme eduroam
+ authorization lan-access radius-scheme eduroam
+ accounting lan-access radius-scheme eduroam
+#
+
+```
+
+12.4 测试
+
+如果需要调试，可以停止radiusd，并用调试模式启动，查看交互信息
+
+```
+systemctl stop radiusd
+radiusd -X
+```
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
