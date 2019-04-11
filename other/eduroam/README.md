@@ -98,6 +98,8 @@ openssl dhparam -out dh 1024
 make ca.pem
 make ca.der
 make server.pem
+
+chgrp radiusd *
 ```
 
 如果想查看生成的证书，可以执行
@@ -221,6 +223,14 @@ radiusd -X
 输入 test@fsyy.ustc.edu.cn test 测试正常
 
 如果测试通过，说明本地用户已经可以在其他地方登录。
+
+## 11. 加入启动过程
+
+```
+systemctl start radiusd
+systemctl enable radiusd
+```
+不过我测试重启时，可能因为mariadb启动有点慢，自动启动会出错。
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
