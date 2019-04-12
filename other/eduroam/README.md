@@ -199,10 +199,21 @@ sql_user_name = "%{%{Stripped-User-Name}:-%{%{User-Name}:-DEFAULT}}"
 sites-available/default
 将authorize中
 ```
--sql 
-改为
-sql
+auth_log
 ```
+
+accounting中
+```
+#unix
+```
+post-auth中
+```
+#-sql
+```
+
+这样设置，会把关键日志记录在 /var/log/radius目录下。
+
+如果想记录更多的日志，可以把 pre-proxy 中的pre_proxy_log和post-proxy中的post_proxy_log也打开。
 
 ## 8. 启用sql模块
 
@@ -229,6 +240,13 @@ radiusd -X
 输入 test@fsyy.ustc.edu.cn test123 测试正常
 
 如果测试通过，说明本地用户已经可以在其他地方登录。
+
+测试完毕后，把修改commit到git：
+```
+cd /etc/raddb
+git add *
+git commit -m "now works"
+```
 
 ## 11. 加入启动过程
 
@@ -308,6 +326,31 @@ domain eduroam
 systemctl stop radiusd
 radiusd -X
 ```
+
+## 13. 优化
+
+以下按照上海交通大学赖学亮老师的《eduroam配置建议》 https://www.eduroam.edu.cn/info/1021/1072.htm
+
+vi /etc/raddb/sites-enabled/default 文件, pre-proxy 段落里，增加了
+```
+ update proxy-request {
+  Operator-Name := "1fsyy.ustc.edu.cn"
+ }
+```
+
+vi /etc/raddb/dictionary.eduroam.local，增加如下内容：
+```
+ VENDOR  eduroam 9048
+ BEGIN-VENDOR    eduroam
+ ATTRIBUTE       Eduroam-Proxy                           0       String
+ END-VENDOR eduroam
+```
+
+vi /etc/raddb/dictionary文件里增加一行
+```
+ $INCLUDE        /etc/raddb/dictionary.eduroam.local
+```
+
 
 ## 13. 关于密码
 
