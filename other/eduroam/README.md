@@ -4,7 +4,7 @@
 
 修改时间：2019.04.11
 
-测试工具：https://eduroam.ustc.edu.cn/
+eduroam@CERNET http://www.eduroam.edu.cn 
 
 [Protocol and Password Compatibility](http://deployingradius.com/documents/protocols/compatibility.html)
 
@@ -220,6 +220,7 @@ INSERT INTO radcheck VALUES (1,'test','Cleartext-Password',':=','test123');
 建立一个用户test，密码test123
 
 ## 10. 测试
+
 1. 在radius服务器上执行
 radiusd -X
 
