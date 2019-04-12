@@ -16,7 +16,7 @@ eduroam是education roaming的缩写，在各个国家的教育科研网广泛�
 
 ## 0. 基础
 
-1. 有用户名和明文密码，以便radius使用
+1. 有用户名，明文 或 NT Hash 密码，以便radius使用 (关于NT Hash密码，请见最后)
 
 2. 准备一个IP地址，将来用作radius服务器。
 
@@ -309,5 +309,46 @@ systemctl stop radiusd
 radiusd -X
 ```
 
+## 13. 关于密码
+
+eduroam使用EAP-MSCHAPv2认证，需要使用明文密码或NT Hash密码。
+
+如用户test，密码test，如果是明文密码，格式如下(只要一个即可):
+```
+MariaDB [radius]> select * from radcheck;
++----+----------+--------------------+----+----------------------------------+
+| id | username | attribute          | op | value                            |
++----+----------+--------------------+----+----------------------------------+
+|  1 | test     | NT-Password        | := | 0CB6948805F797BF2A82807973B89537 |
+|  2 | test     | Cleartext-Password | := | test                             |
++----+----------+--------------------+----+----------------------------------+
+```
+
+使用如下php片段可以生成NT Hash密码:
+
+```
+<?php
+
+function NTHash($Input) {
+  // Convert the password from UTF8 to UTF16 (little endian)
+  $Input=iconv('UTF-8','UTF-16LE',$Input);
+
+  // Encrypt it with the MD4 hash
+  $MD4Hash=bin2hex(mhash(MHASH_MD4,$Input));
+
+  // You could use this instead, but mhash works on PHP 4 and 5 or above
+  // The hash function only works on 5 or above
+  //$MD4Hash=hash('md4',$Input);
+
+  // Make it uppercase, not necessary, but it's common to do so with NTLM hashes
+  $NTHash=strtoupper($MD4Hash);
+
+  // Return the result
+  return($NTHash);
+}
+
+?>
+
+```
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
