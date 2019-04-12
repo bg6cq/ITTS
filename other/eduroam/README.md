@@ -313,7 +313,7 @@ radiusd -X
 
 eduroam使用EAP-MSCHAPv2认证，需要使用明文密码或NT Hash密码。
 
-如用户test，密码test，如果是明文密码，格式如下(只要一个即可):
+如用户test，密码test，明文密码和NT Hash密码格式如下(只要一个即可):
 ```
 MariaDB [radius]> select * from radcheck;
 +----+----------+--------------------+----+----------------------------------+
@@ -324,7 +324,7 @@ MariaDB [radius]> select * from radcheck;
 +----+----------+--------------------+----+----------------------------------+
 ```
 
-使用如下php片段可以生成NT Hash密码:
+NT Hash密码是把密码MD4hash后得到的，使用如下php片段可以生成NT Hash密码:
 
 ```
 <?php
