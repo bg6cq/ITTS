@@ -8,6 +8,10 @@
 
 [Protocol and Password Compatibility](http://deployingradius.com/documents/protocols/compatibility.html)
 
+eduroam是education roaming的缩写，在各个国家的教育科研网广泛采用。如果所在学校/单位已经加入eduroam，那么他们可以非常容易地在其他支持eduroam的学校/单位免费使用Internet，不受国界限制。目前eduroam已经覆盖全球100余个国家，我国也有180余所高校和50余个中国科学院研究所覆盖。
+
+我国高校的漫游认证中心由北京大学提供，只要一个高校加入漫游认证体系，高校的用户就可以在全球的eduroam内免费使用。
+
 ## 0. 基础
 
 1. 有用户名和明文密码，以便radius使用（加密的密码未测试过)
