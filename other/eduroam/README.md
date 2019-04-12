@@ -215,13 +215,34 @@ post-auth中
 
 如果想记录更多的日志，可以把 pre-proxy 中的pre_proxy_log和post-proxy中的post_proxy_log也打开。
 
+以下按照上海交通大学赖学亮老师的《eduroam配置建议》 https://www.eduroam.edu.cn/info/1021/1072.htm
+
+vi /etc/raddb/sites-enabled/default 文件, pre-proxy 段落里，增加了
+```
+ update proxy-request {
+  Operator-Name := "1fsyy.ustc.edu.cn"
+ }
+```
+
+vi /etc/raddb/dictionary.eduroam.local，增加如下内容：
+```
+ VENDOR  eduroam 9048
+ BEGIN-VENDOR    eduroam
+ ATTRIBUTE       Eduroam-Proxy                           0       String
+ END-VENDOR eduroam
+```
+
+vi /etc/raddb/dictionary文件里增加一行
+```
+ $INCLUDE        /etc/raddb/dictionary.eduroam.local
+```
+
 ## 8. 启用sql模块
 
 ```
 cd /etc/raddb/mods-enabled
 ln -s ../mods-available/sql .
 ```
-
 
 ## 9. 测试用户
 ```
@@ -326,31 +347,6 @@ domain eduroam
 systemctl stop radiusd
 radiusd -X
 ```
-
-## 13. 优化
-
-以下按照上海交通大学赖学亮老师的《eduroam配置建议》 https://www.eduroam.edu.cn/info/1021/1072.htm
-
-vi /etc/raddb/sites-enabled/default 文件, pre-proxy 段落里，增加了
-```
- update proxy-request {
-  Operator-Name := "1fsyy.ustc.edu.cn"
- }
-```
-
-vi /etc/raddb/dictionary.eduroam.local，增加如下内容：
-```
- VENDOR  eduroam 9048
- BEGIN-VENDOR    eduroam
- ATTRIBUTE       Eduroam-Proxy                           0       String
- END-VENDOR eduroam
-```
-
-vi /etc/raddb/dictionary文件里增加一行
-```
- $INCLUDE        /etc/raddb/dictionary.eduroam.local
-```
-
 
 ## 13. 关于密码
 
