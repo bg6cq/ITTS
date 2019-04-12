@@ -18,7 +18,7 @@
     5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md), [
 OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并发送邮件）](network/vpn/openvpn_ldap/README.md))
     6. 流量控制
-    7. 缓存服务([IXCACHE使用介绍](network/ixcache/README.md))
+    7. 缓存服务([IXCache使用介绍](network/ixcache/README.md))
 3. 服务器存储
     1. 服务器
     2. 存储
