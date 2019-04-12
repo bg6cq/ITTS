@@ -326,6 +326,8 @@ MariaDB [radius]> select * from radcheck;
 
 NT Hash密码是把密码MD4hash后得到的，使用如下php片段可以生成NT Hash密码:
 
+来自 https://www.php.net/manual/en/ref.hash.php
+
 ```
 <?php
 
