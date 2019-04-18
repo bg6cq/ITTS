@@ -13,7 +13,7 @@
 2. 网络
     1. 网络防火墙([使用CentOS 7做NAT设备](network/nat/centos7/README.md), [TCP状态防火墙带来的故障](network/firewall/tcpstate/README.md))
     2. 路由器
-    3. 交换机([2层交换机生成树TC事件的集中记录和处](network/switch/stptc/README.md), [交换机sflow抓包的简单说明](network/switch/sflow/README.md) )
+    3. 交换机([2层交换机生成树TC事件的集中记录和处](network/switch/stptc/README.md), [交换机sflow抓包的简单说明](network/switch/sflow/README.md) [初试盛科TAP交换机](network/switch/tap/README.md))
     4. AC控制器([H3C AC/AP隐藏调试命令](network/wireless/h3c/README.md))
     5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md), [
 OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并发送邮件）](network/vpn/openvpn_ldap/README.md))
