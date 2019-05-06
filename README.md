@@ -67,6 +67,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
    13. [高校等保一级应用系统的管理模式探究](security/l1.md)
    14. [从一个简单的备份需求演示gpg的使用](security/gpg/README.md)
    15. [人人都需要一个yubikey](security/yubikey/README.md)
+   16. [在 SSH 服务器上使用 YubiKey OTP 进行两步认证](security/ssh-yubikey-otp/README.md)
    17. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
 
 9. 标杆文档
