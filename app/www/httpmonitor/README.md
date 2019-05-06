@@ -68,7 +68,7 @@ log ()
 
 ```
 crontab -e 
-*/1 * * * * sh /usr/src/httptest/httpmonitor/monitor.sh
+*/1 * * * * sh /usr/src/httptest/httpmonitor/monitor.sh  >/dev/null 2>/dev/null
 ```
 
 此时系统已可正常运行，当有站点访问异常时，便会发送短信进行通知。
