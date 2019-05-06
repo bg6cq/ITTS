@@ -9,7 +9,7 @@
 
 为保证站点在访问异常的情况下管理员可实时收到通知，及时进行处理，快速恢复站点访问。
 
-使用中国科学技术大学 张焕杰 [httptest](https://github.com/bg6cq/httptest)，进行相关部署。在站点异常时实时发送短信给管理员，管理员第一时间得到服务正常异常报告。
+使用中国科学技术大学 张焕杰 开发的 [httptest](https://github.com/bg6cq/httptest)，在站点异常时实时发送短信给管理员，管理员第一时间得到服务正常异常报告。
 
 程序详细代码见：https://github.com/bg6cq/httptest
 
@@ -18,11 +18,8 @@
 ### 系统环境
 
 * 系统：CentOS7 64位
-
 * CPU：2核
-
 * 内存：2G
-
 * 硬盘：30G
 
 ### 安装过程
@@ -43,7 +40,6 @@ cd httpmonitor
 /usr/src/httptest/httpmonitor 目录下共有monitor.sh、urllist.txt两个文件
 
 * monitor.sh为Shell执行程序，用户可在里面自定义各项参数
-
 * urllist.txt为要监控的站点信息文件
 
 urllist.txt
