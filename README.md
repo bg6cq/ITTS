@@ -69,6 +69,7 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
    15. [人人都需要一个yubikey](security/yubikey/README.md)
    16. [在 SSH 服务器上使用 YubiKey OTP 进行两步认证](security/ssh-yubikey-otp/README.md)
    17. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
+   18. [网站测试中发现的有趣现象](other/test/README.md)
 
 9. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
