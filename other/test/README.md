@@ -49,7 +49,7 @@
 ![PKU-ms](img/pku-ms.jpeg)
 
 而THU服务器，一上来发送tcp window scale选项7，也就是可以支持>64KB的窗口。实际传输时，窗口大小在130KB左右变化，因此速度比pku高了近一倍。
-按照每ms统计数据包对比，是下面的图(左边是PKU下载的数据包，右边是THU下载的数据包）：
+下午是每ms统计数据包对比，左边是PKU下载的数据包，右边是THU下载的数据包：
 
 ![PKU-THU](img/pkuvsthu-ms.jpeg)
 
