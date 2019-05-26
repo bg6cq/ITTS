@@ -122,7 +122,7 @@ THU的第7批数据包是抓包中的第430-593中的数据包，从0.262267秒 
 
 ### 9. 可视化的工具方便查到问题
 
-Wireshark中，菜单 统计(Statitics)/TCP流图形(TCP Stream Graphs)/时间序列(Stevens)(Time Sequence(Stevens)) 会生成下面的图形。
+Wireshark中，菜单 统计(Statistics)/TCP流图形(TCP Stream Graphs)/时间序列(Stevens)(Time Sequence(Stevens)) 会生成下面的图形。
 
 图形的一段一段代表TCP的序列号增长情况，可以看到PKU的每次增长几乎是相同的，而THU则越来越多。
 
