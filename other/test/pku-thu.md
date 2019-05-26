@@ -1,5 +1,9 @@
 ## PKU比THU慢的真相大白
 
+本文原创：**中国科学技术大学 张焕杰**
+
+修改时间：2019.05.26
+
 ### 1. 性能差异来自哪里
 
 http://github.com/bg6cq/httptest 是一个简单的http/https测试工具。
@@ -116,9 +120,9 @@ THU的第7批数据包是抓包中的第430-593中的数据包，从0.262267秒 
 
 越大的文件，THU比PKU快的越明显。
 
-### 9. 有没有可视化的看到这个问题呢
+### 9. 可视化的工具方便查到问题
 
-Wireshark中，菜单 统计(Statitics)/TCP流图形(TCP Stream Graphs)/时间序列(Stevens)(Time Sequence(Stevens)) 会有下面的图形。
+Wireshark中，菜单 统计(Statitics)/TCP流图形(TCP Stream Graphs)/时间序列(Stevens)(Time Sequence(Stevens)) 会生成下面的图形。
 
 图形的一段一段代表TCP的序列号增长情况，可以看到PKU的每次增长几乎是相同的，而THU则越来越多。
 
@@ -127,3 +131,6 @@ Wireshark中，菜单 统计(Statitics)/TCP流图形(TCP Stream Graphs)/时间�
 ![thu-ts](img/thu-ts.jpg)
 
 
+
+***
+欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
