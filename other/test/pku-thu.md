@@ -8,7 +8,7 @@
 
 http://github.com/bg6cq/httptest 是一个简单的http/https测试工具。
 
-从我的PC机（Mac MINI）对PKU/THU网站上500KB左右的文件测试，结果pku的传输速度在2.5MB/s，而pku的传输速度可以到3.5MB/s。
+从我的PC机（Mac MINI）对PKU/THU网站上500KB左右的文件测试，结果PKU的传输速度在2.5MB/s，而THU的传输速度可以到3.5MB/s。
 
 我的PC机到PKU/THU服务器使用IPv6协议，中间带宽接近1G，延迟大约26ms。
 
