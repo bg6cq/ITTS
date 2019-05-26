@@ -32,7 +32,7 @@ $ ./httptest -d https://www.tsinghua.edu.cn/publish/thu2018en/11490/201905141231
 
 ### 3. IO图表
 
-Wireshark中打开 tcpdump 获取的 .cap 文件，选择菜单 统计/IO图表，将间隔改为 1ms， 可以看到以下2个传输过程的图表：
+Wireshark中打开 tcpdump 获取的 .cap 文件，选择菜单 统计(Statistics)/IO图表(I/O Graph)，将间隔改为 1ms， 可以看到以下2个传输过程的图表：
 
 ![pku-io](img/pku-io.jpg)
 
@@ -115,4 +115,15 @@ THU的第7批数据包是抓包中的第430-593中的数据包，从0.262267秒 
 而THU服务器端的发送CWND窗口会跟随客户端的RWND慢慢增大，所以传输会随着时间的推移，逐步增大。
 
 越大的文件，THU比PKU快的越明显。
+
+### 9. 有没有可视化的看到这个问题呢
+
+Wireshark中，菜单 统计(Statitics)/TCP流图形(TCP Stream Graphs)/时间序列(Stevens)(Time Sequence(Stevens)) 会有下面的图形。
+
+图形的一段一段代表TCP的序列号增长情况，可以看到PKU的每次增长几乎是相同的，而THU则越来越多。
+
+![pku-ts](img/pku-ts.jpg)
+
+![thu-ts](img/thu-ts.jpg)
+
 
