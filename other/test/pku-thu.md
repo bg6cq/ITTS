@@ -4,6 +4,8 @@
 
 修改时间：2019.05.26
 
+说明：本文发出后，PKU修改了设备配置，解决了TCP CWND不超过65535问题，速度大幅提升。
+
 ### 1. 性能差异来自哪里
 
 http://github.com/bg6cq/httptest 是一个简单的http/https测试工具。
