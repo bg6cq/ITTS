@@ -6,7 +6,7 @@
 
 ### 1. pku和thu网站传输速度测试环境
 
-从我的PC机（Mac MINI）对PKU/THU网站上500KB左右的文件测试，结果PKU的传输速度在2.5MB/s，而THU的传输速度可以到3.5MB/s。
+从我的PC机（Mac MINI）对PKU/THU网站上500KB左右的文件测试，2个网站的传输速度有较大差异。
 
 我的PC机到PKU/THU服务器使用IPv6协议，中间带宽接近1G，延迟大约26ms。
 
