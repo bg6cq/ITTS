@@ -1,4 +1,4 @@
-## 深入每个包分析pku和thu网站传输速度差异
+## 深入数据包分析pku和thu网站传输速度差异
 
 本文原创：**中国科学技术大学 张焕杰**
 
@@ -36,9 +36,9 @@ $ ./httptest -d https://www.tsinghua.edu.cn/publish/thu2018en/11490/201905141231
 
 Wireshark中打开 tcpdump 获取的 .cap 文件，选择菜单 统计(Statistics)/IO图表(I/O Graph)，将间隔改为 1ms， 可以看到以下2个传输过程的图表：
 
-![pku-io-2](img/pku-io-2.jpg)
+![pku-io-2](img/pku-io-2.png)
 
-![thu-io-2](img/thu-io-2.jpg)
+![thu-io-2](img/thu-io-2.png)
 
 这个图大致可以看到传输分若干批完成，其中PKU分4批传输，而THU分8批传输。
 
