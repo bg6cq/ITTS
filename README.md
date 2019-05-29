@@ -68,21 +68,24 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
    14. [从一个简单的备份需求演示gpg的使用](security/gpg/README.md)
    15. [人人都需要一个yubikey](security/yubikey/README.md)
    16. [在 SSH 服务器上使用 YubiKey OTP 进行两步认证](security/ssh-yubikey-otp/README.md)
-   17. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
-   18. [网站测试中发现的有趣现象](other/test/README.md)
-   19. [深入数据包分析pku和thu网站传输速度差异](other/test/pku_vs_thu.md)
 
-9. 标杆文档
+9. 杂项
+   1. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
+   2. [网站测试中发现的有趣现象](other/test/README.md)
+   3. [深入数据包分析pku和thu网站传输速度差异](other/test/pku_vs_thu.md)
+   4. [2张图1分钟快速定位TCP故障原因](other/wireshark/README.md)
+  
+10. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
 	
-10. 相关法律法规
+11. 相关法律法规
     1. [中华人民共和国网络安全法](http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm)
     2. [中华人民共和国国家安全法](http://www.npc.gov.cn/npc/xinwen/2015-07/07/content_1941161.htm)
     3. [中华人民共和国保守国家秘密法](http://www.npc.gov.cn/huiyi/cwh/1114/2010-04/29/content_1571766.htm)
     4. [中华人民共和国反恐怖主义法](http://www.npc.gov.cn/npc/xinwen/2015-12/28/content_1957401.htm)
     5. [中华人民共和国反间谍法](http://www.npc.gov.cn/npc/xinwen/2014-11/02/content_1884660.htm)
     6. [刑法修正案（九）](http://www.npc.gov.cn/npc/xinwen/2015-08/31/content_1945587.htm)
-11. 其他
+12. 其他
     1. [每日更新的电信,联通,移动等ISP地址段](https://ispip.clang.cn)
     2. [中国运营商IP地址库(每日更新)](https://github.com/gaoyifan/china-operator-ip/tree/ip-lists)
     3. [中国大陆根DNS服务器的奥秘](other/dns/README.md)
