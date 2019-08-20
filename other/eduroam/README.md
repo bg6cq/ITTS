@@ -305,7 +305,9 @@ firewall-cmd --reload
 
 12.3 无线控制器设置
 
-这里以H3C的为例，设置如下：
+这里以H3C和华为的AC为例，设置如下：
+
+H3C例子：
 
 假定用户在vlan 196，radius服务器IP是s.s.s.s
 
@@ -338,6 +340,49 @@ domain eduroam
 #
 
 ```
+
+华为的例子：
+
+```
+authentication-profile name wlan-eduroam
+ dot1x-access-profile wlan-eduroam
+ access-domain default dot1x force
+
+radius-server template radius_eduroam
+ radius-server shared-key cipher *************************************************
+ radius-server authentication s.s.s.s 1812 weight 80
+ radius-server accounting s.s.s.s 1813 weight 80
+
+aaa
+ authentication-scheme radius_eduroam
+  authentication-mode radius
+
+ domain default
+  authentication-scheme radius_eduroam
+  radius-server radius_eduroam
+
+wlan
+
+ security-profile name eduroam
+  security wpa2 dot1x aes-tkip
+
+ ssid-profile name eduroam
+  ssid eduroam
+
+ vap-profile name eduroam
+  forward-mode tunnel
+  service-vlan vlan-id 191
+  ssid-profile eduroam
+  security-profile eduroam
+  authentication-profile wlan-eduroam
+
+ ap-group name ****
+  radio 0
+   vap-profile eduroam wlan 1
+
+dot1x-access-profile name wlan-eduroam
+```
+
 
 12.4 测试
 
