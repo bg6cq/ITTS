@@ -92,5 +92,3 @@ OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并�
     4. [可扩展视频直播设施建设](other/live/README.md)
 
 欢迎 [加入我们整理资料](work.md)
-
-[Markdown 语法](http://wowubuntu.com/markdown/)
