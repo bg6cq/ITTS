@@ -72,10 +72,8 @@ service named restart
 2. /var/named/zones 目录对named可写，并且不能有前缀相同，多了 .signed 后缀的文件，因为bind运行时要写这样的文件。
 
 3. 如果有多个view，zone文件不能有名字相同的，原因是bind运行时签名写 .signed 文件时后面的view因为文件存在，会错误。解决办法是使用软链接不同的文件名，或者其中一个为master，其余为slave。
-``` 
 
 4. 自动在线签名会修改SOA中的序列号，不同服务器的序列号可能不一致，不会影响运行。
-
 
 ## 步骤五：上级服务器增加DS记录
 
