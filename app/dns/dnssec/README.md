@@ -93,6 +93,13 @@ ustc.edu.cn.		IN DS 19065 7 2 EBD1C6420F893D8FF9950ADBF896075D059006439419634128
 
 ![DNSSEC](img/dnssec.png)
 
+DS记录仅仅包含KSK的密钥信息即可，也可以这样获取:
+
+```
+   dig dnskey ustc.edu.cn | dnssec-dsfromkey -f - ustc.edu.cn
+```
+
+
 ## 修改域名zone文件的签名步骤
 
 一旦修改了域名zone文件，均要重复步骤三的过程，并重启bind。我们使用git pre-commit hook自动这个过程。
