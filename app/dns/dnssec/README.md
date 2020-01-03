@@ -17,6 +17,8 @@ bind 大部分文件存放在 /var/named/chroot/var/named 目录，zone文件存
 
 ## 步骤一：生成ZSK和KSK密钥
 
+建议使用RSASHA256(增加选项-a RSASHA256 -b 2048)，我这里使用默认的RSASHA1-NSEC3-SHA1，不建议继续使用。
+
 ```
 cd /var/named/chroot/var/named
 dnssec-keygen -r /dev/urandom -3 ustc.edu.cn
