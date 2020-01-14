@@ -2,7 +2,9 @@
 
 本文原创：**中国科学技术大学 张焕杰**
 
-修改时间：2017.12.04
+修改时间：2020.01.14
+
+2020.01.14 增加arpa.域，避免地址反向解析的serverfail。
 
 # 一、自己建立根DNS服务器的优点
 
@@ -84,6 +86,11 @@ zone "." IN {
         file "root.zone";
 };
 
+zone "arpa." IN {
+        type master;
+        file "arpa.zone";
+};
+
 zone "ROOT-SERVERS.NET." IN {
         type master;
         file "root-servers.net.zone";
@@ -151,6 +158,7 @@ M.ROOT-SERVERS.NET.      AAAA  2001:dc3::35
 ```
 cd /var/named
 wget http://www.internic.net/domain/root.zone
+wget http://www.internic.net/domain/arpa.zone
 ```
 
 ## 2.5 允许53端口
@@ -326,6 +334,7 @@ neighbor 202.38.64.126 {
 ```
 all:
         wget -O root.zone http://www.internic.net/domain/root.zone
+        wget -O arpa.zone http://www.internic.net/domain/arpa.zone
         chgrp named *
         /sbin/service named configtest
         /sbin/service named restart
