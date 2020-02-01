@@ -4,6 +4,39 @@
 
 修改时间：2017.10.04
 
+重要更新：2020.02.01
+
+## 重要更新
+
+Let's encrypt 升级了api接口，原有的不久将禁用。之前安装的，可以按照如下步骤升级：
+
+1. 升级 getssl 程序
+
+选择两种方式之一升级即可，最简单的：
+```
+cd /usr/src/getssl
+./getssl -u
+```
+以上过程，getssl会自动下载最新的版本。或者采用如下方式升级：
+
+```
+cd /usr/src/getssl
+curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
+```
+
+2. 修改 程序API接口
+
+执行vi /root/.getssl/getssl.cfg，把其中的
+````
+CA="https://acme-v01.api.letsencrypt.org"
+````
+
+修改为：
+````
+CA="https://acme-v02.api.letsencrypt.org"
+````
+
+
 ## 一、SSL证书产生过程介绍
 
 1. SSL证书产生过程涉及以下几个概念：
@@ -54,7 +87,7 @@ vi /root/.getssl/getssl.cfg /root/.getssl/blackip.ustc.edu.cn/getssl.cfg
 ````
 其中/root/.getssl/getssl.cfg修改为：
 ````
-CA="https://acme-v01.api.letsencrypt.org"
+CA="https://acme-v02.api.letsencrypt.org"
 ACCOUNT_EMAIL="james@ustc.edu.cn"
 ````
 /root/.getssl/blackip.ustc.edu.cn/getssl.cfg修改为：
