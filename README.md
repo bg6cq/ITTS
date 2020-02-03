@@ -17,7 +17,8 @@
     4. AC控制器([H3C AC/AP隐藏调试命令](network/wireless/h3c/README.md))
     5. VPN([通过互联网桥接2个以太网段](https://github.com/bg6cq/ethudp/blob/master/sample2/README.md), [
 OpenVPN的安装与部署（ldap进行身份认证+记录用户访问日志并发送邮件）](network/vpn/openvpn_ldap/README.md), 
-[ L2TPVPN 服务器安装(Centos7) ] (network/vpn/l2tpvpn) )
+[
+L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
     6. 流量控制
     7. 缓存服务([IXCache使用介绍](network/ixcache/README.md))
 3. 服务器存储
