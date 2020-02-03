@@ -185,7 +185,6 @@ systemctl disable firewalld
 systemctl enable ipsec
 systemctl enable xl2tpd
 ```
-```
 
 3.8 设置策略路由和简单过滤
 
