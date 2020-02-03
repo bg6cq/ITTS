@@ -234,6 +234,15 @@ ip6tables -A INPUT -j DROP -p tcp --dport 22
 ```
 chmod u+x /etc/rc.d/rc.local /etc/rc.d/rc.route /etc/rc.d/rc.firewall
 ```
+
+
+3.9 修改日志保存时间
+
+vi /etc/logrotate.conf
+
+```
+rotate 40
+```
  
 
 重启服务器就可以工作了。
