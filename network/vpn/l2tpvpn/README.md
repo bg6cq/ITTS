@@ -236,7 +236,38 @@ chmod u+x /etc/rc.d/rc.local /etc/rc.d/rc.route /etc/rc.d/rc.firewall
 ```
 
 
-3.9 修改日志保存时间
+3.9 设置日志
+
+配置单独的l2tp日志记录
+
+vi /etc/rsyslog.d/20-xl2tpd.conf，内容如下：
+```
+if $programname == 'xl2tpd' then /var/log/xl2tpd.log
+stop
+```
+
+vi /etc/rsyslog.d/20-pptpd.conf，内容如下：
+```
+if $programname == 'pppd' then /var/log/xl2tpd.log
+stop
+```
+
+vi /etc/ppp/ip-up，增加
+```
+echo "`date -d today +%F_%T` $PEERNAME $IPREMOTE start" >> /var/log/xl2tpd.log
+```
+vi /etc/ppp/ip-down，增加
+```
+echo "`date -d today +%F_%T` $PEERNAME $IPREMOTE stop" >> /var/log/xl2tpd.log
+```
+
+3.10 修改日志保存时间
+
+vi /etc/logrotate.d/syslog
+增加
+```
+/var/log/xl2tpd.conf
+```
 
 vi /etc/logrotate.conf
 
