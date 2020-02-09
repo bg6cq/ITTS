@@ -63,6 +63,98 @@ authserver 	202.38.64.X:1812
 acctserver 	202.38.64.X:1813
 ```
 
+增加MS-CHAP-V2属性：
+
+vi /usr/share/radiusclient-ng/dictionary，增加一行
+```
+INCLUDE /usr/share/radiusclient-ng/dictionary.microsoft
+```
+
+vi /usr/share/radiusclient-ng/dictionary.microsoft，增加如下内容
+
+```
+#
+#	Microsoft's VSA's, from RFC 2548
+#
+#	$Id: dictionary.microsoft,v 1.1 2004/11/14 07:26:26 paulus Exp $
+#
+
+VENDOR		Microsoft	311	Microsoft
+
+ATTRIBUTE	MS-CHAP-Response	1	string	Microsoft
+ATTRIBUTE	MS-CHAP-Error		2	string	Microsoft
+ATTRIBUTE	MS-CHAP-CPW-1		3	string	Microsoft
+ATTRIBUTE	MS-CHAP-CPW-2		4	string	Microsoft
+ATTRIBUTE	MS-CHAP-LM-Enc-PW	5	string	Microsoft
+ATTRIBUTE	MS-CHAP-NT-Enc-PW	6	string	Microsoft
+ATTRIBUTE	MS-MPPE-Encryption-Policy 7	string	Microsoft
+# This is referred to as both singular and plural in the RFC.
+# Plural seems to make more sense.
+ATTRIBUTE	MS-MPPE-Encryption-Type 8	string	Microsoft
+ATTRIBUTE	MS-MPPE-Encryption-Types  8	string	Microsoft
+ATTRIBUTE	MS-RAS-Vendor		9	integer	Microsoft
+ATTRIBUTE	MS-CHAP-Domain		10	string	Microsoft
+ATTRIBUTE	MS-CHAP-Challenge	11	string	Microsoft
+ATTRIBUTE	MS-CHAP-MPPE-Keys	12	string	Microsoft
+ATTRIBUTE	MS-BAP-Usage		13	integer	Microsoft
+ATTRIBUTE	MS-Link-Utilization-Threshold 14 integer	Microsoft
+ATTRIBUTE	MS-Link-Drop-Time-Limit	15	integer	Microsoft
+ATTRIBUTE	MS-MPPE-Send-Key	16	string	Microsoft
+ATTRIBUTE	MS-MPPE-Recv-Key	17	string	Microsoft
+ATTRIBUTE	MS-RAS-Version		18	string	Microsoft
+ATTRIBUTE	MS-Old-ARAP-Password	19	string	Microsoft
+ATTRIBUTE	MS-New-ARAP-Password	20	string	Microsoft
+ATTRIBUTE	MS-ARAP-PW-Change-Reason 21	integer	Microsoft
+
+ATTRIBUTE	MS-Filter		22	string	Microsoft
+ATTRIBUTE	MS-Acct-Auth-Type	23	integer	Microsoft
+ATTRIBUTE	MS-Acct-EAP-Type	24	integer	Microsoft
+
+ATTRIBUTE	MS-CHAP2-Response	25	string	Microsoft
+ATTRIBUTE	MS-CHAP2-Success	26	string	Microsoft
+ATTRIBUTE	MS-CHAP2-CPW		27	string	Microsoft
+
+ATTRIBUTE	MS-Primary-DNS-Server	28	ipaddr	Microsoft
+ATTRIBUTE	MS-Secondary-DNS-Server	29	ipaddr	Microsoft
+ATTRIBUTE	MS-Primary-NBNS-Server	30	ipaddr	Microsoft
+ATTRIBUTE	MS-Secondary-NBNS-Server 31	ipaddr	Microsoft
+
+#ATTRIBUTE	MS-ARAP-Challenge	33	string	Microsoft
+
+
+#
+#	Integer Translations
+#
+
+#	MS-BAP-Usage Values
+
+VALUE		MS-BAP-Usage		Not-Allowed	0
+VALUE		MS-BAP-Usage		Allowed		1
+VALUE		MS-BAP-Usage		Required	2
+
+#	MS-ARAP-Password-Change-Reason Values
+
+VALUE	MS-ARAP-PW-Change-Reason	Just-Change-Password		1
+VALUE	MS-ARAP-PW-Change-Reason	Expired-Password		2
+VALUE	MS-ARAP-PW-Change-Reason	Admin-Requires-Password-Change	3
+VALUE	MS-ARAP-PW-Change-Reason	Password-Too-Short		4
+
+#	MS-Acct-Auth-Type Values
+
+VALUE		MS-Acct-Auth-Type	PAP		1
+VALUE		MS-Acct-Auth-Type	CHAP		2
+VALUE		MS-Acct-Auth-Type	MS-CHAP-1	3
+VALUE		MS-Acct-Auth-Type	MS-CHAP-2	4
+VALUE		MS-Acct-Auth-Type	EAP		5
+
+#	MS-Acct-EAP-Type Values
+
+VALUE		MS-Acct-EAP-Type	MD5		4
+VALUE		MS-Acct-EAP-Type	OTP		5
+VALUE		MS-Acct-EAP-Type	Generic-Token-Card	6
+VALUE		MS-Acct-EAP-Type	TLS		13
+```
+
 验证：
 
 在radius服务器上增加相应的设置(增加client，设置防火墙)后，在L2TPVPN服务器上使用命令 radlogin ，输入用户名和密码验证radius验证是否正确。
@@ -95,6 +187,7 @@ vi /etc/ppp/options.xl2tpd，内容如下：
 ```
 ipcp-accept-local
 ipcp-accept-remote
+require-mschap-v2
 ms-dns  202.38.64.17
 ms-dns  202.38.64.56
 noccp
