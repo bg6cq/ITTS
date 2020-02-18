@@ -8,7 +8,9 @@ Core DNS是一个go语言开的DNS服务器，主要用来提供权威解析服�
 
 本次尝试使用Core DNS软件搭建ah.edu.cn域的DNS权威解析服务器，从以下步骤可以看到针对一个独立域名的配置，比bind要简单很多。
 
-Core DNS支持很多plugin，本文仅仅使用最简单的file、log。
+Core DNS支持很多plugin，本文仅仅使用最简单的file、errors、log。
+
+Core DNS还不直接支持view等功能。
 
 ## 一、CentOS 7 安装
 
