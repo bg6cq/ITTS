@@ -4,7 +4,7 @@
 
 修改时间：2020.02.18
 
-Core DNS是一个go语言开的DNS服务器，主要用来提供权威解析服务。详细请见 https://github.com/coredns/coredns
+Core DNS是一个go语言开发的DNS服务器，主要用来提供权威解析服务。详细请见 https://github.com/coredns/coredns
 
 本次尝试使用Core DNS软件搭建ah.edu.cn域的DNS权威解析服务器，从以下步骤可以看到针对一个独立域名的配置，比bind要简单很多。
 
