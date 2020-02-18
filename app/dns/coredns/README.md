@@ -117,7 +117,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-3.6  动coredns
+3.6 启动CoreDNS
 
 ```
 systemctl enable coredns
@@ -132,7 +132,7 @@ firewall-cmd --permanent --add-service=dns
 firewall-cmd --reload
 ```
 
-注意：现在的配置，DNS查询日志记录在/var/log/message 
+注意：上述配置，DNS查询日志记录在/var/log/message 
 
 
 ***
