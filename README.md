@@ -49,7 +49,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
     2. nginx([step-by-step install nginx反向代理服务器](https://github.com/bg6cq/nginx-install), [nginx反向代理服务器](app/nginx/README.md), [nginx-rrd绘图参数](app/nginx/nginx-rrd/README.md), [Nginx 400错误案例](app/nginx/Cases.md), [使用lua对反向代理做权限控制](https://github.com/bg6cq/nginxauth), [Nginx服务器优化](app/nginx/nginx-opt))
     3. iis
     4. ftp([ProFTPd配置TLS](app/ftp/proftpd-tls.md), [ProFTPd配置LDAP](app/ftp/proftpd-ldap.md))
-    5. dns([自己建立根DNS服务器](app/dns/root/README.md), [为何DNS服务器要禁用连接跟踪](app/dns/whynoconntrack/README.md), [DNS服务器的iptables规则](app/dns/iptables/README.md), [git辅助DNS服务器的运行](app/dns/dns_with_git/README.md), [ustc.edu.cn 域增加DNSSEC功能过程](app/dns/dnssec/README.md), [CoreDNS尝试](app/dns/coredns/README.dm))
+    5. dns([自己建立根DNS服务器](app/dns/root/README.md), [为何DNS服务器要禁用连接跟踪](app/dns/whynoconntrack/README.md), [DNS服务器的iptables规则](app/dns/iptables/README.md), [git辅助DNS服务器的运行](app/dns/dns_with_git/README.md), [ustc.edu.cn 域增加DNSSEC功能过程](app/dns/dnssec/README.md), [CoreDNS尝试](app/dns/coredns/README.md))
     6. ntp([建立ntp服务器](app/ntp/README.md), [用GPS模块建立高精度ntp服务器](app/ntp/gps/README.md))
     7. dhcp([Linux下ISC dhcpd分配状态显示](app/dhcp/dhcpd-pool/README.md))
     8. [使用Nextcloud提供私有网盘服务](app/nextcloud/README.md)
