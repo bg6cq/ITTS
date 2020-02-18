@@ -4,17 +4,15 @@
 
 修改时间：2020.02.18
 
-有个DNS服务器，仅仅服务几个域名，本次尝试使用Core DNS。
-
+本次尝试使用Core DNS软件搭建DNS服务器，一个独立域名的配置，比bind要简单很多。
 
 ## 一、CentOS 7 安装
 
-CentOS 7 安装后，运行
+CentOS 7 安装后，更新并安装常用软件
 ```
 yum update -y
 yum install -y wget bind-utils net-tools git
 ```
-更新
 
 ## 二、CoreDNS安装
 
@@ -129,6 +127,8 @@ systemctl status coredns
 firewall-cmd --permanent --add-service=dns
 firewall-cmd --reload
 ```
+
+注意：现在的配置，DNS查询日志记录在/var/log/message 
 
 
 ***
