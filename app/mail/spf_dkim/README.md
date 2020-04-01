@@ -90,5 +90,120 @@ _dmarc.ustc.edu.cn.	3600	IN	TXT	"v=DMARC1; p=quarantine; rua=mailto:postmaster@u
 
 如果DNS上设置了DMARC记录，可以使用 [https://mxtoolbox.com/DMARC.aspx ](https://mxtoolbox.com/DMARC.aspx) 进行测试。
 
+
+### 附录： lists.ustc.edu.cn 启用SPF、DKIM、DMARC 的过程
+
+lists.ustc.edu.cn 是 sympa mail lists服务器，IP地址是 202.38.95.62/2001:da8:d800:95::62，使用的邮件软件是postfix。
+
+0. 准备
+
+DNS中设置如下的DNS PTR记录：
+
+```
+$ORIGIN 95.38.202.in-addr.arpa.
+62.95.38.202.in-addr.arpa.	IN	PTR	lists.ustc.edu.cn.
+
+$ORIGIN 0.0.8.d.8.a.d.0.1.0.0.2.ip6.arpa
+62.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.5.9.0.0 IN PTR lists.ustc.edu.cn.
+```
+
+1. SPF设置
+
+DNS中增加如下记录：
+```
+lists          IN      A       202.38.95.62
+               IN      TXT     "v=spf1 ip4:202.38.95.62 ~all"
+               IN      AAAA    2001:da8:d800:95::62
+               IN      TXT     "v=spf1 a -all"
+```
+
+2. DKIM设置
+
+设置好epel库，安装opendkim：
+```
+yum install opendkim
+```
+
+生成DKIM key (使用的selector 名称为default)
+```
+# 请替换下面的域名
+export domain=lists.ustc.edu.cn
+
+mkdir /etc/opendkim/keys/$domain
+
+cd /etc/opendkim/keys/$domain
+
+opendkim-genkey -d $domain -s default
+
+chown -R opendkim:opendkim /etc/opendkim/keys/$domain
+
+echo "default._domainkey.$domain $domain:default:/etc/opendkim/keys/$domain/default.private" >> /etc/opendkim/KeyTable
+
+echo "*@$domain default._domainkey.$domain" >> /etc/opendkim/SigningTable
+```
+生成之后打开/etc/opendkim/keys/lists.ustc.edu.cn/default.txt，里面就是DKIM key，需要添加到DNS，主机记录为default._domainkey.lists.ustc.edu.cn，记录值为括号里面的（去掉引号）。
+```
+default._domainkey.lists        IN      TXT     "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZyUmKw+U9kG520nVyoe9aFUIq8wQ+Izvdb7qyFS+DKGElpWmDAIrxjfHWNfWVSadHzqZv6pyoasL1ZVrgkq59fQyOpRbvdQzXm3hbrQFZvyQLvBkqnV7XelHyxWNTKS4MQcP9IaeClwMIHJ8Q5xTH6PJF18o55Q9OH8n1vq53oQIDAQAB"
+```
+
+修改openDKIM设置
+```
+vi /etc/opendkim.conf
+
+1. 将Mode 改为 Mode sv
+2. 将Domain 改为 Domain lists.ustc.edu.cn
+3. 将所有变量前面的#去掉，但是KeyFile、Statistics加上#
+4. 再把SigningTable /etc/opendkim/SigningTable改成SigningTable refile:/etc/opendkim/SigningTable
+```
+
+启动openDKIM
+```
+chkconfig opendkim on
+service opendkim start
+```
+
+设置Postfix
+```
+vi /etc/postfix/main.cf
+
+加上下面幾行
+# opendkim setup
+smtpd_milters = inet:127.0.0.1:8891
+non_smtpd_milters = inet:127.0.0.1:8891
+milter_default_action = accept
+```
+重启服务
+
+```
+service opendkim restart
+service postfix restart
+chkconfig opendkim on
+```
+PS: 第一次启动如果出现 Generating default DKIM keys: hostname: Unknown host 可以在 /etc/hosts 上面加上域名，例如：
+
+```
+127.0.0.1 lists.ustc.edu.cn localhost localhost.localdomain localhost4 localhost4.localdomain4
+```
+
+3. sympa 设置
+
+sympa 与DKIM设置有关的很多，我们采用最简单的方式。
+
+默认的sympa发出的邮件，From地址是用户的，这样就相当于伪造地址发送。
+因此在 /etc/sympa.conf 增加以下配置，将From地址重写为
+`From:  “User Name”  (userEmail@address.com) <listName@lists.illinois.edu>`
+
+```
+dmarc_protection_mode all
+dmarc_protection_phrase name_and_email
+```
+
+4. DMARC设置
+
+DNS中增加如下记录：
+```
+_dmarc.lists.ustc.edu.cn.	3600	IN	TXT	"v=DMARC1; p=quarantine; rua=mailto:postmaster@ustc.edu.cn"
+```
+
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
