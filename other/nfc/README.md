@@ -18,7 +18,7 @@ pecl install pcsc-alpha
 
 wget https://www.acs.com.hk/download-driver-unified/12131/ACS-Unified-PKG-Lnx-118-P.zip
 unzip ACS-Unified-PKG-Lnx-118-P.zip
-rpm -i ACS-Unified-PKG-Lnx-118-P/epel/pcsc-lite-acsccid-1.1.8-1.el6.x86_64.rpm
+rpm -i ACS-Unified-PKG-Lnx-118-P/epel/6/pcsc-lite-acsccid-1.1.8-1.el6.x86_64.rpm
 
 service messagebus start
 service pcscd start
@@ -78,14 +78,18 @@ while(1) {
         } else {
                 var_dump($res);
         }
-
         scard_disconnect($connection);
-
 }
 scard_release_context($context);
 
 ?>
 ```
+
+参考：
+
+* http://ludovicrousseau.blogspot.com/2010/04/pcsc-sample-in-different-languages.html
+* https://www.acs.com.hk/cn/driver/351/acr1252u-nfc%E8%AF%BB%E5%86%99%E5%99%A8iii-nfc%E8%AE%BA%E5%9D%9B%E8%AE%A4%E8%AF%81%E8%AF%BB%E5%86%99%E5%99%A8/
+* https://pecl.php.net/package/pcsc
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
