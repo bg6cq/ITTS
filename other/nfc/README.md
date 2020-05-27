@@ -14,7 +14,17 @@ ACS ACR1252U USB NFC读卡器，使用USB接口连接到安装CentOS 6的机器�
 
 ```
 yum install -y wget pcsc-lite pcsc-lite-devel php-pear php-devel libusb1 unzip
+
 pecl install pcsc-alpha
+
+## 注意，这个版本的pcsc有内存泄漏，可以安装 https://github.com/bg6cq/pcsc.git
+# cd /usr/src/
+# git clone https://github.com/bg6cq/pcsc.git
+# cd pcsc
+# phpize
+# ./configure
+# make
+# make install
 
 wget https://www.acs.com.hk/download-driver-unified/12131/ACS-Unified-PKG-Lnx-118-P.zip
 unzip ACS-Unified-PKG-Lnx-118-P.zip
