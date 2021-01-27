@@ -71,6 +71,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
    14. [从一个简单的备份需求演示gpg的使用](security/gpg/README.md)
    15. [人人都需要一个yubikey](security/yubikey/README.md)
    16. [在 SSH 服务器上使用 YubiKey OTP 进行两步认证](security/ssh-yubikey-otp/README.md)
+   17. [一次挖矿入侵处理记录(2021.01.27)](security/mine/README.md)
 
 9. 杂项
    1. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
