@@ -73,7 +73,7 @@ chmod +x busybox
 
 ```
 
-由此可以判定黑客通过 /etc/ld.so.preload 加载了 libcurl.so.2.17.0 动态链接库，拦截了对系统的访问，从而隐藏了信息，
+由此可以判定黑客通过 /etc/ld.so.preload 加载 libcurl.so.2.17.0 动态链接库，拦截对系统的访问，从而隐藏了有关信息，
 导致top、netstat、ls等均无法看到黑客增加的文件和运行的程序。
 
 ## 三、被入侵机器的处理过程
