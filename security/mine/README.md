@@ -40,7 +40,7 @@ fstat(3, {st_mode=S_IFREG|0755, st_size=27112, ...}) = 0
 ```
 
 说明文件是存在的，但是`ls /lib`看不到，怀疑黑客使用/etc/ld.so.preload 加载了动态连接库后门来隐藏信息
-(参考https://www.freebuf.com/column/162604.html，警惕利用Linux预加载型恶意动态链接库的后门)
+(参考 https://www.freebuf.com/column/162604.html ，警惕利用Linux预加载型恶意动态链接库的后门)
 
 strace配合tcpdump可以发现每次执行命令时，会访问www.fullskystar.top，由于机器无法访问外网，所以命令执行的很慢。
 
