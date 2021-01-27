@@ -90,6 +90,7 @@ chmod +x busybox
 ~ # ./busybox chattr -i /lib/libcurl.so.2.17.0; ./busybox mv /lib/libcurl.so.2.17.0 /lib/libcurl.so.2.17.0.old
 ~ # exit
 
+# 执行以上命令后，退出重新登录，否则之前的bash是注入过libcurl.so的
 # 下面的命令要等所有注入过libcurl.so.2.17.0的进程都退出后才有用，否则还会被改
 # grep libcurl.so.2.17. /proc/*/maps 可以查看哪些进程被注入了
 [root@localhost ~]# chattr -i /etc/ld.so.preload 
