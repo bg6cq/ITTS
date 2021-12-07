@@ -4,6 +4,8 @@
 
 修改时间：2018.03.14
 
+修改时间：2021.10.08
+
 ## 一、SSL证书产生过程介绍
 
 1. SSL证书产生过程涉及以下几个概念：
@@ -20,7 +22,8 @@
 
 CA服务机构的存在是做为公认的第三方来验证服务器身份，这中间可能需要收取服务费。
 
-为了方便使用，可以选择Let's encrypt免费CA机构签发证书。Let's encrypt已被广泛接受，申请证书也比较快捷，一般来说5分钟内可以完成从开始安装程序到申请证书过程。需要说明的是Let's encrypt签发的证书有效期是90天，在到期之前需完成证书更新。
+为了方便使用，可以选择ZeroSSL / Let's encrypt免费CA机构签发证书。之前Let's encrypt已被广泛接受，申请证书也比较快捷，一般来说5分钟内可以完成从开始安装程序到申请证书过程。需要说明的是Let's encrypt签发的证书有效期是90天，在到期之前需完成证书更新。后续ZeroSSL也提供与Let's encrypt相同的免费证书，且acme.sh默认使用
+ZeroSSL来申请证书，下面的描述对ZeroSSL也适用。
 
 3. Let's encrypt免费证书颁发过程
 
@@ -65,23 +68,35 @@ _acme-challenge.ustc.edu.cn IN	TXT "9ihDbjYfTExAYeDs4DBUeuTo18KBzwvTEjUnSwd32-c"
 ```
 然后继续获取证书的过程，注意下面的命令行中的"renew"
 ```
-./acme.sh --renew  -d *.ustc.edu.cn
+./acme.sh --renew -d *.ustc.edu.cn
 ```
 
 注意：上面是生成 *.ustc.edu.cn 泛域名证书，如果是生成普通的域名证书，更简单：
 ```
-./acme.sh --issue --webroot /etc/nginx/html/.well-known/acme-challenge -d linux.ustc.edu.cn
+./acme.sh --issue --webroot /etc/nginx/html/ -d linux.ustc.edu.cn
 ```
 
-3. 产生nginx需要的证书
+3. 产生nginx/apache需要的证书
 
 以上执行过程，会在 ~/.acme.sh 产生一些中间文件（包括证书的信息），使用如下命令可以生成nginx需要的两个文件：
 
+这两个文件分别是 私钥 和 包含所有证书的全证书链文件。
+
 ```
 acme.sh --install-cert -d *.ustc.edu.cn \
---key-file       /etc/nginx/ssl/ustc.edu.cn.key  \
+--key-file /etc/nginx/ssl/ustc.edu.cn.key \
 --fullchain-file /etc/nginx/ssl/ustc.edu.cn.pem
 ```
+
+apache需要三个文件，分别是私钥、域名证书 和 证书链（后两个文件在一起就是上面nginx的全证书链)：
+
+```
+acme.sh --install-cert -d *.ustc.edu.cn \
+--key-file /etc/httpd/conf/ssl/ssl.key \
+--cert-file /etc/httpd/conf/ssl/ssl.crt \
+--ca-file /etc/httpd/conf/ssl/chain.crt
+```
+
 
 4. 证书使用
 
