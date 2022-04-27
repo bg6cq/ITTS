@@ -211,6 +211,8 @@ server {
     location ~ \.ts$ {
        proxy_pass http://live-server;
        proxy_cache hls-cache;
+# proxy_cache_lock on 很关键，默认是off。设置为on，同时访问一个ts文件时，仅仅去源端取一次，设置为off取多次
+       proxy_cache_lock on;
        proxy_cache_key $host$uri;
        proxy_cache_valid 200 304 2m;
        proxy_set_header  Host $http_host;
@@ -220,6 +222,7 @@ server {
    location ~ \.m3u8$ {
        proxy_pass http://live-server;
        proxy_cache m3u8-cache;
+       proxy_cache_lock on;
        proxy_cache_key $host$uri;
        proxy_cache_valid 200 304 1s;
        proxy_set_header  Host $http_host;
