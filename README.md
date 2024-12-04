@@ -75,6 +75,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
    3. [深入数据包分析pku和thu网站传输速度差异](other/test/pku_vs_thu.md)
    4. [2张图1分钟快速定位TCP故障原因](other/wireshark/README.md)
    5. [CentOS 6 php 使用ACS ACR1252U USB NFC读卡器 读取卡UID](other/nfc/README.md)
+   6. [自建bark-server向苹果手机发送通知消息](other/bark/README.md)
   
 10. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
