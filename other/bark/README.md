@@ -8,7 +8,7 @@
 
 1. 软件获取
 
-[https://github.com/Finb/bark-server](https://github.com/Finb/bark-server)可以下载编译好的版本，或这使用docker运行。
+[https://github.com/Finb/bark-server](https://github.com/Finb/bark-server)可以下载编译好的版本，或使用docker运行。
 
 2. 运行
 
@@ -21,27 +21,28 @@
 
 3.1 获取手机Device Token
 
-苹果手机安装Bark app，在设置/Device Token 处单击，将手机的Device Token拷贝到粘贴板，长度为64字节。
+苹果手机安装Bark app后，在 设置/Device Token 处单击，将手机的Device Token拷贝到粘贴板，长度为64字节。
 
 3.2 注册手机，获取device_key
+
+这一步很关键，但文档中未提及。
 
 ```
 curl http://x.x.x.x:8080/register?devicetoken=64字节长的device_token
 ```
-会显示类似如下内容
+成功会显示如下内容
 ```
  {"code":200,"message":"success","data":{"key":"af6kyzEXwb3wfV7fwThbhB","device_key":"af6kyzEXwb3wfV7fwThbhB","device_token":"********"},"timestamp":1733282760}
 ```
-其中device_key是将来发送信息需要用到的。
+其中device_key是发送信息需要用到的。
 
-
-3.3 使用
+3.3 发送消息
 
 ```
 curl http://x.x.x.x:8080/af6kyzEXwb3wfV7fwThbhB/title/msg
 ```
 
-其中af6kyzEXwb3wfV7fwThbhB是上一步的device_key，该设备既可以收到消息。
+其中af6kyzEXwb3wfV7fwThbhB是上一步的device_key，访问上述URL后，手机可以收到消息。
 
 
 3.4 配置nginx
