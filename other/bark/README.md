@@ -17,6 +17,15 @@
 ./bark-server --addr 0.0.0.0:8080 --data ./bark-data
 ```
 
+bark-server不支持https，为了方便，可以使用nginx代理提供https访问
+```
+	location ^~ /bark/  {
+		keepalive_timeout  0;
+		proxy_pass http://127.0.0.1:8080/;
+	}
+```
+使用以上配置，将来可以用 https://x.x.x.x/bark/ 来访问。
+
 ### 3. 工作原理
 
 #### 3.1 注册过程
@@ -49,17 +58,6 @@ curl http://x.x.x.x:8080/af6kyzEXwb3wfV7fwThbhB/title/msg
 
 添加后，Bark App会自动完成register注册过程，将发送消息的URL显示在 App 中。
 
-
-### 5. 配置nginx
-
-为了方便，可以使用nginx代理提供https访问
-```
-	location ^~ /bark/  {
-		keepalive_timeout  0;
-		proxy_pass http://127.0.0.1:8080/;
-	}
-```
-使用以上配置，将来可以用 https://x.x.x.x/bark/ 来访问。
 
 
 参考：
