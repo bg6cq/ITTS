@@ -62,7 +62,7 @@ xxd output.bin  # 查看十六进制转储
 ```
 其中Magic Number是`Gh0st`，后续是4字节数据包总长度，4字节解压后的消息长度，zlib压缩后的数据。 总长度0xad = 173, 0xe0 = 224。
 
-问 deepseek 写一段程序`解压zlib压缩文件，根据回答编辑文件` decompress_zlib.py`
+问 deepseek `写一段程序解压zlib压缩文件`，参考回答编辑文件` decompress_zlib.py`
 
 ```
 import zlib
