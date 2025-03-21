@@ -26,6 +26,7 @@ vi payload.hex，输入`:s/\\\\x//g` 删除 `\\x`，`:w`保存，此时 payload.
 payload.hex文件长度346个字符+换行，共347字节。
 
 问deepseek `如何把hex字符串转换为二进制文件`，得到回答是：
+
 ```
 echo -n "48656C6C6F" | xxd -r -p > output.bin
 ```
@@ -61,7 +62,7 @@ xxd output.bin  # 查看十六进制转储
 ```
 其中Magic Number是`Gh0st`，后续是4字节数据包总长度，4字节解压后的消息长度，zlib压缩后的数据。 总长度0xad = 173, 0xe0 = 224。
 
-问deepseek `写一段程序解压zlib压缩文件`，根据回答编辑文件 decompress_zlib.py
+问 deepseek 写一段程序解压zlib压缩文件，根据回答编辑文件 decompress_zlib.py
 
 ```
 import zlib
