@@ -63,7 +63,6 @@ xxd output.bin  # 查看十六进制转储
 
 问deepseek `写一段程序解压zlib压缩文件`，根据回答编辑文件 decompress_zlib.py
 
-
 ```
 import zlib
 import sys
