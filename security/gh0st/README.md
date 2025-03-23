@@ -139,9 +139,9 @@ typedef struct
     char            HostName[50];   // 主机名
     bool            bIsWebCam;      // 是否有摄像头
     DWORD           dwSpeed;        // 网速
-}LOGININFO;
+} LOGININFO;
 ```
-具体分析略，主要内容是192.168.1.60 主机名WIN-T9UN4HIIHEC的一台受控机向C2服务器发出的上线包。
+具体分析略，主要内容是一台 IP是192.168.1.60(主机名WIN-T9UN4HIIHEC)被控机向C2服务器发出的上线包。
 
 ## 三、安全事件分析
 
@@ -151,7 +151,7 @@ typedef struct
 
 ## 四、相关事件协查
 
-在网络流量中查找TCP数据包中带有 Gh0st 字样的数据包，经过1天的观察，能看大到一些payload完全相同的数据包。数据包源地址不同，目的地址也不同，目的端口均是80端口。在运行Apache的WEB服务器上，有如下日志记录：
+在网络流量中查找TCP数据包中带有 Gh0st 字样的数据包，经过1天的观察，能观察到若干payload完全相同的数据包。数据包源地址不同，目的地址不同，目的端口均是80端口。在运行Apache的WEB服务器上，有如下日志记录：
 ```
 [Thu Mar 20 14:51:54 2025] [error] [client 159.89.147.253] Invalid method in request Gh0st\xad
 ```
@@ -160,6 +160,11 @@ typedef struct
 
 这些数据包并不能对服务端造成任何负面影响。
 
+## 五、题外话
+
+以上过程分析完成后，才发现 chat.ustc.edu.cn 实际上用的是 通义千问，而不是 Deepseek。
+
+把 "二、payload 分析" 中的 payload.bin 内容`4768307374AD000000E0000...`完整交给手机上的DeepSeek App，deepseek进行长达2-3分钟的思考，很可惜的是deepseek无法执行程序，因此无法对zlib压缩部分解压缩，无法分析出来数据包的实际含义。
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
