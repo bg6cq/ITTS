@@ -1,4 +1,4 @@
-## [原创]使用deepseek辅助分析安全通报的入侵事件
+## [原创]使用deepseek辅助一次安全入侵事件分析
 
 本文原创：**中国科学技术大学 张焕杰**
 
@@ -15,11 +15,11 @@
 
 ## 二、payload 分析
 
-从中猜测hex=后面是可疑payload的hex编码，提取hex=后内容到文件 payload.hex，得到
+从中猜测hex=后面是可疑payload的hex编码，提取hex=后内容到文件 payload.hex，文件内容为：
 ```
 \\x47\\x68\\x30\\x73\\x74\\xAD\\x00\\x00\\x00\\xE0\\x00\\x00\\x00\\x78\\x9C\\x4B\\x53\\x60\\x60\\x98\\xC3\\xC0\\xC0\\xC0\\x06\\xC4\\x8C\\x40\\xBC\\x51\\x96\\x81\\x81\\x09\\x48\\x07\\xA7\\x16\\x95\\x65\\x26\\xA7\\x2A\\x04\\x24\\x26\\x67\\x2B\\x18\\x32\\x94\\xF6\\xB0\\x30\\x30\\xAC\\xA8\\x72\\x63\\x00\\x01\\x11\\xA0\\x82\\x1F\\x5C\\x60\\x26\\x83\\xC7\\x4B\\x37\\x86\\x19\\xE5\\x6E\\x0C\\x39\\x95\\x6E\\x0C\\x3B\\x84\\x0F\\x33\\xAC\\xE8\\x73\\x63\\x68\\xA8\\x5E\\xCF\\x34\\x27\\x4A\\x97\\xA9\\x82\\xE3\\x30\\xC3\\x91\\x68\\x5D\\x26\\x90\\xF8\\xCE\\x97\\x53\\xCB\\x41\\x34\\x4C\\x3F\\x32\\x3D\\xE1\\xC4\\x92\\x86\\x0B\\x40\\xF5\\x60\\x0C\\x54\\x1F\\xAE\\xAF\\x5D\\x0A\\x72\\x0B\\x03\\x23\\xA3\\xDC\\x02\\x7E\\x06\\x86\\x03\\x2B\\x18\\x6D\\xC2\\x3D\\xFD\\x74\\x43\\x2C\\x43\\xFD\\x4C\\x3C\\x3C\\x3D\\x3D\\x5C\\x9D\\x19\\x88\\x00\\xE5\\x20\\x02\\x00\\x54\\xF5\\x2B\\x5C
 ```
-vi payload.hex，输入`:s/\\\\x//g` 删除 `\\x`，`:w`保存，此时 payload.hex 为
+执行`vi payload.hex`，输入`:s/\\\\x//g` 删除 `\\x`，`:w`保存，此时 payload.hex 内容为
 ```
 4768307374AD000000E0000000789C4B53606098C3C0C0C006C48C40BC51968181094807A716956526A72A042426672B183294F6B03030ACA87263000111A0821F5C602683C74B378619E56E0C39956E0C3B840F33ACE8736368A85ECF34274A97A982E330C391685D2690F8CE9753CB41344C3F323DE1C492860B40F5600C541FAEAF5D0A720B0323A3DC027E0686032B186DC23DFD74432C43FD4C3C3C3D3D5C9D198800E520020054F52B5C
 ```
@@ -60,9 +60,9 @@ xxd output.bin  # 查看十六进制转储
 |5 Byte      |4 Byte      |4 Byte             |Compressed length|
 |------------|------------|-------------------|-----------------|
 ```
-其中Magic Number是`Gh0st`，后续是4字节数据包总长度，4字节解压后的消息长度，zlib压缩后的数据。 总长度0xad = 173, 0xe0 = 224。
+其中Magic Number是`Gh0st`，后续是4字节数据包总长度，4字节解压后的消息长度，zlib压缩后的数据。本次数据包，总长度0xad = 173, zlib解压后的数据包长度应该是0xe0 = 224。
 
-问 deepseek `写一段程序解压zlib压缩文件`，参考回答编辑文件` decompress_zlib.py`
+问 deepseek `写一段程序解压zlib压缩文件`，根据回答编辑文件`decompress_zlib.py`，内容如下：
 
 ```
 import zlib
@@ -101,11 +101,11 @@ if __name__ == "__main__":
     decompress_zlib_file(input_file, output_file)
 ```
 
-将前面生成的payload.hex备份，并删除789C之前的Magic Number、Total Length、Uncompressed Length部分，保留如下内容:
+将前面生成的payload.hex备份，并删除789C之前的Magic Number、Total Length、Uncompressed Length部分，保留如下从789C开始的内容:
 ```
 789C4B53606098C3C0C0C006C48C40BC51968181094807A716956526A72A042426672B183294F6B03030ACA87263000111A0821F5C602683C74B378619E56E0C39956E0C3B840F33ACE8736368A85ECF34274A97A982E330C391685D2690F8CE9753CB41344C3F323DE1C492860B40F5600C541FAEAF5D0A720B0323A3DC027E0686032B186DC23DFD74432C43FD4C3C3C3D3D5C9D198800E520020054F52B5C
 ```
-执行命令 `cat payload.hex | xxd -r -p > zlib.bin`，执行命令 `python3 decompress_zlib.py zlib.bin zlib.out.bin`，输出`解压成功！输出文件：zlib.out.bin`，输出文件zlib.out.bin长度224字节，与数据包头处的Uncompressed Length 0xe0一致。
+执行命令 `cat payload.hex | xxd -r -p > zlib.bin`，执行命令 `python3 decompress_zlib.py zlib.bin zlib.out.bin`，输出`解压成功！输出文件：zlib.out.bin`，输出的文件zlib.out.bin长度224字节，与数据包头处的Uncompressed Length 0xe0 = 224一致。
 
 执行命令`xxd payload.bin`，显示为:
 ```
@@ -125,7 +125,7 @@ if __name__ == "__main__":
 000000d0: 0000 0000 0000 0000 0000 0077 0000 0000  ...........w....
 ```
 
-对比https://www.freebuf.com/articles/paper/167917.html可知:
+对比 https://www.freebuf.com/articles/paper/167917.html 可知:
 
 ```
 0x66 = 102 是 TOKEN_LOGIN,                    // 上线包
@@ -141,7 +141,7 @@ typedef struct
     DWORD           dwSpeed;        // 网速
 }LOGININFO;
 ```
-具体分析略，主要内容是192.168.1.60 主机名是WIN-T9UN4HIIHEC向C2服务器发出的上线包。
+具体分析略，主要内容是192.168.1.60 主机名WIN-T9UN4HIIHEC的一台受控机向C2服务器发出的上线包。
 
 ## 三、安全事件分析
 
@@ -149,12 +149,11 @@ typedef struct
 
 被通报IP的80端口运行的是HTTP服务，并不是Gh0st RAT远控软件服务器端，这些数据包是没有意义的。
 
-## 四、安全事件协查
+## 四、相关事件协查
 
-在网络流量中查找TCP数据包中带有 Gh0st 字样的数据包，能观察到一些payload完全相同的数据包。数据包源地址不同，目的地址也不同，目的端口均是80端口。在运行Apache的WEB服务器上，有如下日志记录：
+在网络流量中查找TCP数据包中带有 Gh0st 字样的数据包，经过1天的观察，能看大到一些payload完全相同的数据包。数据包源地址不同，目的地址也不同，目的端口均是80端口。在运行Apache的WEB服务器上，有如下日志记录：
 ```
-[Thu Mar 20 14:51:54 2025] [error] [client 159.89.147.253] Invalid method in req
-uest Gh0st\xad
+[Thu Mar 20 14:51:54 2025] [error] [client 159.89.147.253] Invalid method in request Gh0st\xad
 ```
 
 猜测黑客发送这些数据包的目的是探测是否存在Gh0st RAT远控软件服务器端。
