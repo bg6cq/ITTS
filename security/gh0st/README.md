@@ -164,7 +164,7 @@ typedef struct
 
 以上过程分析完成后，才发现 chat.ustc.edu.cn 实际上用的是 通义千问，而不是 Deepseek。
 
-把 "二、payload 分析" 中的 payload.bin 内容`4768307374AD000000E0000...`完整交给手机上的DeepSeek App，deepseek进行长达2-3分钟的思考，很可惜的是deepseek无法执行程序，因此无法对zlib压缩部分解压缩，无法分析出来数据包的实际含义。
+把 "二、payload 分析" 中的 payload.bin 内容`4768307374AD000000E0000...`完整交给手机上的DeepSeek App，deepseek进行长达512秒钟的思考，很可惜的是deepseek很容易写出zlib解压程序代码但无法执行程序，因此无法对zlib压缩部分解压缩，无法分析出来数据包的实际含义。
 
 ***
 欢迎 [加入我们整理资料](https://github.com/bg6cq/ITTS)
