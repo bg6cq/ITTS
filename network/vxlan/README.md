@@ -16,7 +16,7 @@
 
 ![vxlan](img/vxlan2.png)
 
-以下为使用华为S5731-H交换机作为VTEP交换机的配置。
+以下为使用华为S5731-H交换机作为VTEP交换机的配置示例。
 
 # 二、交换机1配置
 
@@ -69,7 +69,7 @@ interface LoopBack0
  ip address 192.168.0.2 255.255.255.255
 
 interface Nve1
- source 192.168.0.1
+ source 192.168.0.2
  vni 100 head-end peer-list 192.168.0.1
  vni 100 head-end peer-list 192.168.0.3
  vni 200 head-end peer-list 192.168.0.1
@@ -99,7 +99,7 @@ interface LoopBack0
  ip address 192.168.0.3 255.255.255.255
 
 interface Nve1
- source 192.168.0.1
+ source 192.168.0.3
  vni 100 head-end peer-list 192.168.0.1
  vni 100 head-end peer-list 192.168.0.2
  vni 200 head-end peer-list 192.168.0.1
