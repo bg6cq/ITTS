@@ -12,6 +12,10 @@
 
 实现vlan 100、vlan 200 在校区间透传。
 
+下图是使用VXLAN传输以太网包的简单解释。原始的数据包使用UDP发送到对端设备，一般使用UDP端口4789。因此使用VXLAN时，沿途链路的MTU要比通常的1500大，建议不少于1600字节。
+
+![vxlan](img/vxlan2.png)
+
 以下为使用华为S5731-H交换机作为VTEP交换机的配置。
 
 # 二、交换机1配置
@@ -102,6 +106,30 @@ interface Nve1
  vni 200 head-end peer-list 192.168.0.2
 ```
 
+# 五、VTEP交换机loopback接口IP可达的实现
+
+VTEP交换机loopback接口IP可达可以采用多种方式实现。
+
+如果VTEP交换机接口2层可达，使用OSPF等动态路由是最简单的方式，这里不再说明。
+
+如果VTEP交换机接口间2层不可达，同时有多条链路，可以使用nqa辅助静态路由来实现。如下是一种配置，当ping通对方接口地址时，增加loopback接口IP的静态路由：
+
+```
+ip route-static 192.168.0.2 255.255.255.255 192.168.23.2 preference 5 track nqa user test1
+
+ source-interface GigabitEthernet0/0/12
+ start now
+
+nqa test-instance user test1h
+ test-type icmp
+ destination-address ipv4 192.168.22.1
+ frequency 11
+ interval seconds 5
+ timeout 4
+ probe-count 2
+ source-interface GigabitEthernet0/0/12
+ start now
+```
 
 
 
