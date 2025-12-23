@@ -77,6 +77,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
    4. [2张图1分钟快速定位TCP故障原因](other/wireshark/README.md)
    5. [CentOS 6 php 使用ACS ACR1252U USB NFC读卡器 读取卡UID](other/nfc/README.md)
    6. [自建bark-server向苹果手机发送通知消息](other/bark/README.md)
+   6. [自建ntfy.sh server向安卓手机发送通知消息](other/ntfy/README.md)
    7. [常用脚本](other/util/README.md)
   
 10. 标杆文档
