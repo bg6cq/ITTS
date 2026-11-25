@@ -79,6 +79,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
    6. [自建bark-server向苹果手机发送通知消息](other/bark/README.md)
    6. [自建ntfy.sh server向安卓手机发送通知消息](other/ntfy/README.md)
    7. [常用脚本](other/util/README.md)
+   8. [debian 使用 docker 时iptables 规则的维护(2026.11.25)](other/docker_iptables/README.md)
   
 10. 标杆文档
     1. [中山大学信息技术安全管理办法](http://info.sysu.edu.cn/node/160)
