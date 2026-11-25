@@ -34,7 +34,7 @@ iptables -A INPUT -j ACCEPT -p tcp -m multiport --dports 80,443
 iptables -A INPUT -j DROP
 ```
 
-`/root/etc/rc.local`
+编辑文件 `/root/etc/rc.local`
 ```
 #!/bin/bash
 
