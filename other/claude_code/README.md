@@ -4,7 +4,7 @@
 
 修改时间：2026.11.25
 
-### What's agent doing
+### 1. What's agent doing
 
 显示Cluade Code的状态
 ```
@@ -12,7 +12,7 @@
 /plugin install whats-agent-doing@tzafrir
 ```
 
-### Code Audit
+### 2. Code Audit
 Code Audit 是一个专业白盒代码安全审计技能
 
 ```bash
@@ -24,7 +24,7 @@ git clone https://github.com/3stoneBrother/code-audit
 使用/code-audit deep 对这个项目进行安全审计，并形成完整的审计报告。
 ```
  
-### bento html PPT
+### 3. bento html PPT
 
 bento 是一个单一文件的用于演示的 html 文件，页面部分是json 格式，方便AI和人编辑。
 
