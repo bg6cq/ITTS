@@ -69,6 +69,7 @@ L2TPVPN 服务器安装(Centos7) ](network/vpn/l2tpvpn) )
    17. [一次挖矿入侵处理记录(2021.01.27)](security/mine/README.md)
    18. [收集H3C路由器/防火墙输出的NAT流日志(userlog/flowlog)](https://github.com/bg6cq/h3cflowd)
    19. [使用deepseek辅助一次安全入侵事件分析(2025.03.22)](security/gh0st/README.md)
+   20. [如何拦截恶意解析域名的访问(2026.11.28)](security/www/host/README.md)
 
 9. 杂项
    1. [centos7 eduroam freeradius 安装记录](other/eduroam/README.md)
